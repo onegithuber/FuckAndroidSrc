@@ -1,0 +1,2506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <link rel="canonical" href="https://blog.csdn.net/QQ1084283172/article/details/57086486"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="renderer" content="webkit"/>
+    <meta name="force-rendering" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="report" content='{"pid":"blog"}'>
+    <meta name="referrer" content="always">
+    <meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+    <meta name="shenma-site-verification" content="5a59773ab8077d4a62bf469ab966a63b_1497598848">
+        <meta name="csdn-baidu-search"  content='{"autorun":true,"install":true,"keyword":"修改Android手机内核，绕过反调试 - Fly20141201. 的专栏"}'>
+    
+    <link href="https://csdnimg.cn/public/favicon.ico" rel="SHORTCUT ICON">
+    <title>修改Android手机内核，绕过反调试 - Fly20141201. 的专栏 - CSDN博客</title>
+
+        
+                    <link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/detail-7f17405543.min.css">
+            
+            <script type="application/ld+json">{"@context":"https:\/\/ziyuan.baidu.com\/contexts\/cambrian.jsonld","@id":"https:\/\/blog.csdn.net\/QQ1084283172\/article\/details\/57086486","appid":"1563894916825412","title":"\u4fee\u6539Android\u624b\u673a\u5185\u6838\uff0c\u7ed5\u8fc7\u53cd\u8c03\u8bd5 - Fly20141201. \u7684\u4e13\u680f","images":["https:\/\/img-blog.csdn.net\/20170225180815811?watermark\/2\/text\/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy\/font\/5a6L5L2T\/fontsize\/400\/fill\/I0JBQkFCMA==\/dissolve\/70\/gravity\/SouthEast","https:\/\/img-blog.csdn.net\/20170225181900847?watermark\/2\/text\/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy\/font\/5a6L5L2T\/fontsize\/400\/fill\/I0JBQkFCMA==\/dissolve\/70\/gravity\/SouthEast","https:\/\/img-blog.csdn.net\/20170225182839664?watermark\/2\/text\/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy\/font\/5a6L5L2T\/fontsize\/400\/fill\/I0JBQkFCMA==\/dissolve\/70\/gravity\/SouthEast"],"pubDate":"2019-08-02T23:34:05"}</script>
+        
+            <link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/themes/skin-blue/skin-blue-b7967eb1c8.min.css">
+        <script type="text/javascript">
+        var username = "QQ1084283172";
+        var blog_address = "https://blog.csdn.net/qq1084283172";
+        var static_host = "https://csdnimg.cn/release/phoenix/";
+        var currentUserName = "qq_22798667";
+        var isShowAds = false;
+        var isOwner = false;
+        var loginUrl = "http://passport.csdn.net/account/login?from=https://blog.csdn.net/QQ1084283172/article/details/57086486"
+        var blogUrl = "https://blog.csdn.net/";
+
+        var curSkin = "skin-blue";
+        // 收藏所需数据
+        var articleTitle = "修改Android手机内核，绕过反调试";
+        var articleDesc = "0x1.手机设备环境Modelnumber:Nexus5OSVersion:Android4.4.4KTU84PKernelVersion:3.4.0-gd59db4e0x2.Android内核提取查找Android设备的boot分区文件。高通芯片的设备可以通过下面的命令进行查找。cd/home/androidcode/AndroidDevlop";
+        // 第四范式所需数据
+        var articleTitles = "修改Android手机内核，绕过反调试 - Fly20141201. 的专栏";
+        
+        var nickName = "Fly20141201";
+        var isCorporate = false;
+        var subDomainBlogUrl = "https://blog.csdn.net/"
+        var digg_base_url = "https://blog.csdn.net/qq1084283172/phoenix/comment";
+        var articleDetailUrl = "https://blog.csdn.net/QQ1084283172/article/details/57086486";
+    </script>
+    <script src="https://csdnimg.cn/public/common/libs/jquery/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="//g.csdnimg.cn/??fixed-sidebar/1.1.3/fixed-sidebar.js,report/1.0.3/report.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://csdnimg.cn/public/sandalstrap/1.4/css/sandalstrap.min.css">
+    <style>
+        .MathJax, .MathJax_Message, .MathJax_Preview{
+            display: none
+        }
+    </style>
+</head>
+<body class="nodata " > 
+    <link rel="stylesheet" href="https://csdnimg.cn/public/common/toolbar/content_toolbar_css/content_toolbar.css">
+    <script id="toolbar-tpl-scriptId" src="https://csdnimg.cn/public/common/toolbar/js/content_toolbar.js" type="text/javascript" domain="https://blog.csdn.net/"></script>
+<link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/blog_code-c3a0c33d5c.css">
+<link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/vendor/pagination/paging-e040f0c7c8.css">
+
+<script type="text/javascript">
+	var NEWS_FEED = function(){}
+</script>
+
+<link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/chart-3456820cac.css" />
+<div class="container clearfix" id="mainBox">
+			<div class="recommend-right">
+  <ul class="recommend-fixed-box">
+    
+  </ul>
+</div>	    <main>
+        <div class="blog-content-box">
+    <div class="article-header-box">
+        <div class="article-header">
+            <div class="article-title-box">
+                <span class="article-type type-1 float-left">原</span>                <h1 class="title-article">修改Android手机内核，绕过反调试</h1>
+            </div>
+            <div class="article-info-box">
+                <div class="article-bar-top">
+                                                                                                                        <span class="time">2017年02月26日 11:32:53</span>
+                    <a class="follow-nickName" href="https://me.csdn.net/QQ1084283172" target="_blank">Fly20141201</a>
+                    <span class="read-count">阅读数 10430</span>
+                                                                                                                        <div class="tags-box space">
+                                <span class="label">所属专栏：</span>
+                                                                    <a class="tag-link" href="https://blog.csdn.net/column/details/14160.html" target="_blank">Android系统安全和逆向分析研究</a>
+                                                                </a>
+                            </div>
+                                                            </div>
+                <div class="operating">
+                                    </div>
+            </div>
+        </div>
+    </div>
+    <article class="baidu_pl">
+                <div id="article_content" class="article_content clearfix">
+                                                <div class="article-copyright">
+                                                    <svg class="icon" title="CSDN认证原创" aria-hidden="true"
+                                 style="width:53px; height: 18px; vertical-align: -4px;">
+                                <use xlink:href="#CSDN_Cert"></use>
+                            </svg>
+                        
+                        版权声明：本文为博主原创文章，未经博主允许不得转载。                        <a class="copy-right-url" href=" https://blog.csdn.net/QQ1084283172/article/details/57086486"> https://blog.csdn.net/QQ1084283172/article/details/57086486</a>
+                    </div>
+                                                    <link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-3019150162.css" />
+                                        <link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-3019150162.css" />
+                <div class="htmledit_views" id="content_views">
+                                            
+<p style="text-align:center;"><span style="font-family:'Times New Roman';font-size:10px;">本文博客链接：<a href="http://blog.csdn.net/qq1084283172/article/details/57086486" rel="nofollow" data-token="6e5f640f89691ab90b187853175743b9">http://blog.csdn.net/qq1084283172/article/details/57086486</a></span></p>
+<p style="text-align:center;"><br /></p>
+<p><strong><span style="font-family:'Times New Roman';font-size:10px;">0x1.手机设备环境</span></strong></p>
+<p></p>
+<pre><code class="language-cpp">Model number: Nexus 5
+OS Version: Android 4.4.4 KTU84P
+Kernel Version: 3.4.0-gd59db4e</code></pre>
+<p></p>
+<p><br /></p>
+<br /><strong><span style="font-family:'Times New Roman';font-size:10px;">0x2.Android内核提取</span></strong>
+<p><span style="font-family:'Times New Roman';font-size:10px;">查找Android设备的boot分区文件。高通芯片的设备可以通过下面的命令进行查找。</span></p>
+<p><span style="font-family:'Times New Roman';"></span></p>
+<pre><code class="language-cpp">cd /home/androidcode/AndroidDevlop/modifyNexus5Boot
+
+adb shell
+
+ls -al /dev/block/platform/msm_sdcc.1/by-name</code></pre><br /><img src="https://img-blog.csdn.net/20170225180815811?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /><p><br /></p>
+<p><span style="font-family:'Times New Roman';"><span style="font-size:10px;">root权限下，用 dd 将其dump到Nexus 5手机的sdcard文件夹下，然后导出到文件<span style="color:#3333ff;"> /home/androidcode/AndroidDevlop/modifyNexus5Boot</span> 下：</span><br /></span></p>
+<p><span style="font-family:'Times New Roman';"></span></p>
+<pre><code class="language-cpp">adb shell
+su
+
+dd if=/dev/block/mmcblk0p19 of=/sdcard/boot.img
+
+exit
+exit
+
+adb pull /sdcard/boot.img boot.img</code></pre>
+<p><br /></p>
+<img src="https://img-blog.csdn.net/20170225181900847?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /><br /><p><span style="font-family:'Times New Roman';">使用abootimg工具对boot.img文件进行解包处理，解包之后得到的 zImage 文件即为Android的内核文件。<br /></span></p>
+<p><span style="font-family:'Times New Roman';">abootimg工具的github地址：<a href="https://github.com/ggrandou/abootimg" rel="nofollow" data-token="543f2ecf0c50eded8f021d564dcfde42">https://github.com/ggrandou/abootimg</a><br />
+abootimg工具的直接安装命令：<span style="color:#3333ff;">sudo apt-get install build-essential abootimg</span>  <br /></span></p>
+<p><span style="font-family:'Times New Roman';"></span></p>
+<pre><code class="language-cpp">abootimg -x boot.img  
+  
+ls -al  </code></pre>
+<p><br /></p>
+<img src="https://img-blog.csdn.net/20170225182839664?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /><br /><p></p>
+<p><span style="font-family:'Times New Roman';"><span style="font-size:10px;">将zImage文件拷贝一份作为文件名为 kernel.gz 的文件，并使用 WinHex 工具查找十六进制<span style="color:#ff0000;"> 1F 8B 08 00</span>，找到之后把<span style="color:#3333ff;">前面的数据部分全删掉</span>，使kernel.gz文件变成标准的gzip压缩文件，这样子就可以使用
+  <span style="color:#3333ff;">gunzip/gzip</span> 命令进行解压内核文件了。</span><br /></span></p>
+<p><span style="font-family:'Times New Roman';"></span></p>
+<pre><code class="language-cpp">cp ./zImage  ./kernel.gz
+
+# 去掉解包的内核文件kernel.gz中前面的垃圾数据
+
+gzip -d kernel_new.gz
+
+ls -al</code></pre><br /><span style="font-family:'Times New Roman';font-size:10px;">使用WinHex查找十六进制数据：</span>
+<p><span style="font-family:'Times New Roman';"><img src="https://img-blog.csdn.net/20170225185010616?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /></span></p>
+<p><span style="font-family:'Times New Roman';"><br /></span></p>
+<p><span style="font-family:'Times New Roman';">删除掉解包的内核文件kernel.gz中的前面的垃圾数据，然后重新保存修改后的 kernel.gz文件为 <span style="color:#ff0000;">kernel_new.gz</span>.</span></p>
+<p><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><img src="https://img-blog.csdn.net/20170225190428056?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /></span></span></span></p>
+<p><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><br /></span></span></span></p>
+<p><span style="font-family:'Times New Roman';">修改后的gzip格式的 kernel_new.gz 文件的解压得到<span style="color:#3333ff;"><strong>kernel_new内核文件</strong></span>：<br /></span></p>
+<p><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><img src="https://img-blog.csdn.net/20170225190912877?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /></span></span></span></p>
+<p><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><br /></span></span></span></p>
+<p><span style="font-family:'Times New Roman';"><strong>提示</strong>：关于gzip格式文件的解压，既可以使用 gzip 命令也可以使用 gunzip 命令，都一样。有关<span><span style="color:#3333ff;"> </span><span style="color:#3333ff;">gzip/</span><span style="color:#3333ff;">gunzip</span></span>
+ 命令的参数使用说明，如下：</span></p>
+<p><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"></span></span></span></span></span></p>
+<pre><code class="language-cpp">$ gzip -h
+Usage: gzip [OPTION]... [FILE]...
+Compress or uncompress FILEs (by default, compress FILES in-place).
+
+Mandatory arguments to long options are mandatory for short options too.
+
+  -c, --stdout      write on standard output, keep original files unchanged
+  -d, --decompress  decompress
+  -f, --force       force overwrite of output file and compress links
+  -h, --help        give this help
+  -k, --keep        keep (don't delete) input files
+  -l, --list        list compressed file contents
+  -L, --license     display software license
+  -n, --no-name     do not save or restore the original name and time stamp
+  -N, --name        save or restore the original name and time stamp
+  -q, --quiet       suppress all warnings
+  -r, --recursive   operate recursively on directories
+  -S, --suffix=SUF  use suffix SUF on compressed files
+  -t, --test        test compressed file integrity
+  -v, --verbose     verbose mode
+  -V, --version     display version number
+  -1, --fast        compress faster
+  -9, --best        compress better
+  --rsyncable       Make rsync-friendly archive
+
+With no FILE, or when FILE is -, read standard input.
+
+Report bugs to &lt;bug-gzip@gnu.org&gt;.</code></pre><br /><img src="https://img-blog.csdn.net/20170225191431607?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /><p></p>
+<p><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><br /></span></span></span></span></span></p>
+<p><span style="font-family:'Times New Roman';">关于gzip文件格式的说明和源码的解析可以参考 <a href="http://blog.163.com/bh_binghu/blog/static/94553512011626102054571/" rel="nofollow" data-token="57ef4ad3f879f6476502e95874e4dd5c">gzip文件格式解析及源代码分析</a>，进行深入的研究和学习。</span></p>
+<p><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><img src="https://img-blog.csdn.net/20170225191837702?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /></span></span></span></span></span></p>
+<p><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><br /></span></span></span></span></span></p>
+<p><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';"><br /></span></span></span></span></span></p>
+<p><strong><span style="font-family:'Times New Roman';">0x3.Android内核文件的逆向修改</span></strong></p>
+<p><span style="font-family:'Times New Roman';">将解压后的Android内核文件 kernel_new  拖入到IDA Pro 中进行分析，设置处理器类型为<span style="color:#3333ff;">ARM Little-endian</span>。</span></p>
+<p><span style="font-family:'Times New Roman';"><img src="https://img-blog.csdn.net/20170225201853293?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /></span></p>
+<p><span style="font-family:'Times New Roman';"><br /></span></p>
+<p><span style="font-family:'Times New Roman';"> 在 <span style="color:#3333ff;">ROM start address</span> 和<span style="color:#3333ff;">Loading address</span> 处填上
+<span style="color:#ff0000;">0xc0008000</span>，然后点击 OK 。</span><br /></p>
+<p><span style="font-family:'Times New Roman';"><img src="https://img-blog.csdn.net/20170225202423905?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /></span></p>
+<p><span style="font-family:'Times New Roman';"><br /></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;">IDA显示效果如下图所示，没有函数名，不方便定位代码，显示不友好需要添加Android内核的内核符号。</span></p>
+<p><span style="font-family:'Times New Roman';"><img src="https://img-blog.csdn.net/20170225202930659?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /></span></p>
+<p><span style="font-size:10px;font-family:'Times New Roman';line-height:26px;"><br /></span></p>
+<p><span style="font-family:'Times New Roman';"><span style="font-size:10px;line-height:26px;">为了要获取Android内核中所有的内核符号信息，可以通过在root权限下，修改Andriod设备中的</span><span style="font-size:10px;line-height:26px;color:rgb(255,0,0);">/proc/sys/kernel/kptr_restrict </span><span style="font-size:10px;line-height:26px;">的值来实现，去掉Android内核符号的信息屏蔽。</span></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;"><span style="line-height:26px;"></span></span></p>
+<pre><code class="language-cpp">adb shell  
+su  
+  
+# 查看默认值  
+cat /proc/sys/kernel/kptr_restrict  
+  
+# 关闭内核符号屏蔽  
+echo 0 &gt; /proc/sys/kernel/kptr_restrict   
+  
+# 查看修改后的值  
+cat /proc/sys/kernel/kptr_restrict  
+  
+cat /proc/kallsyms </code></pre>
+<p></p>
+<p><br /></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;">关闭Android设备的内核符号的屏蔽以后，再次执行 cat /proc/kallsyms ，发现被隐藏的内核符号信息都显示出来了。</span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;"><img src="https://img-blog.csdn.net/20170225204157769?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;"><br /></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;">在root权限下，将Android设备中的内核符号信息dump出来，导出到 /home/androidcode/AndroidDevlop/modifyNexus5Boot/syms.txt文件中。因此，Android内核文件的内核符号信息都保存在syms.txt文件中了。<br /></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;"></span></p>
+<pre><code class="language-cpp"># cat /proc/kallsyms &gt; /sdcard/syms.txt  
+  
+# exit  
+$ exit  
+  
+$ adb pull /sdcard/syms.txt syms.txt  </code></pre><img src="https://img-blog.csdn.net/20170225204755525?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /><br /><p></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;">我们已经将Androd内核文件中的内核符号信息都dump出来，下面将大有用武之地。因此，向IDA中导入之前提取出来的内核符号信息就可以看到对应的函数名称了。需要用到下面的Python脚本：</span></p>
+<p></p>
+<pre><code class="language-cpp">ksyms = open("C:\Users\Fly2016\Desktop\Android内核的提取和逆向\syms.txt")  
+for line in ksyms:  
+    addr = int(line[0:8],16)  
+    name = line[11:]  
+    idaapi.set_debug_name(addr,name)  
+    MakeNameEx(addr,name,SN_NOWARN)  
+    Message("%08X:%sn"%(addr,name))  </code></pre>
+<p></p>
+<p><br /></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;">在IDA的<span style="color:#3333ff;"> File-&gt;Script Command</span>中运行上述python脚本，之后就可以在IDA中成功添加内核符号信息使IDA显示出正确的系统调用的函数名称来。</span></p>
+<p><img src="https://img-blog.csdn.net/20170225205507669?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /></p>
+<p><br /></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;">Android内核中隐藏的系统函数调用的名称在IDA中显示出来了。</span></p>
+<p><img src="https://img-blog.csdn.net/20170225205818092?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /></p>
+<p><br /></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;">现在来聊一聊修改Android的内核文件绕过反调试，很多的Android加固都会通过查看当前进程的<span style="color:#ff0000;"> /proc/pid/status</span> 的状态信息，来进行判断当前进程是否被调试的依据。如果当前进程被调试器所调试，那么<span style="color:#3333ff;">cat /proc/self/status</span>
+ 显示的状态如下图所示，比较常见的Android反调试也就是通过 TracerPid 的值在调试状态和非调试状态的不同且非调试状态该值为0而调试状态为非0,来判断是否被调试器所调试。</span></p>
+<p><img src="https://img-blog.csdn.net/20170225211659367?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /></p>
+<p><br /></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;">这里修改Android内核绕过反调试也就只是考虑 <span style="line-height:26px;"> TracerPid 的值不同的这种情况，真真的也过掉这些检测的反调试还是需要从具体的Android加固的检测逻辑代码入手，没准现在有些Android加固还会检测State的值的不同呢！修改Android内核绕过Android加固的反调试，其实还是要依赖具体的开源的Android内核代码来进行对照着分析，否则根本不知道哪个地方是<span style="line-height:26px;"> </span><span style="line-height:26px;">/proc/pid/status
+ 的值根据调试状态改变的代码位置，因此这里通过修改Android内核文件绕过反调试还是基于Android内核源码文件<span style="color:#ff0000;"> /kernel/msm/fs/proc/array.c</span> 中 的代码实现进行对照着修改的。</span></span></span></p>
+<p><span style="line-height:26px;"><span style="line-height:26px;"><span style="font-family:'Times New Roman';font-size:10px;"><span style="color:#3333ff;">/kernel/msm/fs/proc/array.c</span>文件中，检测调试修改<span style="line-height:26px;">TracerPid的值的Android内核源码：</span></span><br /></span></span></p>
+<p><span style="font-size:10px;line-height:26px;"><span style="font-size:10px;line-height:26px;"><span style="font-size:10px;line-height:26px;"></span></span></span></p>
+<pre><code class="language-cpp">/*
+ * The task state array is a strange "bitmap" of
+ * reasons to sleep. Thus "running" is zero, and
+ * you can test for combinations of others with
+ * simple bit tests.
+ */
+static const char * const task_state_array[] = {
+	"R (running)",		/*   0 */
+	"S (sleeping)",		/*   1 */
+	"D (disk sleep)",	/*   2 */
+	"T (stopped)",		/*   4 */
+	"t (tracing stop)",	/*   8 */
+	"Z (zombie)",		/*  16 */
+	"X (dead)",		/*  32 */
+	"x (dead)",		/*  64 */
+	"K (wakekill)",		/* 128 */
+	"W (waking)",		/* 256 */
+};
+
+static inline const char *get_task_state(struct task_struct *tsk)
+{
+	unsigned int state = (tsk-&gt;state &amp; TASK_REPORT) | tsk-&gt;exit_state;
+	const char * const *p = &amp;task_state_array[0];
+
+	BUILD_BUG_ON(1 + ilog2(TASK_STATE_MAX) != ARRAY_SIZE(task_state_array));
+
+	while (state) {
+		p++;
+		state &gt;&gt;= 1;
+	}
+	return *p;
+}
+
+static inline void task_state(struct seq_file *m, struct pid_namespace *ns,
+				struct pid *pid, struct task_struct *p)
+{
+	struct group_info *group_info;
+	int g;
+	struct fdtable *fdt = NULL;
+	const struct cred *cred;
+	pid_t ppid, tpid;
+
+	rcu_read_lock();
+	ppid = pid_alive(p) ?
+		task_tgid_nr_ns(rcu_dereference(p-&gt;real_parent), ns) : 0;
+	tpid = 0;
+	if (pid_alive(p)) {
+		struct task_struct *tracer = ptrace_parent(p);
+		if (tracer)
+			// 逆向Android内核文件需要关注的地方
+			tpid = task_pid_nr_ns(tracer, ns);
+	}
+	cred = get_task_cred(p);
+	seq_printf(m,
+		"State:\t%s\n"
+		"Tgid:\t%d\n"
+		"Pid:\t%d\n"
+		"PPid:\t%d\n"
+		"TracerPid:\t%d\n"
+		"Uid:\t%d\t%d\t%d\t%d\n"
+		"Gid:\t%d\t%d\t%d\t%d\n",
+		get_task_state(p),
+		task_tgid_nr_ns(p, ns),
+		pid_nr_ns(pid, ns),
+		ppid, tpid,
+		cred-&gt;uid, cred-&gt;euid, cred-&gt;suid, cred-&gt;fsuid,
+		cred-&gt;gid, cred-&gt;egid, cred-&gt;sgid, cred-&gt;fsgid);
+
+	task_lock(p);
+	if (p-&gt;files)
+		fdt = files_fdtable(p-&gt;files);
+	seq_printf(m,
+		"FDSize:\t%d\n"
+		"Groups:\t",
+		fdt ? fdt-&gt;max_fds : 0);
+	rcu_read_unlock();
+
+	group_info = cred-&gt;group_info;
+	task_unlock(p);
+
+	for (g = 0; g &lt; min(group_info-&gt;ngroups, NGROUPS_SMALL); g++)
+		seq_printf(m, "%d ", GROUP_AT(group_info, g));
+	put_cred(cred);
+
+	seq_putc(m, '\n');
+}</code></pre>
+<p></p>
+<p style="font-family:'Times New Roman';"><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><br /></span></span></span></p>
+<span style="font-family:'Times New Roman';font-size:10px;">因此，通过上面的Android内核源码的实现可以知道，如图所示的位置是我们应该修改的地方：</span>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><img src="https://img-blog.csdn.net/20170225214309980?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /><br /></span></span></span></p>
+<p><span style="line-height:26px;"><span style="line-height:26px;"><span style="line-height:26px;"><span style="font-family:'Times New Roman';font-size:10px;">通过对Android内核源码的研究知道了我们在Android内核文件中修改的地方，在IDA中通过字符串搜索 <span style="color:rgb(204,0,0);">TracerPid</span>
+ 即查找上面提到的特征字符串组。</span></span></span></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><img src="https://img-blog.csdn.net/20170225214650506?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /></span></span></span></p>
+<p><br /></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;">在IDA中通过<span style="color:#3333ff;">对特征字符串的引用</span>功能可以定位到我们需要关注的代码的位置。</span></p>
+<p><img src="https://img-blog.csdn.net/20170225215010583?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /></p>
+<p><br /></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;">通过IDA的F5功能分析Android内核根据检测调试状态修改TracerPid值的代码位置。</span></p>
+<p><img src="https://img-blog.csdn.net/20170225215646620?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /></p>
+<p><br /></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;">通过IDA具体细致的看下，我们需要关注的代码位置处的ARM汇编指令。</span></p>
+<p><img src="https://img-blog.csdn.net/20170225222049406?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /></p>
+<p><br /></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;">通过逆向分析代码的流程可以知道，只要<span style="color:#3333ff;"> ROM:C02BA5C0 EC FE FF 0A
+</span><span style="color:#ff0000;">  BEQ  Jmp_C02BA178 </span> 处改为<span style="color:#3333ff;">直接跳转</span>到地址C02BA178处执行，没有机会执行下面的代码既可以绕过反调试检测。<span style="line-height:26px;">通过IDA的二进制修改的功能，实现了ARM汇编代码的修改，修改后的代码如下图：</span></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><img src="https://img-blog.csdn.net/20170226000043435?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /></span></p>
+<p><br /></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;">Android内核文件kernel_new在修改前后的代码的对比结果示意图：</span></p>
+<p><img src="https://img-blog.csdn.net/20170226000736133?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /></p>
+<p><br /></p>
+<p><br /></p>
+<p><br /></p>
+<p><strong><span style="font-family:'Times New Roman';font-size:10px;">0x4.将逆向修改的Android内核刷回Android设备</span></strong></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;">对修改后的Android内核文件 kernel_new 进行gzip的压缩处理得到压缩文件
+<span style="line-height:26px;"><span style="color:#3333ff;">kernel_new.gz </span></span>。</span></p>
+<p></p>
+<pre><code class="language-cpp"># -n, --no-name     do not save or restore the original name and time stamp 
+# -f, --force       force overwrite of output file and compress links
+# -9, --best        compress better
+gzip -n -f -9 kernel_new</code></pre>
+<p></p>
+<p><img src="https://img-blog.csdn.net/20170226004956387?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /></p>
+<p><br /></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;">使用WinHex工具将kernel_new.gz文件的二进制数据<span style="color:#3333ff;">覆盖到原来的zImage文件的 1F 8B 08 00 处的位置开始到结束的地方</span>（新的kernel_new.gz文件必须比原kernel_new.gz文件小，并且回写回去时不能改变原zImage文件的大小及修改原zImage文件中后面的内容，否则会很麻烦），这时得到了zImage文件。<br /></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;">上面这句话，可能不太好理解，但是也很好理解，可以参考一下作者 lcweik 给出的理解的例子：</span></p>
+<p><img src="https://img-blog.csdn.net/20170226005758750?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /></p>
+<p><br /></p>
+<p><span style="font-family:'Times New Roman';"><span style="font-size:10px;">通过WinHex工具查看</span><span style="line-height:26px;"><span style="font-size:10px;">kernel_new.gz文件的大小为 0x6AB190，</span><span style="line-height:26px;"><span style="font-size:10px;">zImage文件中 1F
+ 8B 08 00 处的位置起始偏移为0x48B4，</span><span style="font-size:10px;">因此在</span><span style="font-size:10px;line-height:26px;">zImage文件中<span style="font-size:10px;line-height:26px;">kernel_new.gz文件的起始位置偏移为<span style="font-size:10px;line-height:26px;">0x48B4，结束位置偏移为0x6AFA43。使用WinHex工具先将<span style="font-size:10px;line-height:26px;">zImage文件中<span style="font-size:10px;line-height:26px;">0x48B4~<span style="font-size:10px;line-height:26px;">0x</span><span style="font-size:10px;line-height:26px;">6AFA43处的数据删除，然后将<span style="font-size:10px;line-height:26px;">kernel_new.gz文件中的数据全部拷贝到<span style="font-size:10px;line-height:26px;">0x48B4~</span><span style="font-size:10px;line-height:26px;">0x</span><span style="font-size:10px;line-height:26px;">6AFA43的范围中，即zImage文件中偏移0x48B3后面的位置开始覆盖。</span></span></span></span></span></span></span></span></span></span></span></p>
+<p><span style="font-size:10px;line-height:26px;"><span style="font-size:10px;line-height:26px;"><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><img src="https://img-blog.csdn.net/20170226012742242?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /></span></span></span></span></span></span></span></span></span></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><br /></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;">使用abootimg打包工具，重新对解包的boot.img的文件进行打包处理。</span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"></span></p><pre><code class="language-cpp">abootimg --create myboot.img -f bootimg.cfg -k zImage -r initrd.img</code></pre>
+<p><span style="line-height:26px;"><span style="line-height:26px;"><span style="line-height:26px;"><span style="line-height:26px;"><span style="line-height:26px;"><span style="line-height:26px;"><span style="line-height:26px;"><span style="line-height:26px;"><span style="line-height:26px;"><span style="line-height:26px;"></span></span></span></span></span></span></span></span></span></span></p>
+<p style="font-family:'Times New Roman';font-size:10px;"><img src="https://img-blog.csdn.net/20170226101517336?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /></p>
+<p style="font-family:'Times New Roman';font-size:10px;"><br /></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;">将修改后重新打包的 my<span style="line-height:26px;">boot.img镜像 文件，更新到Android设备上。</span></span></p>
+<p style="font-family:'Times New Roman';font-size:10px;"><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"></span></p><pre><code class="language-cpp">adb reboot bootloader
+fastboot flash boot myboot.img</code></pre>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><img src="https://img-blog.csdn.net/20170226102242793?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /></span></p>
+<p><br /></p>
+<p><br /></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><strong>0x5.手机刷成砖的还原</strong></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;">直接修改Android内核的二进制文件比较危险，很容易导致Android设备变砖的。如果不幸Android设备变砖了，只需要将前面的步骤中备份的原始boot.img镜像文件重新输入Android设备即可。</span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"></span></p><pre><code class="language-cpp">adb reboot bootloader
+fastboot flash boot boot.img</code></pre>
+<p><br /></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><strong>0x6.逆向修改Android内核的总结。</strong></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;">这篇博文主要是参考：<a href="http://bbs.pediy.com/thread-207538.htm" rel="nofollow" data-token="333105a0ed4c88395fdbdd509f501027">逆向修改手机内核，绕过反调试</a>，原文的作者方法说的很详细，但是我的操作步骤有些地方和原作者的不同。</span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;">1.找目标代码和目标函数的方法不同，原作者通过关闭Android设备中内核符号屏蔽然后拿到关键函数 <span style="color:#3333ff;">proc_pid_status_</span>和<span style="color:#3333ff;">proc_pid_status_（获取调试器进程的pid）</span>的系统调用的地址，在IDA进行查找定位到需要逆向分析的关键代码的位置。</span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><img src="https://img-blog.csdn.net/20170226104106379?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><br /></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;">2.在修改二进制代码绕过反调试的方法上，我和原作者修改的地方稍有一处不同，原作者的修改如下图。</span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><img src="https://img-blog.csdn.net/20170226104744993?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><br /></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;">3.按照作者的操作步骤，修改Andorid内核成功绕过反调试耳朵检测，但是我按照自己改进后的操作，修改Android内核成功但是刷机重启直接变砖，哈哈。说实话，这么逆向修改Android内核绕过反调试只是提供一种思路吧，实际干活是吃力不讨好而且要真的绕过这种反调试的检测还需要修改其他的地方，而且其他的检测位置修改也不方便。这种open 情况下的反调试检测，其实手动patch内存过掉也是很简单的事情。</span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><br /></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><br /></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><strong>0x7.关于ARM汇编BL指令的计算</strong></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;">ARM汇编下BL类指令的修改以及偏移的计算具体可以参考：<a href="%E3%80%90%E6%B1%82%E5%8A%A9%E3%80%91arm%E6%8C%87%E4%BB%A4BL%E6%8C%87%E4%BB%A4%E5%AF%B9%E5%BA%94%E7%9A%84%E6%9C%BA%E5%99%A8%E7%A0%81%E9%97%AE%E9%A2%98" rel="nofollow" data-token="8b3f1b5214e4bc29d74a81dbc6b42dba">【求助】arm指令BL指令对应的机器码问题</a>、<a href="http://www.cnblogs.com/Reyzal/p/4857948.html" rel="nofollow" data-token="e3b97a4c26ad74b6cbd2751f91ae8b5a">ARM中跳转指令BL/BLX偏移值计算规则</a>
+ ，由于在前面的操作步骤中涉及到B类跳转指令的修改，特此提到一下。提醒两点：1.一定要善于利用IDA能够显示ARM指令机器码的特点，2.在内存中ARM指令的存放是按小尾端存放的。</span><br /></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><img src="https://img-blog.csdn.net/20170226110327108?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /></span></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><img src="https://img-blog.csdn.net/20170226110422733?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvUVExMDg0MjgzMTcy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="" /><br /></span></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><br /></span></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><strong>参考资料</strong>：</span></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><a href="http://bbs.pediy.com/thread-207538-2.htm" rel="nofollow" data-token="7c548449a21c7bffa15a5a955f8e3200">逆向修改手机内核，绕过反调试</a> 
+ &lt;主要参考&gt;<br /></span></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><a href="http://www.blogbus.com/riusksk-logs/272240986.html" rel="nofollow" data-token="4baf37502c18a8b333e9eb5c2fd8082e">提取Android内核的方法</a><br /></span></span></p>
+<p><span style="font-family:'Times New Roman';font-size:10px;line-height:26px;"><a href="http://write.blog.csdn.net/postedit/%E3%80%90%E6%B1%82%E5%8A%A9%E3%80%91arm%E6%8C%87%E4%BB%A4BL%E6%8C%87%E4%BB%A4%E5%AF%B9%E5%BA%94%E7%9A%84%E6%9C%BA%E5%99%A8%E7%A0%81%E9%97%AE%E9%A2%98" rel="nofollow" style="font-family:'Times New Roman';font-size:10px;line-height:26px;" data-token="f7727bb9652a25a5338c91a5d9a685d9">【求助】arm指令BL指令对应的机器码问题</a><br /></span></p>
+<p><a href="http://www.cnblogs.com/Reyzal/p/4857948.html" rel="nofollow" style="font-family:'Times New Roman';font-size:10px;line-height:26px;" data-token="e3b97a4c26ad74b6cbd2751f91ae8b5a">ARM中跳转指令BL/BLX偏移值计算规则</a></p>
+<p><br /></p>
+                                    </div>
+                    </div>
+    </article>
+</div>
+
+
+<script>
+    $(".MathJax").remove();
+    if ($('div.markdown_views pre.prettyprint code.hljs').length > 0) {
+        $('div.markdown_views')[0].className = 'markdown_views';
+    }
+    var persentSet = 1;
+</script>
+
+<script src="https://csdnimg.cn/release/phoenix/vendor/linkCatcher/linkCatcher-cd33e25803.js"></script>        <div class="recommend-box"><div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/wr132/article/details/52786960","strategy":"BlogCommendFromAutoMl2","index":"logCommendFromAutoMl2"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/wr132/article/details/52786960" target="_blank" title="忙里偷闲 教你如何通过修改android内核实现root">
+		<h4 class="text-truncate oneline">
+				忙里偷闲 教你如何通过<em>修改</em>android<em>内核</em>实现root		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">10-11</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					1万+</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/wr132/article/details/52786960" target="_blank" title="忙里偷闲 教你如何通过修改android内核实现root">
+				<span class="desc oneline">改教程主要是针对安卓5.0以上版本的root，root方式为破解boot.img内核文件。所需工具：1.booting.exe  访问密码b34a 2.notepad++	你需要获取boot.img文...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/wr132">来自：	<span class="blog_title"> colorfulshark</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+</div>        <a id="commentBox"></a>
+<div class="comment-box">
+	
+	<div class="comment-edit-box d-flex">
+		<a id="commentsedit"></a>
+		<div class="user-img">
+			<a href="//me.csdn.net/qq_22798667" target="_blank">
+				<img class="" src="https://avatar.csdn.net/C/1/A/3_qq_22798667.jpg">
+			</a>
+		</div>
+		<form id="commentform">
+			<input type="hidden" id="comment_replyId">
+			<textarea class="comment-content" name="comment_content" id="comment_content" placeholder="想对作者说点什么"></textarea>
+			<div class="opt-box"> <!-- d-flex -->
+				<div id="ubbtools" class="add_code">
+					<a href="#insertcode" code="code" target="_self"><i class="icon iconfont icon-daima"></i></a>
+				</div>
+				<input type="hidden" id="comment_replyId" name="comment_replyId">
+				<input type="hidden" id="article_id" name="article_id" value="57086486">
+				<input type="hidden" id="comment_userId" name="comment_userId" value="">
+				<input type="hidden" id="commentId" name="commentId" value="">
+				<div style="display: none;" class="csdn-tracking-statistics tracking-click" data-report-click='{"mod":"popu_384","dest":""}'><a href="#" target="_blank" class="comment_area_btn">发表评论</a></div>
+				<div class="dropdown" id="myDrap">
+					<a class="dropdown-face d-flex align-items-center" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+					<div class="txt-selected text-truncate">添加代码片</div>
+					<svg class="icon d-block" aria-hidden="true">
+						<use xlink:href="#csdnc-triangledown"></use>
+					</svg>
+					</a>
+					<ul class="dropdown-menu" id="commentCode" aria-labelledby="drop4">
+						<li><a data-code="html">HTML/XML</a></li>
+						<li><a data-code="objc">objective-c</a></li>
+						<li><a data-code="ruby">Ruby</a></li>
+						<li><a data-code="php">PHP</a></li>
+						<li><a data-code="csharp">C</a></li>
+						<li><a data-code="cpp">C++</a></li>
+						<li><a data-code="javascript">JavaScript</a></li>
+						<li><a data-code="python">Python</a></li>
+						<li><a data-code="java">Java</a></li>
+						<li><a data-code="css">CSS</a></li>
+						<li><a data-code="sql">SQL</a></li>
+						<li><a data-code="plain">其它</a></li>
+					</ul>
+				</div>  
+				<div class="right-box">
+					<span id="tip_comment" class="tip">还能输入<em>1000</em>个字符</span>
+					<input type="button" class="btn btn-sm btn-cancel d-none" value="取消回复">
+					<input type="submit" class="btn btn-sm btn-red btn-comment" value="发表评论">
+				</div>
+			</div>
+		</form>
+	</div>
+
+		<div class="comment-list-container">
+		<a id="comments"></a>
+		<div class="comment-list-box">
+		</div>
+		<div id="commentPage" class="pagination-box d-none"></div>
+		<div class="opt-box text-center">
+			<div class="btn btn-sm btn-link-blue" id="btnMoreComment"></div>
+		</div>
+	</div>
+</div>
+        <div class="recommend-box">
+                            <div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/mike8825/article/details/77111356","strategy":"BlogCommendFromAutoMl2","index":"logCommendFromAutoMl2"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/mike8825/article/details/77111356" target="_blank" title="修改Android内核配置">
+		<h4 class="text-truncate oneline">
+				<em>修改</em>Android<em>内核</em>配置		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">08-12</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					5223</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/mike8825/article/details/77111356" target="_blank" title="修改Android内核配置">
+				<span class="desc oneline">源码编译完成后，如果需要修改内核配置，可参考如下方法先配置makemenuconfig后保存makekernel-savedefconfig具体定义kernel/Android.mkkernel-sa...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/mike8825">来自：	<span class="blog_title"> Android开发</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/u012417380/article/details/73353670","strategy":"BlogCommendFromAutoMl2","index":"logCommendFromAutoMl2"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/u012417380/article/details/73353670" target="_blank" title="三、Android系统内核编译及刷机实战 （修改反调试标志位）">
+		<h4 class="text-truncate oneline">
+				三、Android系统<em>内核</em>编译及刷机实战 （<em>修改</em><em>反调试</em>标志位）		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">06-18</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					9398</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/u012417380/article/details/73353670" target="_blank" title="三、Android系统内核编译及刷机实战 （修改反调试标志位）">
+				<span class="desc oneline">前言在二、Android系统源码编译及刷机实战一文中，我们成功编译了Android4.4.4_r1源码并刷入系统了Nexus5设备，下面是设置界面的信息。上面显示的内核版本信息是3.4.0-gd59d...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/u012417380">来自：	<span class="blog_title"> 七月冷雨</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/QQ1084283172/article/details/55509714","strategy":"BlogCommendFromAutoMl2","index":"logCommendFromAutoMl2"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/QQ1084283172/article/details/55509714" target="_blank" title="安卓源码+内核修改编译(修改内核调试标志绕过反调试)">
+		<h4 class="text-truncate oneline">
+				安卓源码+<em>内核</em><em>修改</em>编译(<em>修改</em><em>内核</em>调试标志<em>绕过</em><em>反调试</em>)		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">02-17</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					4582</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/QQ1084283172/article/details/55509714" target="_blank" title="安卓源码+内核修改编译(修改内核调试标志绕过反调试)">
+				<span class="desc oneline">标题: 【分享】安卓源码+内核修改编译(修改内核调试标志绕过反调试)作者: koflfy时间: 2016-10-26,18:05:19链接: http://bbs.pediy.com/showthre...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/QQ1084283172">来自：	<span class="blog_title"> Fly20141201. 的专栏</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/u011283906/article/details/41581127","strategy":"BlogCommendFromAutoMl2","index":"logCommendFromAutoMl2"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/u011283906/article/details/41581127" target="_blank" title="小马哥===教你修改内核boot.img来实现手机root权限">
+		<h4 class="text-truncate oneline">
+				小马哥===教你<em>修改</em><em>内核</em>boot.img来实现手机root权限		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">11-29</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					8853</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/u011283906/article/details/41581127" target="_blank" title="小马哥===教你修改内核boot.img来实现手机root权限">
+				<span class="desc oneline">在windows下首先安装Java环境和配置环境变量解包boot.img文件 在ramdisk文件夹下打开init.huawei.rc文件在其中加入三行代码servicegeno/sbin/genoc...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/u011283906">来自：	<span class="blog_title"> 小马哥的专栏</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/leizhenzi99/article/details/50207109","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/leizhenzi99/article/details/50207109" target="_blank" title="（完美亲测）可行的安卓手机一键修改型号的教程">
+		<h4 class="text-truncate oneline">
+				（完美亲测）可行的安卓手机一键<em>修改</em>型号的教程		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">12-07</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					1万+</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/leizhenzi99/article/details/50207109" target="_blank" title="（完美亲测）可行的安卓手机一键修改型号的教程">
+				<span class="desc oneline">安卓手机型号特别多，产品出的也快，手机一下子就成了老机器了，有没有办法可以修改手机的型号，许多做项目的朋友应该也有这样的需求，下面分享一个实用快捷的型号等手机参数修改工具琢石模拟器，这也是朋友分享给我...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/leizhenzi99">来自：	<span class="blog_title"> leizhenzi99的博客</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+	<div class="recommend-item-box  recommend-download-box clearfix"  data-report-click='{"mod":"popu_614","dest":"https://download.csdn.net/download/u012500387/6422619","strategy":"BlogCommendFromBaidu","index":"6"}'>
+		<a href="https://download.csdn.net/download/u012500387/6422619" target="_blank">
+			<div class="content clearfix">
+				<div class="">
+					<h4 class="text-truncate oneline clearfix">
+						可以<em>修改</em>手机<em>内核</em>的强大工具					</h4>
+					<span class="data float-right">10-19</span>
+				</div>
+				<div class="desc oneline">
+						好东东哦， 不是教你学坏 ，只是学技术而已嘛， 如果不请楚，也不能 挂网ile				</div>
+				<span class="type-show type-show-download">下载</span>
+			</div>
+		</a>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/baimingyong007/article/details/25594307","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/baimingyong007/article/details/25594307" target="_blank" title="教大家修改Android手机的内核版本信息">
+		<h4 class="text-truncate oneline">
+				教大家<em>修改</em><em>Android手机</em>的<em>内核</em>版本信息		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">05-12</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					6593</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/baimingyong007/article/details/25594307" target="_blank" title="教大家修改Android手机的内核版本信息">
+				<span class="desc oneline">修改源码路径：kernel/scripts/mkcompile_h#!/bin/shTARGET=$1ARCH=$2SMP=$3PREEMPT=$4CC=$5vecho(){[&quot;${quiet}&quot;=&quot;...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/baimingyong007">来自：	<span class="blog_title"> baimingyong007的专栏</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/maoguodong2012/article/details/78671935","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/maoguodong2012/article/details/78671935" target="_blank" title="修改Android设备型号和内核版本号">
+		<h4 class="text-truncate oneline">
+				<em>修改</em>Android设备型号和<em>内核</em>版本号		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">11-30</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					4370</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/maoguodong2012/article/details/78671935" target="_blank" title="修改Android设备型号和内核版本号">
+				<span class="desc oneline">1.修改Android设备型号修改点：关于设备-&gt;型号2.修改内核版本</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/maoguodong2012">来自：	<span class="blog_title"> maoguodong2012的专栏</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box  recommend-other-item-box"  data-report-click='{"mod":"popu_614","dest":"http://ask.csdn.net/questions/233298","strategy":"BlogCommendFromBaidu","index":"9"}'>
+	<a href="http://ask.csdn.net/questions/233298" target="_blank">
+		<h4 class="text-truncate oneline">
+				<em>修改</em>安卓<em>内核</em>，加入自己的一段代码		</h4>
+		<div class="info-box d-flex align-content-center">
+				<span class="date">01-19</span>
+		</div>
+		<p class="content oneline">
+			<span class="desc oneline">-</span>
+							<span class="type-show type-show-ask">问答</span>
+					</p>
+	</a>
+
+</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/fanren224/article/details/79693758","strategy":"BlogCommendFromAutoMl2","index":"logCommendFromAutoMl2"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/fanren224/article/details/79693758" target="_blank" title="shell总结">
+		<h4 class="text-truncate oneline">
+				shell总结		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">03-26</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					1138</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/fanren224/article/details/79693758" target="_blank" title="shell总结">
+				<span class="desc oneline">1、kill-0pid不发送任何信号，但是系统会进行错误检查。所以经常用来检查一个进程是否存在，存在返回0；不存在返回1Ifsigis0,thennosignalissent,buterrorchec...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/fanren224">来自：	<span class="blog_title"> fanren224的博客</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+			<div class="recommend-item-box blog-expert-recommend-box">
+			<div class="d-flex">
+				<div class="blog-expert-recommend">
+					<div class="blog-expert">
+						<div class="blog-expert-flexbox"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/earbao/article/details/73883413","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/earbao/article/details/73883413" target="_blank" title="逆向修改手机内核绕过反调试">
+		<h4 class="text-truncate oneline">
+				逆向<em>修改</em>手机<em>内核</em><em>绕过</em><em>反调试</em>		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">06-29</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					1150</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/earbao/article/details/73883413" target="_blank" title="逆向修改手机内核绕过反调试">
+				<span class="desc oneline">转自：http://bbs.pediy.com/thread-207538.htm逆向修改手机内核，绕过反调试Android应用反调试里最常用的一种反调试方法是查看/proc/self/status的...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/earbao">来自：	<span class="blog_title"> 云守护的专栏</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box  recommend-other-item-box"  data-report-click='{"mod":"popu_614","dest":"http://ask.csdn.net/questions/353292","strategy":"BlogCommendFromBaidu","index":"12"}'>
+	<a href="http://ask.csdn.net/questions/353292" target="_blank">
+		<h4 class="text-truncate oneline">
+				安卓5.0系统中<em>内核</em>信息如何<em>修改</em>？		</h4>
+		<div class="info-box d-flex align-content-center">
+				<span class="date">12-20</span>
+		</div>
+		<p class="content oneline">
+			<span class="desc oneline">-</span>
+							<span class="type-show type-show-ask">问答</span>
+					</p>
+	</a>
+
+</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/killsmm0/article/details/83048299","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/killsmm0/article/details/83048299" target="_blank" title="orangePI_zero_plus android 内核修改">
+		<h4 class="text-truncate oneline">
+				orangePI_zero_plus android <em>内核</em><em>修改</em>		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">10-14</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					308</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/killsmm0/article/details/83048299" target="_blank" title="orangePI_zero_plus android 内核修改">
+				<span class="desc oneline">1.编译内核~/orange_pi_zero_plus/Android/lichee/linux-3.10$./build.sh-psun50iw2p1_android-klinux-3.102.修改...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/killsmm0">来自：	<span class="blog_title"> killsmm0的博客</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/peikm/article/details/81014305","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/peikm/article/details/81014305" target="_blank" title="android刷机修改内核遇到的问题">
+		<h4 class="text-truncate oneline">
+				android刷机<em>修改</em><em>内核</em>遇到的问题		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">07-12</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					454</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/peikm/article/details/81014305" target="_blank" title="android刷机修改内核遇到的问题">
+				<span class="desc oneline">android刷机修改内核可以去查看下面链接：http://blog.csdn.net/qq1084283172/article/details/54880488下面记录下在修改过程中遇到的问题： 插...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/peikm">来自：	<span class="blog_title"> peikm的博客</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box  recommend-other-item-box"  data-report-click='{"mod":"popu_614","dest":"https://bbs.csdn.net/topics/390805028","strategy":"BlogCommendFromBaidu","index":"15"}'>
+	<a href="https://bbs.csdn.net/topics/390805028" target="_blank">
+		<h4 class="text-truncate oneline">
+				如何<em>修改</em>android<em>内核</em>代码把横屏和竖屏都一个方向显示??		</h4>
+		<div class="info-box d-flex align-content-center">
+				<span class="date">06-05</span>
+		</div>
+		<p class="content oneline">
+			<span class="desc oneline">大家好, 我现在是在一个电子产品中跑安卓系统, 需要对android内核进行一系列的裁剪. 现在我想把android中 无论上面跑的app 需要横屏或竖屏, 都是一个方向显示, 请问下这个怎么来实现,</span>
+							<span class="type-show type-show-bbs">论坛</span>
+					</p>
+	</a>
+
+</div>
+
+	
+	
+	<div class="recommend-item-box  recommend-download-box clearfix"  data-report-click='{"mod":"popu_614","dest":"https://download.csdn.net/download/zbx91/9908147","strategy":"BlogCommendFromBaidu","index":"16"}'>
+		<a href="https://download.csdn.net/download/zbx91/9908147" target="_blank">
+			<div class="content clearfix">
+				<div class="">
+					<h4 class="text-truncate oneline clearfix">
+						安卓<em>内核</em><em>修改</em>工具 bootimg_tools					</h4>
+					<span class="data float-right">07-23</span>
+				</div>
+				<div class="desc oneline">
+						安卓内核修改工具 bootimg_tools				</div>
+				<span class="type-show type-show-download">下载</span>
+			</div>
+		</a>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/bfboys/article/details/52562201","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/bfboys/article/details/52562201" target="_blank" title="怎样修改安卓bootimg内核">
+		<h4 class="text-truncate oneline">
+				怎样<em>修改</em>安卓bootimg<em>内核</em>		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">09-17</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					4729</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/bfboys/article/details/52562201" target="_blank" title="怎样修改安卓bootimg内核">
+				<span class="desc oneline">Android产品中，内核格式是Linux标准的zImage，根文件系统采用ramdisk格式。这两者在Android下是直接合并在一起取名为boot.img,会放在一个独立分区当中。这个分区格式是A...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/bfboys">来自：	<span class="blog_title"> tasty</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/beyond702/article/details/53175154","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/beyond702/article/details/53175154" target="_blank" title="Android内核之运行自定义内核">
+		<h4 class="text-truncate oneline">
+				Android<em>内核</em>之运行自定义<em>内核</em>		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">11-15</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					2243</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/beyond702/article/details/53175154" target="_blank" title="Android内核之运行自定义内核">
+				<span class="desc oneline">获取Android内核的途径有两种，一种是从设备中提取内核，可以看我另外一篇文章；另一种方式是从官网去下载内核源码，编译然后刷到手机里。这里我们讲第二种方式。...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/beyond702">来自：	<span class="blog_title"> beyond702的专栏</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+	<div class="recommend-item-box  recommend-download-box clearfix"  data-report-click='{"mod":"popu_614","dest":"https://download.csdn.net/download/u012117768/7175071","strategy":"BlogCommendFromBaidu","index":"19"}'>
+		<a href="https://download.csdn.net/download/u012117768/7175071" target="_blank">
+			<div class="content clearfix">
+				<div class="">
+					<h4 class="text-truncate oneline clearfix">
+						<em>修改</em>手机<em>内核</em>					</h4>
+					<span class="data float-right">04-11</span>
+				</div>
+				<div class="desc oneline">
+						android内核移植 配置 修改 编译 内核				</div>
+				<span class="type-show type-show-download">下载</span>
+			</div>
+		</a>
+	</div>
+
+	
+	
+	<div class="recommend-item-box  recommend-download-box clearfix"  data-report-click='{"mod":"popu_614","dest":"https://download.csdn.net/download/chenrui_ralph/5797825","strategy":"BlogCommendFromBaidu","index":"20"}'>
+		<a href="https://download.csdn.net/download/chenrui_ralph/5797825" target="_blank">
+			<div class="content clearfix">
+				<div class="">
+					<h4 class="text-truncate oneline clearfix">
+						android 的linux <em>内核</em><em>修改</em>					</h4>
+					<span class="data float-right">07-22</span>
+				</div>
+				<div class="desc oneline">
+						该文档描述了android内核对标准linux内核的修改，对希望学习android内核的同学有帮助。				</div>
+				<span class="type-show type-show-download">下载</span>
+			</div>
+		</a>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/QQ1084283172/article/details/54880488","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/QQ1084283172/article/details/54880488" target="_blank" title="编译Android内核 For nexus 5 以及绕过Android的反调试">
+		<h4 class="text-truncate oneline">
+				编译Android<em>内核</em> For nexus 5 以及<em>绕过</em>Android的<em>反调试</em>		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">02-07</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					6465</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/QQ1084283172/article/details/54880488" target="_blank" title="编译Android内核 For nexus 5 以及绕过Android的反调试">
+				<span class="desc oneline">前面的博客中已经记录了Nexus5手机的Android4.4.4r1源码的编译基于ubuntu14.04.5，后面来学习一下Android内核源码的编译基于Nexus5手机。一、Android内核源码...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/QQ1084283172">来自：	<span class="blog_title"> Fly20141201. 的专栏</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/rzwinters/article/details/76999030","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/rzwinters/article/details/76999030" target="_blank" title="编译安卓Linux内核并替换（配置支持LKM） （MD）">
+		<h4 class="text-truncate oneline">
+				编译安卓Linux<em>内核</em>并替换（配置支持LKM） （MD）		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">08-09</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					883</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/rzwinters/article/details/76999030" target="_blank" title="编译安卓Linux内核并替换（配置支持LKM） （MD）">
+				<span class="desc oneline">1下载安卓内核源代码（1）设备信息型号：SamsungGalaxyS5Android版本：6.0.1基带版本：G9006VZNU1CPJ2内核版本：3.4.0（2）下载设备对应内核源代码网站地址（Sa...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/rzwinters">来自：	<span class="blog_title"> BreakingPoint</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/sophiaviayang/article/details/83786738","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/sophiaviayang/article/details/83786738" target="_blank" title="如何修改系统内核版本">
+		<h4 class="text-truncate oneline">
+				如何<em>修改</em>系统<em>内核</em>版本		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">11-06</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					868</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/sophiaviayang/article/details/83786738" target="_blank" title="如何修改系统内核版本">
+				<span class="desc oneline">更改系统内核版本系统中安装了多个内核版本，一般重启会根据配置文件的启动顺序，选择一个，怎样选择自己想要的版本？直接修改/etc/grub2.cfg里的序号即可找到对应的menuentry的序号，从0开...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/sophiaviayang">来自：	<span class="blog_title"> sophiaviayang的博客</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/c_zyer/article/details/60574159","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/c_zyer/article/details/60574159" target="_blank" title="linux 内核编译——修改内核版本号">
+		<h4 class="text-truncate oneline">
+				linux <em>内核</em>编译——<em>修改</em><em>内核</em>版本号		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">03-06</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					7699</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/c_zyer/article/details/60574159" target="_blank" title="linux 内核编译——修改内核版本号">
+				<span class="desc oneline">一、实验前提  下载2.6.19或更新的Linux内核，配置该内核使其支持NTFS，并在新的内核中修改其版本为LinuxNameTestKernelx.x.x，其中，Name是你的名字（汉语拼音）；x...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/c_zyer">来自：	<span class="blog_title"> c_zyer的博客</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/Qidi_Huang/article/details/77984575","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/Qidi_Huang/article/details/77984575" target="_blank" title="Linux 内核修改 xxx_defconfig 的正确方法">
+		<h4 class="text-truncate oneline">
+				Linux <em>内核</em><em>修改</em> xxx_defconfig 的正确方法		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">09-14</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					2276</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/Qidi_Huang/article/details/77984575" target="_blank" title="Linux 内核修改 xxx_defconfig 的正确方法">
+				<span class="desc oneline">【前言】　　昨天将AndroidN上的驱动代码移植到AndroidO上，xxxx_defconfig文件是我手动修改的，但因为公司将内核版本切换到4.9之后开启了强制代码格式检查，所以Patch在提交...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/Qidi_Huang">来自：	<span class="blog_title"> 一程山水一程歌</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/WanGong/article/details/49862953","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/WanGong/article/details/49862953" target="_blank" title="Linux内核参数配置文件修改(/proc/sys与/etc/sysctl.conf变量对应关系)">
+		<h4 class="text-truncate oneline">
+				Linux<em>内核</em>参数配置文件<em>修改</em>(/proc/sys与/etc/sysctl.conf变量对应关系)		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">11-16</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					6004</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/WanGong/article/details/49862953" target="_blank" title="Linux内核参数配置文件修改(/proc/sys与/etc/sysctl.conf变量对应关系)">
+				<span class="desc oneline">Linux在系统运行时修改内核参数(/proc/sys与/etc/sysctl.conf)，而不需要重新引导系统，这个功能是通过/proc虚拟文件系统实现的。在/proc/sys目录下存放着大多数的内...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/WanGong">来自：	<span class="blog_title"> WanGong的专栏</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/u012461550/article/details/42608919","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/u012461550/article/details/42608919" target="_blank" title="修改内核参数">
+		<h4 class="text-truncate oneline">
+				<em>修改</em><em>内核</em>参数		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">01-11</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					1618</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/u012461550/article/details/42608919" target="_blank" title="修改内核参数">
+				<span class="desc oneline">查看当前系统参数sysctl-a手动修改（当前有效，重启后无效）joy@joy:~$cat/proc/sys/net/ipv4/icmp_echo_ignore_all0joy@joy:~$echo&quot;...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/u012461550">来自：	<span class="blog_title"> u012461550的专栏</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/qq_25606103/article/details/51340410","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/qq_25606103/article/details/51340410" target="_blank" title="手机的内核版本、基带版本等都是什么意思？">
+		<h4 class="text-truncate oneline">
+				手机的<em>内核</em>版本、基带版本等都是什么意思？		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">05-07</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					2万+</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/qq_25606103/article/details/51340410" target="_blank" title="手机的内核版本、基带版本等都是什么意思？">
+				<span class="desc oneline">转自：http://netsmell.com/post/what-mean-of-mobile-kernel-version-baseband-version.html?_biz=MjM5OTA1MD...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/qq_25606103">来自：	<span class="blog_title"> Don't let your dreams be dreams</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/u013227819/article/details/18444797","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/u013227819/article/details/18444797" target="_blank" title="手机内核是什么要怎么刷，小白必看的手机内核刷机命令">
+		<h4 class="text-truncate oneline">
+				手机<em>内核</em>是什么要怎么刷，小白必看的手机<em>内核</em>刷机命令		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">01-18</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					1万+</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/u013227819/article/details/18444797" target="_blank" title="手机内核是什么要怎么刷，小白必看的手机内核刷机命令">
+				<span class="desc oneline">http://bbs.hutoufeng.net/forum.php?mod=viewthread&amp;tid=10117&amp;page=1&amp;extra=#pid11139对于手机内核，很多小白们都不懂，其实...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/u013227819">来自：	<span class="blog_title"> u013227819的专栏</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/u011467458/article/details/50494547","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/u011467458/article/details/50494547" target="_blank" title="ios上webview与浏览器webview">
+		<h4 class="text-truncate oneline">
+				ios上webview与浏览器webview		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">01-10</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					1万+</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/u011467458/article/details/50494547" target="_blank" title="ios上webview与浏览器webview">
+				<span class="desc oneline">1.ios上的webview在ios中有自己的浏览器组件，他就是UIWebView,UIWebView是iOS上对WebKit的封装，WebKit是渲染引擎，UIWebView是渲染引擎和JS引擎的组...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/u011467458">来自：	<span class="blog_title"> X-Prince的博客</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/weixin_33863087/article/details/93547048","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/weixin_33863087/article/details/93547048" target="_blank" title="「Android」Huawei U8825d(G330d)内核编译过程实录">
+		<h4 class="text-truncate oneline">
+				「Android」Huawei U8825d(G330d)<em>内核</em>编译过程实录		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">11-07</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					1</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/weixin_33863087/article/details/93547048" target="_blank" title="「Android」Huawei U8825d(G330d)内核编译过程实录">
+				<span class="desc oneline">1.下载内核源代码，放到任意地方（建议放在Ext4格式的盘符上）https://github.com/derekhe/huawei-g330d-u8825d-kernel2.下载后解压，打开里边HOW...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/weixin_33863087">来自：	<span class="blog_title"> weixin_33863087的博客</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/JiangzhouHe/article/details/78222806","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/JiangzhouHe/article/details/78222806" target="_blank" title="Android每次编译kernel时间都会改变（不让它改变）">
+		<h4 class="text-truncate oneline">
+				Android每次编译kernel时间都会改变（不让它改变）		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">10-13</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					1188</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/JiangzhouHe/article/details/78222806" target="_blank" title="Android每次编译kernel时间都会改变（不让它改变）">
+				<span class="desc oneline">/kernel-3.18/init/Makefileline33include/generated/compile.h:FORCE去掉后面的FORCE kernel时间第一次编译就确定了，后面再编译时...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/JiangzhouHe">来自：	<span class="blog_title"> JiangzhouHe的博客</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/zhangshaoye998/article/details/80636981","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/zhangshaoye998/article/details/80636981" target="_blank" title="android 修改编译内核源码配置选项不执行">
+		<h4 class="text-truncate oneline">
+				android <em>修改</em>编译<em>内核</em>源码配置选项不执行		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">06-09</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					439</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/zhangshaoye998/article/details/80636981" target="_blank" title="android 修改编译内核源码配置选项不执行">
+				<span class="desc oneline">咸鱼上淘来rk3288板子，一直没有时间玩。今天周末无事，打算添加一个驱动熟悉下rk3288开发环境。在Makefile test.cKconfig都完成后。使用makemenuconfig 配置内核...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/zhangshaoye998">来自：	<span class="blog_title"> zhangshaoye998的专栏</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/huanghai381/article/details/51190382","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/huanghai381/article/details/51190382" target="_blank" title="android源码修改内核配置不生效的解决办法">
+		<h4 class="text-truncate oneline">
+				android源码<em>修改</em><em>内核</em>配置不生效的解决办法		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">04-19</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					2046</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/huanghai381/article/details/51190382" target="_blank" title="android源码修改内核配置不生效的解决办法">
+				<span class="desc oneline">现象： 在Android的内核kernel_imx目录执行makemunuconfig配置完内核后，在Android源码目录执行make,编译Android源码，完成后发现内核的配置又变回之前的配置了...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/huanghai381">来自：	<span class="blog_title"> 月天寒的专栏</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box  recommend-other-item-box"  data-report-click='{"mod":"popu_614","dest":"https://bbs.csdn.net/topics/370223732","strategy":"BlogCommendFromBaidu","index":"35"}'>
+	<a href="https://bbs.csdn.net/topics/370223732" target="_blank">
+		<h4 class="text-truncate oneline">
+				怎么把android系统或者android系统的kernel<em>内核</em>烧到真机里啊		</h4>
+		<div class="info-box d-flex align-content-center">
+				<span class="date">09-29</span>
+		</div>
+		<p class="content oneline">
+			<span class="desc oneline">怎么把android系统、或者android系统的kernel内核烧到真机（比如手机 pad等等）里啊？ 在什么平台，用什么软件，大概步骤是怎么样的？ 求高人牛人好心人指点啊~~</span>
+							<span class="type-show type-show-bbs">论坛</span>
+					</p>
+	</a>
+
+</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/zddxmu/article/details/16362867","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/zddxmu/article/details/16362867" target="_blank" title="修改kernel version的方法及后果">
+		<h4 class="text-truncate oneline">
+				<em>修改</em>kernel version的方法及后果		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">11-16</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					3682</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/zddxmu/article/details/16362867" target="_blank" title="修改kernel version的方法及后果">
+				<span class="desc oneline">1.修改kernel version方法utsname()是在内核空间里面存着的相关的内核信息。utsrelease.h是一个自动生成的文件，没有办法修改，但这个数据是根据Makefile和.conf...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/zddxmu">来自：	<span class="blog_title"> Iot小能手</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/beyond702/article/details/53113382","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/beyond702/article/details/53113382" target="_blank" title="Android内核之内核提取">
+		<h4 class="text-truncate oneline">
+				Android<em>内核</em>之<em>内核</em>提取		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">11-10</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					5543</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/beyond702/article/details/53113382" target="_blank" title="Android内核之内核提取">
+				<span class="desc oneline">Android设备启动的时候有两种模式：第一种是正常启动，使用boot分区；第二种是启动恢复过程，使用recovery分区。这两种分区的结构是相同的，后面会介绍到。两者的区别顾名思义，这里不多说了。这...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/beyond702">来自：	<span class="blog_title"> beyond702的专栏</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/zpq_win/article/details/43149001","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/zpq_win/article/details/43149001" target="_blank" title="android手机内核提取及逆向分析">
+		<h4 class="text-truncate oneline">
+				<em>android手机</em><em>内核</em>提取及逆向分析		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">01-26</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					2462</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/zpq_win/article/details/43149001" target="_blank" title="android手机内核提取及逆向分析">
+				<span class="desc oneline">技术背景：Android手机获得Root权限,其实就是让/system和/data分区获得读写的权限.这两个分区的权限配置,一般在根分区的init.rc文件中,修改这个文件可永久获得root权限.众所...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/zpq_win">来自：	<span class="blog_title"> zpq_win的专栏</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/zhangbijun1230/article/details/79956369","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/zhangbijun1230/article/details/79956369" target="_blank" title="Android 8.0 学习（4）---Android通用内核">
+		<h4 class="text-truncate oneline">
+				Android 8.0 学习（4）---Android通用<em>内核</em>		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">04-16</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					3315</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/zhangbijun1230/article/details/79956369" target="_blank" title="Android 8.0 学习（4）---Android通用内核">
+				<span class="desc oneline">内核Linux内核是几乎所有的Android设备上极其重要的软件组成部分。本部分介绍了Linux内核开发和版本模型（如下）、稳定的长期支持(LTS)内核（包括所有Android设备都应使用稳定版本而非...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/zhangbijun1230">来自：	<span class="blog_title"> zhangbijun1230的专栏</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/tangxueqin/article/details/78720877","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/tangxueqin/article/details/78720877" target="_blank" title="了解安卓架构(linux内核层、系统运行库层、应用框架层、应用层)">
+		<h4 class="text-truncate oneline">
+				了解安卓架构(linux<em>内核</em>层、系统运行库层、应用框架层、应用层)		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">12-05</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					1万+</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/tangxueqin/article/details/78720877" target="_blank" title="了解安卓架构(linux内核层、系统运行库层、应用框架层、应用层)">
+				<span class="desc oneline">版权声明：本文为博主原创文章，未经博主允许不得转载。首先为了理解安卓系统是怎么工作的，就先来看一下android的系统架构，其架构大至可以分为四层：linux内核层、系统运行库层、应用框架层和应用层，...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/tangxueqin">来自：	<span class="blog_title"> tangxueqin的博客</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/u013752202/article/details/53648823","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/u013752202/article/details/53648823" target="_blank" title="图解Android和Linux发行版的区别">
+		<h4 class="text-truncate oneline">
+				图解Android和Linux发行版的区别		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">12-14</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					2万+</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/u013752202/article/details/53648823" target="_blank" title="图解Android和Linux发行版的区别">
+				<span class="desc oneline">众所周知Google的Android系统跟Linux系统有着千丝万缕的关系，可究竟有什么关系呢？有人说Android是Android，Linux是Linux，两个只是kernel一样调度机制一样，其他...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/u013752202">来自：	<span class="blog_title"> 技术改变生活，创新让世界更美</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/CodeMyDream/article/details/53819312","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/CodeMyDream/article/details/53819312" target="_blank" title="Android内核和Linux内核的区别">
+		<h4 class="text-truncate oneline">
+				Android<em>内核</em>和Linux<em>内核</em>的区别		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">12-22</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					1万+</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/CodeMyDream/article/details/53819312" target="_blank" title="Android内核和Linux内核的区别">
+				<span class="desc oneline">1.Android系统层面的底层是Linux，并且在中间加上了一个叫做Dalvik的Java虚拟机，从表面层看是Android运行库。每个Android应用都运行在自己的进程上，享有Dalvik虚拟机...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/CodeMyDream">来自：	<span class="blog_title"> CodeMyDream的专栏</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/ly890700/article/details/75040704","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/ly890700/article/details/75040704" target="_blank" title="android版本与linux内核版本对应关系">
+		<h4 class="text-truncate oneline">
+				android版本与linux<em>内核</em>版本对应关系		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">07-12</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					1万+</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/ly890700/article/details/75040704" target="_blank" title="android版本与linux内核版本对应关系">
+				<span class="desc oneline">https://android.stackexchange.com/questions/51651/which-android-runs-which-linux-kernelAndroidVersio...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/ly890700">来自：	<span class="blog_title"> rockly89的博客</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/github_19529589/article/details/80901130","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/github_19529589/article/details/80901130" target="_blank" title="Android源码和内核下载编译流程">
+		<h4 class="text-truncate oneline">
+				Android源码和<em>内核</em>下载编译流程		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">07-03</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					2628</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/github_19529589/article/details/80901130" target="_blank" title="Android源码和内核下载编译流程">
+				<span class="desc oneline">原文地址：点击查看概述为了深入学习Android系统源码，我们需要下载Android官方的最新源码进行阅读学习，这篇文章我们来总结一下在Ubuntu系统中Android官方源码的下载和编译流程通过本文...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/github_19529589">来自：	<span class="blog_title"> 墨迹是种态度</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+	<div class="recommend-item-box  recommend-download-box clearfix"  data-report-click='{"mod":"popu_614","dest":"https://download.csdn.net/download/lhzjllh/9624907","strategy":"BlogCommendFromBaidu","index":"45"}'>
+		<a href="https://download.csdn.net/download/lhzjllh/9624907" target="_blank">
+			<div class="content clearfix">
+				<div class="">
+					<h4 class="text-truncate oneline clearfix">
+						Android<em>内核</em>剖析(完整版)					</h4>
+					<span class="data float-right">09-08</span>
+				</div>
+				<div class="desc oneline">
+						Android内核剖析(完整版) 这个有不要积分的，要积分是为了能更大的上传MB文件给需要的人。 大家互相帮助。没积分的，可以找同书名的，不用积分，我也上传了。				</div>
+				<span class="type-show type-show-download">下载</span>
+			</div>
+		</a>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/xxcios/article/details/9291989","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/xxcios/article/details/9291989" target="_blank" title="那两年炼就的Android内功修养">
+		<h4 class="text-truncate oneline">
+				那两年炼就的Android内功修养		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">07-10</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					478</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/xxcios/article/details/9291989" target="_blank" title="那两年炼就的Android内功修养">
+				<span class="desc oneline">经过两年的时间，终于完成对Android系统的研究了。Android是一个博大精深的系统，老罗不敢说自己精通了（事实上最讨厌的就是说自己精通神马神马的了，或者说企业说要招聘精通神马神马的人才），但是至...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/xxcios">来自：	<span class="blog_title"> xxc的专栏</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/csdnzouqi/article/details/80902110","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/csdnzouqi/article/details/80902110" target="_blank" title="Android中使用x5内核加载网页的实现">
+		<h4 class="text-truncate oneline">
+				Android中使用x5<em>内核</em>加载网页的实现		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">07-03</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					3878</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/csdnzouqi/article/details/80902110" target="_blank" title="Android中使用x5内核加载网页的实现">
+				<span class="desc oneline">前言由于是使用的腾讯的浏览服务，所以这里大部分介绍的是官网的一些东西，不过自己会做一些复杂使用部分的实现，不至于像官网上介绍的笼统。联系方式这里用的是TBS腾讯浏览服务。官网地址是https://x5...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/csdnzouqi">来自：	<span class="blog_title"> 邹奇健身已上瘾</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box type_blog clearfix"  data-report-click='{"mod":"popu_614","dest":"https://blog.csdn.net/QQxiaoqiang1573/article/details/57086865","strategy":"BlogCommendFromBaidu","index":"logCommendFromBaidu"}'>
+	<div class="content">
+		<a href="https://blog.csdn.net/QQxiaoqiang1573/article/details/57086865" target="_blank" title="Android内核开发 学习笔记">
+		<h4 class="text-truncate oneline">
+				Android<em>内核</em>开发 学习笔记		</h4>
+		<div class="info-box d-flex align-content-center">
+			<p class="date-and-readNum oneline">
+				<span class="date hover-show">02-27</span>
+				<span class="read-num hover-hide">
+					阅读数 
+					1531</span>
+				</p>
+			</div>
+		</a>
+		<p class="content">
+			<a href="https://blog.csdn.net/QQxiaoqiang1573/article/details/57086865" target="_blank" title="Android内核开发 学习笔记">
+				<span class="desc oneline">Android内核开发：序Android内核开发：开发板选购Android内核开发：理解和掌握repo工具下载manifest仓库repoinit-uhttps://android.googlesou...</span>
+			</a>
+			<span class="blog_title_box oneline ">
+									<span class="type-show type-show-blog type-show-after">博文</span>
+											<a target="_blank" href="https://blog.csdn.net/QQxiaoqiang1573">来自：	<span class="blog_title"> 张小强的专栏</span></a>
+												</span>
+		</p>
+	</div>
+	</div>
+
+	
+	
+<div class="recommend-item-box  recommend-other-item-box"  data-report-click='{"mod":"popu_614","dest":"https://bbs.csdn.net/topics/380162526","strategy":"BlogCommendFromBaidu","index":"49"}'>
+	<a href="https://bbs.csdn.net/topics/380162526" target="_blank">
+		<h4 class="text-truncate oneline">
+				<em>android手机</em>linux<em>内核</em>里的fb0、fb1到底是干嘛的？		</h4>
+		<div class="info-box d-flex align-content-center">
+				<span class="date">02-06</span>
+		</div>
+		<p class="content oneline">
+			<span class="desc oneline">我是新手，之前认为是显示的缓冲区，所以认为应该就是一些像素信息。但是我发现我看到代码在fb1里创建了一些文件，好像是控制用的。于是我用adb看到fb1目录下有很多跟显示没有直接关系的文件。。。很不解。</span>
+							<span class="type-show type-show-bbs">论坛</span>
+					</p>
+	</a>
+
+</div>
+
+	
+	
+                <div class="recommend-item-box type_hot_word">
+                                <div class="content clearfix">
+                    <div class="word float-left">
+                                                            <span>
+                        <a href="https://edu.csdn.net/courses/o5329_s5330_k " target="_blank">
+                        机器学习教程                    </a></span>
+                                                                                <span>
+                        <a href="https://edu.csdn.net/courses/o280_s351_k " target="_blank">
+                        Objective-C培训                    </a></span>
+                                                                                <span>
+                        <a href="https://edu.csdn.net/combos/o7115_s388_l0_t " target="_blank">
+                        交互设计视频教程                    </a></span>
+                                                                                <span>
+                        <a href="https://edu.csdn.net/course/play/5599/104252 " target="_blank">
+                        颜色模型                    </a></span>
+                                                                                <span>
+                        <a href="https://edu.csdn.net/combos/o363_l0_t " target="_blank">
+                        设计制作学习                    </a></span>
+                                                            </div>
+                </div>
+                                                </div>
+                            <div class="recommend-loading-box">
+                <img src='https://csdnimg.cn/release/phoenix/images/feedLoading.gif'>
+            </div>
+            <div class="recommend-end-box">
+                <p class="text-center">没有更多推荐了，<a href="https://blog.csdn.net/" class="c-blue c-blue-hover c-blue-focus">返回首页</a></p>
+            </div>
+        </div>
+    </main>
+
+    <aside>
+	<div id="asideProfile" class="aside-box">
+    <!-- <h3 class="aside-title">个人资料</h3> -->
+    <div class="profile-intro d-flex">
+        <div class="avatar-box d-flex justify-content-center flex-column">
+            <a href="https://blog.csdn.net/QQ1084283172">
+              <img src="https://avatar.csdn.net/9/D/3/3_qq1084283172.jpg" class="avatar_pic">
+                              <img src="https://g.csdnimg.cn/static/user-reg-year/1x/8.png" class="user-years">
+                          </a>
+            
+        </div>
+        <div class="user-info d-flex justify-content-center flex-column">
+            <p class="name csdn-tracking-statistics tracking-click" data-report-click='{"mod":"popu_379"}'>
+                <a href="https://blog.csdn.net/QQ1084283172" target="_blank" class="" id="uid">Fly20141201</a>
+            </p>
+                          <p class="flag expert">
+                <a href="https://blog.csdn.net/home/help.html#classicfication" target="_blank">
+                <svg class="icon" aria-hidden="true">
+                  <use xlink:href="#csdnc-blogexpert"></use>
+                </svg>
+                博客专家
+                </a>
+                <span class="bubble hide hideAnimate">
+                已认证的专家
+                </span>
+              </p>
+                    </div>
+                <div class="opt-box d-flex justify-content-center flex-column">
+            <span  class="csdn-tracking-statistics tracking-click" data-report-click='{"mod":"popu_379"}'>
+                                    <a class="btn btn-sm btn-red-hollow attention" id="btnAttent">关注</a>
+                            </span>
+        </div>
+            </div>
+    <div class="data-info d-flex item-tiling">
+                <dl class="text-center" title="143">
+                        <dt><a href="https://blog.csdn.net/qq1084283172?t=1">原创</a></dt>
+            <dd><a href="https://blog.csdn.net/qq1084283172?t=1"><span class="count">143</span></a></dd>
+                    </dl>
+        <dl class="text-center" id="fanBox" title="475">
+            <dt>粉丝</dt>
+            <dd><span class="count" id="fan">475</span></dd>
+        </dl>
+        <dl class="text-center" title="147">
+            <dt>喜欢</dt>
+            <dd><span class="count">147</span></dd>
+        </dl>
+        <dl class="text-center" title="355">
+            <dt>评论</dt>
+            <dd><span class="count">355</span></dd>
+        </dl>
+    </div>
+    <div class="grade-box clearfix">
+        <dl>
+            <dt>等级：</dt>
+            <dd>
+                <a href="https://blog.csdn.net/home/help.html#level" title="6级,点击查看等级说明" target="_blank">
+                    <svg class="icon icon-level" aria-hidden="true">
+                        <use xlink:href="#csdnc-bloglevel-6"></use>
+                    </svg>
+                </a>
+            </dd>
+        </dl>
+        <dl>
+            <dt>访问：</dt>
+            <dd title="653296">
+                65万+            </dd>
+        </dl>
+        <dl>
+            <dt>积分：</dt>
+            <dd title="7924">
+                7924            </dd>
+        </dl>
+        <dl title="4778">
+            <dt>排名：</dt>
+            <dd>4778</dd>
+        </dl>
+    </div>
+        <div class="badge-box d-flex">
+        <span>勋章：</span>
+        <div class="badge d-flex">
+                                                        <div class="icon-badge" title="专栏达人">
+                       <div class="mouse-box">
+                          <img src="https://g.csdnimg.cn/static/user-medal/zhuanlan.svg" alt="">
+                          <div class="icon-arrow"></div>
+                       </div>
+                       <div class="grade-detail-box">
+                           <div class="pos-box">
+                               <div class="left-box d-flex justify-content-center align-items-center flex-column">
+                                    <img src="https://g.csdnimg.cn/static/user-medal/zhuanlan.svg" alt="">
+                                   <p>专栏达人</p>
+                               </div>
+                               <div class="right-box">
+                                   授予成功创建个人博客专栏的用户。专栏中添加五篇以上博文即可点亮！撰写博客专栏浓缩技术精华，专栏达人就是你！                               </div>
+                           </div>
+                       </div>
+                   </div>
+                                                             <div class="icon-badge" title="持之以恒">
+                       <div class="mouse-box">
+                          <img src="https://g.csdnimg.cn/static/user-medal/chizhiyiheng.svg" alt="">
+                          <div class="icon-arrow"></div>
+                       </div>
+                       <div class="grade-detail-box">
+                           <div class="pos-box">
+                               <div class="left-box d-flex justify-content-center align-items-center flex-column">
+                                    <img src="https://g.csdnimg.cn/static/user-medal/chizhiyiheng.svg" alt="">
+                                   <p>持之以恒</p>
+                               </div>
+                               <div class="right-box">
+                                   授予每个自然月内发布4篇或4篇以上原创或翻译IT博文的用户。不积跬步无以至千里，不积小流无以成江海，程序人生的精彩需要坚持不懈地积累！                               </div>
+                           </div>
+                       </div>
+                   </div>
+                                             </div>
+        <script>
+            (function ($) {
+                setTimeout(function(){
+                    $('div.icon-badge.show-moment').removeClass('show-moment');
+                }, 5000);
+            })(window.jQuery)
+        </script>
+    </div>
+    </div>
+<div id="asideColumn" class="aside-box flexible-box">
+    <h3 class="aside-title">博主专栏</h3>
+    <div class="aside-content">
+        <ul class="column-box csdn-tracking-statistics tracking-click" data-report-view='{"mod":"popu_520"}' >
+                            <li class="clearfix">
+                    <div class="img-box float-left">
+                        <a class="d-flex align-items-center" href="https://blog.csdn.net/QQ1084283172/column/info/upshell">
+                            <img src="https://img-blog.csdn.net/20151123180358974?imageView2/5/w/120/h/120" alt="">
+                        </a>
+                    </div>
+                    <div class="info">
+                        <p class="title"><a href="https://blog.csdn.net/QQ1084283172/column/info/upshell">软件脱壳练习</a></p>
+                        <div class="data">文章数：<span class="count">10 篇</span> 访问量：<span>1万+</span></div>
+                    </div>
+                </li>
+                            <li class="clearfix">
+                    <div class="img-box float-left">
+                        <a class="d-flex align-items-center" href="https://blog.csdn.net/QQ1084283172/column/info/virusanalysis">
+                            <img src="https://img-blog.csdn.net/20160224230913393?imageView2/5/w/120/h/120" alt="">
+                        </a>
+                    </div>
+                    <div class="info">
+                        <p class="title"><a href="https://blog.csdn.net/QQ1084283172/column/info/virusanalysis">Windows病毒分析</a></p>
+                        <div class="data">文章数：<span class="count">17 篇</span> 访问量：<span>4万+</span></div>
+                    </div>
+                </li>
+                            <li class="clearfix">
+                    <div class="img-box float-left">
+                        <a class="d-flex align-items-center" href="https://blog.csdn.net/QQ1084283172/column/info/androidvirus">
+                            <img src="https://img-blog.csdn.net/20151207115232144?imageView2/5/w/120/h/120" alt="">
+                        </a>
+                    </div>
+                    <div class="info">
+                        <p class="title"><a href="https://blog.csdn.net/QQ1084283172/column/info/androidvirus">Android病毒研究与解密</a></p>
+                        <div class="data">文章数：<span class="count">6 篇</span> 访问量：<span>1万+</span></div>
+                    </div>
+                </li>
+                            <li class="clearfix">
+                    <div class="img-box float-left">
+                        <a class="d-flex align-items-center" href="https://blog.csdn.net/QQ1084283172/column/info/14160">
+                            <img src="https://img-blog.csdn.net/20170106102908240?imageView2/5/w/120/h/120" alt="">
+                        </a>
+                    </div>
+                    <div class="info">
+                        <p class="title"><a href="https://blog.csdn.net/QQ1084283172/column/info/14160">Android系统安全和逆向分析研究</a></p>
+                        <div class="data">文章数：<span class="count">71 篇</span> 访问量：<span>25万+</span></div>
+                    </div>
+                </li>
+                            <li class="clearfix">
+                    <div class="img-box float-left">
+                        <a class="d-flex align-items-center" href="https://blog.csdn.net/QQ1084283172/column/info/16600">
+                            <img src="https://img-blog.csdn.net/20170728102858122?imageView2/5/w/120/h/120" alt="">
+                        </a>
+                    </div>
+                    <div class="info">
+                        <p class="title"><a href="https://blog.csdn.net/QQ1084283172/column/info/16600">路由器安全逆向和分析</a></p>
+                        <div class="data">文章数：<span class="count">13 篇</span> 访问量：<span>7万+</span></div>
+                    </div>
+                </li>
+                            <li class="clearfix">
+                    <div class="img-box float-left">
+                        <a class="d-flex align-items-center" href="https://blog.csdn.net/QQ1084283172/column/info/18440">
+                            <img src="https://img-blog.csdn.net/20171223083132326?imageView2/5/w/120/h/120" alt="">
+                        </a>
+                    </div>
+                    <div class="info">
+                        <p class="title"><a href="https://blog.csdn.net/QQ1084283172/column/info/18440">路由器登录协议的模拟和实现</a></p>
+                        <div class="data">文章数：<span class="count">1 篇</span> 访问量：<span>937</span></div>
+                    </div>
+                </li>
+                    </ul>
+    </div>
+        <p class="text-center">
+        <a class="btn btn-link-blue flexible-btn" data-fbox="aside-archive">展开</a>
+    </p>
+    </div>
+<div id="asideNewArticle" class="aside-box">
+    <h3 class="aside-title">最新文章</h3>
+    <div class="aside-content">
+        <ul class="inf_list clearfix csdn-tracking-statistics tracking-click" data-mod="popu_382">
+                        <li class="clearfix">
+                <a href="https://blog.csdn.net/QQ1084283172/article/details/82946782" target="_blank" >
+                                        我为Dexposed续一秒——论ART上运行时 Method AOP实现                </a>
+            </li>
+                        <li class="clearfix">
+                <a href="https://blog.csdn.net/QQ1084283172/article/details/81380553" target="_blank" >
+                                        Android木马病毒com.schemedroid的分析报告                </a>
+            </li>
+                        <li class="clearfix">
+                <a href="https://blog.csdn.net/QQ1084283172/article/details/81194406" target="_blank" >
+                                        Xposed框架中XSharePreference的使用                </a>
+            </li>
+                        <li class="clearfix">
+                <a href="https://blog.csdn.net/QQ1084283172/article/details/81187769" target="_blank" >
+                                        开启Android应用调试选项的工具XDebug的介绍                </a>
+            </li>
+                        <li class="clearfix">
+                <a href="https://blog.csdn.net/QQ1084283172/article/details/81186229" target="_blank" >
+                                        Android Linker 与 SO 加壳技术                </a>
+            </li>
+                    </ul>
+    </div>
+</div>
+<div id="asideCategory" class="aside-box flexible-box">
+    <h3 class="aside-title">个人分类</h3>
+    <div class="aside-content">
+        <ul>
+                        <li>
+                <a class="clearfix" href="https://blog.csdn.net/qq1084283172/article/category/2608299">
+                    <span class="title oneline">C++编程</span>
+                    <span class="count float-right">2篇</span>
+                </a>
+            </li>
+                        <li>
+                <a class="clearfix" href="https://blog.csdn.net/qq1084283172/article/category/3094959">
+                    <span class="title oneline">Android源码学习</span>
+                    <span class="count float-right">4篇</span>
+                </a>
+            </li>
+                        <li>
+                <a class="clearfix" href="https://blog.csdn.net/qq1084283172/article/category/2706001">
+                    <span class="title oneline">Android-NDK编程</span>
+                    <span class="count float-right">5篇</span>
+                </a>
+            </li>
+                        <li>
+                <a class="clearfix" href="https://blog.csdn.net/qq1084283172/article/category/3033177">
+                    <span class="title oneline">Android逆向学习</span>
+                    <span class="count float-right">58篇</span>
+                </a>
+            </li>
+                        <li>
+                <a class="clearfix" href="https://blog.csdn.net/qq1084283172/article/category/3094989">
+                    <span class="title oneline">Android编程学习</span>
+                    <span class="count float-right">2篇</span>
+                </a>
+            </li>
+                        <li>
+                <a class="clearfix" href="https://blog.csdn.net/qq1084283172/article/category/6395077">
+                    <span class="title oneline">iOS逆向学习</span>
+                    <span class="count float-right">2篇</span>
+                </a>
+            </li>
+                        <li>
+                <a class="clearfix" href="https://blog.csdn.net/qq1084283172/article/category/6798627">
+                    <span class="title oneline">Python编程学习</span>
+                    <span class="count float-right">1篇</span>
+                </a>
+            </li>
+                        <li>
+                <a class="clearfix" href="https://blog.csdn.net/qq1084283172/article/category/5744437">
+                    <span class="title oneline">软件逆向工程</span>
+                    <span class="count float-right">2篇</span>
+                </a>
+            </li>
+                        <li>
+                <a class="clearfix" href="https://blog.csdn.net/qq1084283172/article/category/2608319">
+                    <span class="title oneline">windows内核</span>
+                    <span class="count float-right">16篇</span>
+                </a>
+            </li>
+                        <li>
+                <a class="clearfix" href="https://blog.csdn.net/qq1084283172/article/category/5710117">
+                    <span class="title oneline">软件漏洞分析</span>
+                    <span class="count float-right">1篇</span>
+                </a>
+            </li>
+                        <li>
+                <a class="clearfix" href="https://blog.csdn.net/qq1084283172/article/category/6802177">
+                    <span class="title oneline">IDAPython编程学习</span>
+                    <span class="count float-right">3篇</span>
+                </a>
+            </li>
+                        <li>
+                <a class="clearfix" href="https://blog.csdn.net/qq1084283172/article/category/6797044">
+                    <span class="title oneline">路由器逆向分析</span>
+                    <span class="count float-right">13篇</span>
+                </a>
+            </li>
+                        <li>
+                <a class="clearfix" href="https://blog.csdn.net/qq1084283172/article/category/5633191">
+                    <span class="title oneline">软件脱壳练习</span>
+                    <span class="count float-right">10篇</span>
+                </a>
+            </li>
+                        <li>
+                <a class="clearfix" href="https://blog.csdn.net/qq1084283172/article/category/2608317">
+                    <span class="title oneline">Windows病毒分析</span>
+                    <span class="count float-right">17篇</span>
+                </a>
+            </li>
+                        <li>
+                <a class="clearfix" href="https://blog.csdn.net/qq1084283172/article/category/5744443">
+                    <span class="title oneline">Android病毒分析</span>
+                    <span class="count float-right">5篇</span>
+                </a>
+            </li>
+                        <li>
+                <a class="clearfix" href="https://blog.csdn.net/qq1084283172/article/category/6036296">
+                    <span class="title oneline">Android Hook学习</span>
+                    <span class="count float-right">29篇</span>
+                </a>
+            </li>
+                        <li>
+                <a class="clearfix" href="https://blog.csdn.net/qq1084283172/article/category/6036297">
+                    <span class="title oneline">Android安全比赛题目</span>
+                    <span class="count float-right">3篇</span>
+                </a>
+            </li>
+                        <li>
+                <a class="clearfix" href="https://blog.csdn.net/qq1084283172/article/category/6387577">
+                    <span class="title oneline">常用密码算法的实现</span>
+                    <span class="count float-right">1篇</span>
+                </a>
+            </li>
+                    </ul>
+    </div>
+        <p class="text-center">
+        <a class="btn btn-link-blue flexible-btn" data-fbox="aside-archive">展开</a>
+    </p>
+    </div>
+<div id="asideHotArticle" class="aside-box">
+	<h3 class="aside-title">热门文章</h3>
+	<div class="aside-content">
+		<ul class="hotArticle-list csdn-tracking-statistics tracking-click" data-report-view='{"mod":"popu_521"}'>
+							<li>
+
+					<a href="https://blog.csdn.net/QQ1084283172/article/details/66971242" >
+                                                路由器逆向分析------binwalk工具的详细使用说明                    </a>
+					<p class="read">阅读数 <span>21097</span></p>
+				</li>
+							<li>
+
+					<a href="https://blog.csdn.net/QQ1084283172/article/details/69665905" >
+                                                路由器逆向分析------在Linux上安装IDA Pro                    </a>
+					<p class="read">阅读数 <span>15850</span></p>
+				</li>
+							<li>
+
+					<a href="https://blog.csdn.net/QQ1084283172/article/details/46776479" >
+                                                Xposed框架之函数Hook学习                    </a>
+					<p class="read">阅读数 <span>15426</span></p>
+				</li>
+							<li>
+
+					<a href="https://blog.csdn.net/QQ1084283172/article/details/53869796" >
+                                                Android进程的so注入--Poison（稳定注入版）                    </a>
+					<p class="read">阅读数 <span>14199</span></p>
+				</li>
+							<li>
+
+					<a href="https://blog.csdn.net/QQ1084283172/article/details/65441110" >
+                                                路由器逆向分析------binwalk工具的安装                    </a>
+					<p class="read">阅读数 <span>13472</span></p>
+				</li>
+					</ul>
+	</div>
+</div>
+<div id="asideNewComments" class="aside-box">
+    <h3 class="aside-title">最新评论</h3>
+    <div class="aside-content">
+        <ul class="newcomment-list">
+                        <li>
+                <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/qq1084283172/article/details/71037182#comments">Hook android系统调用的...</a>
+                <p class="comment ellipsis">
+                    <a href="https://my.csdn.net/QQ1084283172" class="user-name" target="_blank">QQ1084283172：</a>[reply]Android_think[/reply]
+jni目录吧                </p>
+            </li>
+                        <li>
+                <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/qq1084283172/article/details/71037182#comments">Hook android系统调用的...</a>
+                <p class="comment ellipsis">
+                    <a href="https://my.csdn.net/Android_think" class="user-name" target="_blank">Android_think：</a>kernel_hook.c是在哪个目录下创建的，Makefile里面怎么写才对
+*** No rule to make target 'modules'.  Stop.                </p>
+            </li>
+                        <li>
+                <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/qq1084283172/article/details/69665905#comments">路由器逆向分析------在Lin...</a>
+                <p class="comment ellipsis">
+                    <a href="https://my.csdn.net/darcy00l" class="user-name" target="_blank">darcy00l：</a>您好呀，吾爱破解上的Linux版本ida失效了呢，您可以给百度云分享一下不，谢谢:D                </p>
+            </li>
+                        <li>
+                <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/qq1084283172/article/details/80963610#comments">开启Android Apk调试与备...</a>
+                <p class="comment ellipsis">
+                    <a href="https://my.csdn.net/QQ1084283172" class="user-name" target="_blank">QQ1084283172：</a>[reply]u013076551[/reply]
+android 8.1应该是这个函数变了吧，你要你自己去找代码，查找原因                </p>
+            </li>
+                        <li>
+                <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/qq1084283172/article/details/80956455#comments">查找和定位Android应用的按钮...</a>
+                <p class="comment ellipsis">
+                    <a href="https://my.csdn.net/QQ1084283172" class="user-name" target="_blank">QQ1084283172：</a>[reply]wu_jian_wu[/reply]
+检查一下是查原因，报啥错                </p>
+            </li>
+                    </ul>
+    </div>
+</div>
+<!--自定义模块-->
+<div id="asideCustom41531938" class="aside-box custom-box">
+    <h3 class="aside-title">Android源码：</h3>
+    <div class="aside-content clearfix">
+        
+<a href="http://androidxref.com/">AndroidXRef</a><br>
+    </div>
+</div>
+	<div id="asideFooter">
+				<div class="aside-box">
+			<div class="persion_article">
+			</div>
+		</div>
+	</div>
+</aside>
+<script src="https://csdnimg.cn/pubfooter/js/publib_footer-1.0.3.js" data-isfootertrack="false" type="text/javascript"></script>
+<script>
+	$("a.flexible-btn").click(function(){
+		$(this).parents('div.aside-box').removeClass('flexible-box');
+		$(this).remove();
+	})
+</script>
+</div>
+<div class="mask-dark"></div>
+<div class="tool-box vertical">
+    	<ul class="meau-list">
+		<li class="btn-like-box long-width">
+			<button class=" long-height hover-box btn-like " title="点赞">
+				<svg class="icon active hover-hide" aria-hidden="true">
+					<use xlink:href="#csdnc-thumbsup-ok"></use>
+				</svg>
+				<svg class="icon no-active hover-hide" aria-hidden="true">
+					<use xlink:href="#csdnc-thumbsup"></use>
+				</svg>
+				<span class="hover-show text-box text">
+					<span class="no-active">点赞</span>
+					<span class="active">取消点赞</span>
+				</span>
+				<p id="supportCount">4</p>
+			</button>
+		</li>
+		<li class="to-commentBox">
+						<a class="btn-comments long-height hover-box" title="写评论" href="#commentBox">
+				<svg class="icon hover-hide" aria-hidden="true">
+					<use xlink:href="#csdnc-comments"></use>
+				</svg>
+				<span class="hover-show text">评论</span>
+				<p class="">
+						3				</p>
+			</a>
+		</li>
+		<li class="toc-container-box" id="liTocBox">
+			<a class="btn-toc low-height hover-box btn-comments" title="目录">
+				<svg class="icon hover-hide" aria-hidden="true">
+					<use xlink:href="#csdnc-contents"></use>
+				</svg>
+				<span class="hover-show text">目录</span>
+			</a>
+			<div class="toc-container">
+				<div class="pos-box">
+					<div class="icon-arrow"></div>
+					<div class="scroll-box">
+						<div class="toc-box"></div>
+					</div>
+				</div>
+				<div class="opt-box">
+					<button class="btn-opt prev nomore" title="向上">
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#csdnc-chevronup"></use>
+						</svg>
+					</button>
+					<button class="btn-opt next">
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#csdnc-chevrondown"></use>
+						</svg>
+					</button>
+				</div>
+			</div>
+		</li>
+		<li>
+			<a class="btn-bookmark low-height hover-box btn-comments" title="收藏">
+				<svg class="icon active hover-hide" aria-hidden="true">
+					<use xlink:href="#csdnc-bookmark-ok"></use>
+				</svg>
+				<svg class="icon no-active hover-hide" aria-hidden="true">
+					<use xlink:href="#csdnc-bookmark"></use>
+				</svg>
+					<span class="hover-show text">收藏</span>
+				<!-- <span class="hover-show text-box text">
+					<span class="no-active">收藏</span>
+					<span class="active">取消收藏</span>
+				</span> -->
+			</a>
+		</li>
+		<li class="bdsharebuttonbox">
+			<div class="weixin-qr btn-comments low-height hover-box" >
+        <a href="#" class="bds_weixin clear-share-style" data-cmd="weixin" title="手机看"></a>
+				<svg class="icon hover-hide" aria-hidden="true">
+					<use xlink:href="#csdnc-usephone"></use>
+				</svg>
+				<span class="hover-show text text3">
+					手机看
+				</span>
+			</div>
+		</li>
+							<li class="widescreen-hide">
+				<a class="prev btn-comments low-height hover-box" href="https://blog.csdn.net/qq1084283172/article/details/57074695" title="从Android设备中提取内核和逆向分析">
+					<svg class="icon hover-hide" aria-hidden="true">
+						<use xlink:href="#csdnc-chevronleft"></use>
+					</svg>
+					<span class="hover-show text text3">上一篇</span>
+				</a>
+			</li>
+								<li class="widescreen-hide">
+			<a class="next btn-comments hover-box low-height" href="https://blog.csdn.net/qq1084283172/article/details/63312545" title="Python的套接字、IPv4和简单的客户端/服务器编程">
+				<svg class="icon hover-hide" aria-hidden="true">
+					<use xlink:href="#csdnc-chevronright"></use>
+				</svg>
+				<span class="hover-show text text3">下一篇</span>
+			</a>
+		</li>
+						<!-- 宽屏更多按钮 -->
+		<li class="widescreen-more">
+			<a class="btn-comments chat-ask-button low-height hover-box" title="快问" href="#chatqa">
+				<svg class="icon hover-hide" aria-hidden="true">
+					<use xlink:href="#csdnc-more"></use>
+				</svg>
+				<span class="hover-show text">更多</span>
+				
+			</a>
+			<ul class="widescreen-more-box">
+													<li class="widescreen-more">
+						<a class="btn-comments low-height hover-box" href="https://blog.csdn.net/qq1084283172/article/details/57074695" title="从Android设备中提取内核和逆向分析">
+							<svg class="icon hover-hide" aria-hidden="true">
+								<use xlink:href="#csdnc-chevronleft"></use>
+							</svg>
+							<span class="hover-show text text3">上一篇</span>
+						</a>
+					</li>
+																<li class="widescreen-more">
+					<a class="btn-comments hover-box low-height" href="https://blog.csdn.net/qq1084283172/article/details/63312545" title="Python的套接字、IPv4和简单的客户端/服务器编程">
+						<svg class="icon hover-hide" aria-hidden="true">
+							<use xlink:href="#csdnc-chevronright"></use>
+						</svg>
+						<span class="hover-show text text3">下一篇</span>
+					</a>
+				</li>
+							</ul>
+		</li>
+	</ul>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'https://csdnimg.cn/static/api/js/share.js?v=89860594'];</script>
+<script src="https://g.csdnimg.cn/collection-box/1.0.0/collection-box.js?t=20190710173809" type="text/javascript"></script><script>
+    var recommendCount = 49;
+    recommendCount = recommendCount > 1 ? (recommendCount + (recommendCount>6 ? 2 : 1)) : recommendCount;
+    var ChannelId = 12;
+    var articleId = "57086486";
+    var commentscount = 3;
+    var islock = false;
+    var curentUrl = "https://blog.csdn.net/QQ1084283172/article/details/57086486";
+    var myUrl = "https://my.csdn.net/";
+    //1禁止评论，2正常
+    var commentAuth = 2;
+    //百度搜索
+    var baiduKey = "修改Android手机内核，绕过反调试 - Fly20141201. 的专栏";
+    var needInsertBaidu = true;
+    // 代码段样式
+    var codeStyle = 'atom-one-dark';
+	var highlight = ["\u4fee\u6539","android\u624b\u673a","\u5185\u6838","\u7ed5\u8fc7","\u53cd\u8c03\u8bd5"];//高亮数组
+
+    var RecommendBlogExpertList = [];
+	var articleType = 1;
+	var CopyrightContent = '本文为博主原创文章，未经博主允许不得转载。';
+</script>
+<script src="https://csdnimg.cn/public/sandalstrap/1.4/js/sandalstrap.min.js"></script>
+<script src="https://csdnimg.cn/release/phoenix/vendor/pagination/paging-3d3b805766.js"></script>
+
+
+<div style="display:none;">
+	<img src="" onerror='setTimeout(function(){if(!/(csdn.net|iteye.com|baiducontent.com|googleusercontent.com|360webcache.com|sogoucdn.com|bingj.com|baidu.com)$/.test(window.location.hostname)){window.location.href="\x68\x74\x74\x70\x73\x3a\x2f\x2f\x77\x77\x77\x2e\x63\x73\x64\x6e\x2e\x6e\x65\x74"}},3000);'>
+</div>
+</body>
+
+<!-- 高亮未与 markdown兼容  -->
+	<link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.4.3/ckeditor/plugins/chart/chart.css" />
+	<script type="text/javascript" src="https://csdnimg.cn/release/blog_editor_html/release1.4.3/ckeditor/plugins/chart/lib/chart.min.js"></script>
+	<script type="text/javascript" src="https://csdnimg.cn/release/blog_editor_html/release1.4.3/ckeditor/plugins/chart/widget2chart.js"></script>
+	<link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.4.3/ckeditor/plugins/codesnippet/lib/highlight/styles/atom-one-dark.css">
+	<script type="text/javascript" src="https://csdnimg.cn/release/phoenix/production/pc_wap_common-e061e963a8.js" /></script>
+
+<script src="https://csdnimg.cn/release/phoenix/template/js/common-39dba58a5f.min.js"></script>
+<script src="https://csdnimg.cn/release/phoenix/template/js/detail-c7a064bf19.min.js"></script>
+
+	<script src="https://csdnimg.cn/release/phoenix/themes/skin-yellow/skin-yellow-fc7383b956.min.js"></script>
+<script>
+ // 全局声明
+ if (window.csdn === undefined) {
+      window.csdn = {};
+    }
+    window.csdn.sideToolbar = {
+        options: {
+            report:{
+                isShow: true,
+            },
+            afterFinished: function(){
+                setTimeout(function () {
+                    var viphtml = '<a class="option-box" data-type="vip" href="https://mall.csdn.net/vip" target="_blank">'+
+                        '<img src="https://g.csdnimg.cn/side-toolbar/1.4/images/vip.png" alt="" srcset="">'+
+                        '<span class="show-txt">VIP<br>免广告</span>'+
+                        '</a>';
+                    $('.csdn-side-toolbar').prepend(viphtml)
+                },300)
+            }
+        }
+    }
+
+    $(function(){
+        $(document).on('click',"a.option-box[data-type='report']",function() {
+            showReport(false,articleTitles)
+        });
+    })
+</script>
+<script src="https://g.csdnimg.cn/side-toolbar/1.4/side-toolbar.js"></script>
+
+    <script src="//g.csdnimg.cn/??login-box/1.0.6/login-box.js,login-box/1.0.7/login-auto.js,copyright/1.0.3/copyright.js,baidu-search/1.0.0/baidu-search.js?t=20190307095522"  type="text/javascript"></script>
+
+<script type="text/javascript" src="https://csdnimg.cn/release/blog_mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            "HTML-CSS": {
+                    linebreaks: { automatic: true, width: "94%container" },
+                    imageFont: null
+            },
+            tex2jax: {
+                preview: "none"
+            },
+            mml2jax: {
+                preview: 'none'
+            }
+    });
+</script>
+<script type="text/javascript">
+    </script>
+<script src="https://gh.bdstatic.com/static/gh/js/sdk/bword.min.js"></script>
+</html>

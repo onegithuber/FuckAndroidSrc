@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)https://www.jianshu.com/p/33b5c4061f6c -->
+<html><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+
+  <!-- Start of Baidu Transcode -->
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta name="MobileOptimized" content="width">
+  <meta name="HandheldFriendly" content="true">
+  <meta name="mobile-agent" content="format=html5;url=https://www.jianshu.com/p/33b5c4061f6c">
+  <!-- End of Baidu Transcode -->
+
+    <meta name="description" content="因研究逆向工程需要编译多个Android源码和内核在Nexus5真机上运行。通过简书记录编译过程，所以不会针对单个功能做详细介绍，初次接触的同学可以按照下面流程一步一步来进行环境搭建，资源准备，真机编译。 源码编译 目标 编译Android4.4.4-r1源码及内核 编译Android6.0.1-r1源码及内核 硬件环境 Ubuntu 14.0.4LTS LG Nexus5 手机 环境JDK...">
+
+  <meta name="360-site-verification" content="604a14b53c6b871206001285921e81d8">
+  <meta property="wb:webmaster" content="294ec9de89e7fadb">
+  <meta property="qc:admins" content="104102651453316562112116375">
+  <meta property="qc:admins" content="11635613706305617">
+  <meta property="qc:admins" content="1163561616621163056375">
+  <meta name="google-site-verification" content="cV4-qkUJZR6gmFeajx_UyPe47GW9vY6cnCrYtCHYNh4">
+  <meta name="google-site-verification" content="HF7lfF8YEGs1qtCE-kPml8Z469e2RHhGajy6JPVy5XI">
+  <meta http-equiv="mobile-agent" content="format=html5; url=https://www.jianshu.com/p/33b5c4061f6c">
+
+  <!-- Apple -->
+  <meta name="apple-mobile-web-app-title" content="简书">
+
+    <!--  Meta for Smart App Banner -->
+  <meta name="apple-itunes-app" content="app-id=888237539, app-argument=jianshu://notes/16421170">
+  <!-- End -->
+
+  <!--  Meta for Twitter Card -->
+  <meta content="summary" property="twitter:card">
+  <meta content="@jianshucom" property="twitter:site">
+  <meta content="Android多版本源码及内核编译(Nexus5)" property="twitter:title">
+  <meta content="因研究逆向工程需要编译多个Android源码和内核在Nexus5真机上运行。通过简书记录编译过程，所以不会针对单个功能做详细介绍，初次接触的同学可以按照下面流程一步一步来进行..." property="twitter:description">
+  <meta content="https://www.jianshu.com/p/33b5c4061f6c" property="twitter:url">
+  <!-- End -->
+
+  <!--  Meta for OpenGraph -->
+  <meta property="fb:app_id" content="865829053512461">
+  <meta property="og:site_name" content="简书">
+  <meta property="og:title" content="Android多版本源码及内核编译(Nexus5)">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://www.jianshu.com/p/33b5c4061f6c">
+  <meta property="og:description" content="因研究逆向工程需要编译多个Android源码和内核在Nexus5真机上运行。通过简书记录编译过程，所以不会针对单个功能做详细介绍，初次接触的同学可以按照下面流程一步一步来进行环境搭建，资源准备，...">
+  <!-- End -->
+
+  <!--  Meta for Facebook Applinks -->
+  <meta property="al:ios:url" content="jianshu://notes/16421170">
+  <meta property="al:ios:app_store_id" content="888237539">
+  <meta property="al:ios:app_name" content="简书">
+
+  <meta property="al:android:url" content="jianshu://notes/16421170">
+  <meta property="al:android:package" content="com.jianshu.haruki">
+  <meta property="al:android:app_name" content="简书">
+  <!-- End -->
+
+
+    <title>Android多版本源码及内核编译(Nexus5) - 简书</title>
+
+  <meta name="csrf-param" content="authenticity_token">
+<meta name="csrf-token" content="X4E7AzpZi82xXUWTiXgHIOJnsJMsFjNagor7m66gy+lE4eKS6rNkwx8QGe78uGL2NvjMTUGF4ZP0ZbbNRBlCYQ==">
+
+  <link rel="stylesheet" media="all" href="./Android多版本源码及内核编译(Nexus5) - 简书_files/web-30728a1164102859481d.css">
+  
+  <link rel="stylesheet" media="all" href="./Android多版本源码及内核编译(Nexus5) - 简书_files/entry-aa75deb505b1b600256a.css">
+
+  <link href="https://cdn2.jianshu.io/assets/favicons/favicon-e743bfb1821442341c3ab15bdbe804f7ad97676bd07a770ccc9483473aa76f06.ico" rel="shortcut icon" type="image/x-icon">
+      <link rel="apple-touch-icon-precomposed" href="https://cdn2.jianshu.io/assets/apple-touch-icons/57-a6f1f1ee62ace44f6dc2f6a08575abd3c3b163288881c78dd8d75247682a4b27.png" sizes="57x57">
+      <link rel="apple-touch-icon-precomposed" href="https://cdn2.jianshu.io/assets/apple-touch-icons/72-fb9834bcfce738fd7b9c5e31363e79443e09a81a8e931170b58bc815387c1562.png" sizes="72x72">
+      <link rel="apple-touch-icon-precomposed" href="https://cdn2.jianshu.io/assets/apple-touch-icons/76-49d88e539ff2489475d603994988d871219141ecaa0b1a7a9a1914f4fe3182d6.png" sizes="76x76">
+      <link rel="apple-touch-icon-precomposed" href="https://cdn2.jianshu.io/assets/apple-touch-icons/114-24252fe693524ed3a9d0905e49bff3cbd0228f25a320aa09053c2ebb4955de97.png" sizes="114x114">
+      <link rel="apple-touch-icon-precomposed" href="https://cdn2.jianshu.io/assets/apple-touch-icons/120-1bb7371f5e87f93ce780a5f1a05ff1b176828ee0d1d130e768575918a2e05834.png" sizes="120x120">
+      <link rel="apple-touch-icon-precomposed" href="https://cdn2.jianshu.io/assets/apple-touch-icons/152-bf209460fc1c17bfd3e2b84c8e758bc11ca3e570fd411c3bbd84149b97453b99.png" sizes="152x152">
+
+  <!-- Start of 访问统计 -->
+    <script src="./Android多版本源码及内核编译(Nexus5) - 简书_files/push.js"></script><script src="./Android多版本源码及内核编译(Nexus5) - 简书_files/hm.js"></script><script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?0c0e9d9b1e7d617b3e6842e85b9fb068";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+  <!-- End of 访问统计 -->
+<style type="text/css">@charset "UTF-8";.image-package .image-container .image-view-error:after,.image-package .image-container .image-view-maintain:after{position:absolute;top:50%;left:50%;width:100%;-webkit-transform:translate(-50%,-50%);-ms-transform:translate(-50%,-50%);transform:translate(-50%,-50%);color:#888;font-size:14px}.image-package .image-container{position:relative;z-index:2;background-color:#eee;-webkit-transition:background-color .1s linear;-o-transition:background-color .1s linear;transition:background-color .1s linear;margin:0 auto}body.reader-night-mode .image-package .image-container{background-color:#545454}.image-package .image-container-fill{z-index:1}.image-package .image-container .image-view{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden}.image-package .image-container .image-view-error:after{content:"图片获取失败，请点击重试"}.image-package .image-container .image-view-maintain:after{content:"系统维护中，图片暂时无法加载"}.image-package .image-container .image-view img.image-loading{opacity:.3}.image-package .image-container .image-view img{-webkit-transition:all .15s linear;-o-transition:all .15s linear;transition:all .15s linear;z-index:2;opacity:1}</style><style type="text/css">fieldset[disabled] .multiselect {
+  pointer-events: none;
+}
+
+.multiselect__spinner {
+  position: absolute;
+  right: 1px;
+  top: 1px;
+  width: 48px;
+  height: 35px;
+  background: #fff;
+  display: block;
+}
+
+.multiselect__spinner:after,
+.multiselect__spinner:before {
+  position: absolute;
+  content: "";
+  top: 50%;
+  left: 50%;
+  margin: -8px 0 0 -8px;
+  width: 16px;
+  height: 16px;
+  border-radius: 100%;
+  border-color: #41b883 transparent transparent;
+  border-style: solid;
+  border-width: 2px;
+  box-shadow: 0 0 0 1px transparent;
+}
+
+.multiselect__spinner:before {
+  animation: a 2.4s cubic-bezier(.41,.26,.2,.62);
+  animation-iteration-count: infinite;
+}
+
+.multiselect__spinner:after {
+  animation: a 2.4s cubic-bezier(.51,.09,.21,.8);
+  animation-iteration-count: infinite;
+}
+
+.multiselect__loading-enter-active,
+.multiselect__loading-leave-active {
+  transition: opacity .4s ease-in-out;
+  opacity: 1;
+}
+
+.multiselect__loading-enter,
+.multiselect__loading-leave-active {
+  opacity: 0;
+}
+
+.multiselect,
+.multiselect__input,
+.multiselect__single {
+  font-family: inherit;
+  font-size: 14px;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+}
+
+.multiselect {
+  box-sizing: content-box;
+  display: block;
+  position: relative;
+  width: 100%;
+  min-height: 40px;
+  text-align: left;
+  color: #35495e;
+}
+
+.multiselect * {
+  box-sizing: border-box;
+}
+
+.multiselect:focus {
+  outline: none;
+}
+
+.multiselect--disabled {
+  opacity: .6;
+}
+
+.multiselect--active {
+  z-index: 1;
+}
+
+.multiselect--active:not(.multiselect--above) .multiselect__current,
+.multiselect--active:not(.multiselect--above) .multiselect__input,
+.multiselect--active:not(.multiselect--above) .multiselect__tags {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.multiselect--active .multiselect__select {
+  transform: rotate(180deg);
+}
+
+.multiselect--above.multiselect--active .multiselect__current,
+.multiselect--above.multiselect--active .multiselect__input,
+.multiselect--above.multiselect--active .multiselect__tags {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.multiselect__input,
+.multiselect__single {
+  position: relative;
+  display: inline-block;
+  min-height: 20px;
+  line-height: 20px;
+  border: none;
+  border-radius: 5px;
+  background: #fff;
+  padding: 0 0 0 5px;
+  width: 100%;
+  transition: border .1s ease;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+  vertical-align: top;
+}
+
+.multiselect__tag~.multiselect__input,
+.multiselect__tag~.multiselect__single {
+  width: auto;
+}
+
+.multiselect__input:hover,
+.multiselect__single:hover {
+  border-color: #cfcfcf;
+}
+
+.multiselect__input:focus,
+.multiselect__single:focus {
+  border-color: #a8a8a8;
+  outline: none;
+}
+
+.multiselect__single {
+  padding-left: 6px;
+  margin-bottom: 8px;
+}
+
+.multiselect__tags-wrap {
+  display: inline;
+}
+
+.multiselect__tags {
+  min-height: 40px;
+  display: block;
+  padding: 8px 40px 0 8px;
+  border-radius: 5px;
+  border: 1px solid #e8e8e8;
+  background: #fff;
+}
+
+.multiselect__tag {
+  position: relative;
+  display: inline-block;
+  padding: 4px 26px 4px 10px;
+  border-radius: 5px;
+  margin-right: 10px;
+  color: #fff;
+  line-height: 1;
+  background: #41b883;
+  margin-bottom: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 100%;
+  text-overflow: ellipsis;
+}
+
+.multiselect__tag-icon {
+  cursor: pointer;
+  margin-left: 7px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  font-weight: 700;
+  font-style: normal;
+  width: 22px;
+  text-align: center;
+  line-height: 22px;
+  transition: all .2s ease;
+  border-radius: 5px;
+}
+
+.multiselect__tag-icon:after {
+  content: "\D7";
+  color: #266d4d;
+  font-size: 14px;
+}
+
+.multiselect__tag-icon:focus,
+.multiselect__tag-icon:hover {
+  background: #369a6e;
+}
+
+.multiselect__tag-icon:focus:after,
+.multiselect__tag-icon:hover:after {
+  color: #fff;
+}
+
+.multiselect__current {
+  min-height: 40px;
+  overflow: hidden;
+  padding: 8px 12px 0;
+  padding-right: 30px;
+  white-space: nowrap;
+  border-radius: 5px;
+  border: 1px solid #e8e8e8;
+}
+
+.multiselect__current,
+.multiselect__select {
+  line-height: 16px;
+  box-sizing: border-box;
+  display: block;
+  margin: 0;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.multiselect__select {
+  position: absolute;
+  width: 40px;
+  height: 38px;
+  right: 1px;
+  top: 1px;
+  padding: 4px 8px;
+  text-align: center;
+  transition: transform .2s ease;
+}
+
+.multiselect__select:before {
+  position: relative;
+  right: 0;
+  top: 65%;
+  color: #999;
+  margin-top: 4px;
+  border-style: solid;
+  border-width: 5px 5px 0;
+  border-color: #999 transparent transparent;
+  content: "";
+}
+
+.multiselect__placeholder {
+  color: #adadad;
+  display: inline-block;
+  margin-bottom: 10px;
+  padding-top: 2px;
+}
+
+.multiselect--active .multiselect__placeholder {
+  display: none;
+}
+
+.multiselect__content-wrapper {
+  position: absolute;
+  display: block;
+  background: #fff;
+  width: 100%;
+  max-height: 240px;
+  overflow: auto;
+  border: 1px solid #e8e8e8;
+  border-top: none;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  z-index: 1;
+  -webkit-overflow-scrolling: touch;
+}
+
+.multiselect__content {
+  list-style: none;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  min-width: 100%;
+  vertical-align: top;
+}
+
+.multiselect--above .multiselect__content-wrapper {
+  bottom: 100%;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom: none;
+  border-top: 1px solid #e8e8e8;
+}
+
+.multiselect__content::webkit-scrollbar {
+  display: none;
+}
+
+.multiselect__element {
+  display: block;
+}
+
+.multiselect__option {
+  display: block;
+  padding: 12px;
+  min-height: 40px;
+  line-height: 16px;
+  text-decoration: none;
+  text-transform: none;
+  vertical-align: middle;
+  position: relative;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.multiselect__option:after {
+  top: 0;
+  right: 0;
+  position: absolute;
+  line-height: 40px;
+  padding-right: 12px;
+  padding-left: 20px;
+}
+
+.multiselect__option--highlight {
+  background: #41b883;
+  outline: none;
+  color: #fff;
+}
+
+.multiselect__option--highlight:after {
+  content: attr(data-select);
+  background: #41b883;
+  color: #fff;
+}
+
+.multiselect__option--selected {
+  background: #f3f3f3;
+  color: #35495e;
+  font-weight: 700;
+}
+
+.multiselect__option--selected:after {
+  content: attr(data-selected);
+  color: silver;
+}
+
+.multiselect__option--selected.multiselect__option--highlight {
+  background: #ff6a6a;
+  color: #fff;
+}
+
+.multiselect__option--selected.multiselect__option--highlight:after {
+  background: #ff6a6a;
+  content: attr(data-deselect);
+  color: #fff;
+}
+
+.multiselect--disabled {
+  background: #ededed;
+  pointer-events: none;
+}
+
+.multiselect--disabled .multiselect__current,
+.multiselect--disabled .multiselect__select,
+.multiselect__option--disabled {
+  background: #ededed;
+  color: #a6a6a6;
+}
+
+.multiselect__option--disabled {
+  cursor: text;
+  pointer-events: none;
+}
+
+.multiselect__option--disabled.multiselect__option--highlight {
+  background: #dedede!important;
+}
+
+.multiselect-enter-active,
+.multiselect-leave-active {
+  transition: all .15s ease;
+}
+
+.multiselect-enter,
+.multiselect-leave-active {
+  opacity: 0;
+}
+
+.multiselect__strong {
+  margin-bottom: 8px;
+  line-height: 20px;
+  display: inline-block;
+  vertical-align: top;
+}
+
+[dir=rtl] .multiselect {
+  text-align: right;
+}
+
+[dir=rtl] .multiselect__select {
+  right: auto;
+  left: 1px;
+}
+
+[dir=rtl] .multiselect__tags {
+  padding: 8px 8px 0 40px;
+}
+
+[dir=rtl] .multiselect__content {
+  text-align: right;
+}
+
+[dir=rtl] .multiselect__option:after {
+  right: auto;
+  left: 0;
+}
+
+[dir=rtl] .multiselect__clear {
+  right: auto;
+  left: 12px;
+}
+
+[dir=rtl] .multiselect__spinner {
+  right: auto;
+  left: 1px;
+}
+
+@keyframes a {
+  0% {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(2turn);
+  }
+}</style><style type="text/css">
+#free-reward-panel .reward-users-modal main {
+  padding: 0;
+}
+</style><style type="text/css">
+@charset "UTF-8";
+/*
+ * 变量
+*/
+.reward-note-modal .v-modal {
+  width: 620px;
+  text-align: center;
+}
+.reward-note-modal .v-modal form {
+    margin: 0 auto 25px auto;
+    padding: 0 40px;
+}
+.reward-note-modal .v-modal .reward-intro {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+.reward-note-modal .v-modal .reward-intro .avatar {
+      cursor: default !important;
+      width: 36px;
+      height: 36px;
+      margin-right: 10px;
+      display: inline-block;
+}
+.reward-note-modal .v-modal .reward-intro .intro {
+      margin-right: 5px;
+      font-weight: bold;
+      vertical-align: middle;
+}
+.reward-note-modal .v-modal .reward-intro i {
+      color: #EA6F5A;
+      vertical-align: middle;
+}
+.reward-note-modal .v-modal .main-inputs {
+    margin: 25px 0;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group {
+      margin: 0 -5px;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group input {
+        display: none;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group input:checked + .option {
+        color: #EA6F5A;
+        border-color: #EA6F5A;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .custom-amount:checked + .option .custom-text {
+        opacity: 0;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .custom-amount:checked + .option .custom-amount-input {
+        opacity: 1;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option {
+        position: relative;
+        margin: 0 5px 15px;
+        width: 156px;
+        height: 56px;
+        line-height: 54px;
+        border: 1px solid #E6E6E6;
+        border-radius: 4px;
+        font-weight: normal;
+        color: #999999;
+        cursor: pointer;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option i {
+          font-size: 16px;
+          vertical-align: middle;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .amount {
+          font-size: 28px;
+          vertical-align: middle;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .piece {
+          font-size: 13px;
+          vertical-align: sub;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .custom-amount-input {
+          position: absolute;
+          top: 0;
+          z-index: -1;
+          width: 100%;
+          opacity: 0;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .custom-amount-input i {
+            position: absolute;
+            top: 0;
+            left: 10px;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .custom-amount-input .piece {
+            position: absolute;
+            top: 4px;
+            right: 10px;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .custom-amount-input input {
+            display: block;
+            margin: 0 auto;
+            width: 80px;
+            height: 54px;
+            line-height: 54px;
+            border: none;
+            font-size: 28px;
+            text-align: center;
+            background: transparent;
+            -moz-appearance: textfield;
+}
+.reward-note-modal .v-modal .main-inputs .amount-group .option .custom-amount-input input::-webkit-outer-spin-button, .reward-note-modal .v-modal .main-inputs .amount-group .option .custom-amount-input input::-webkit-inner-spin-button {
+              -webkit-appearance: none !important;
+}
+.reward-note-modal .v-modal .main-inputs .message {
+      padding: 15px 20px;
+      margin-bottom: 0;
+      font-size: 14px;
+      border: 1px solid #E6E6E6;
+      color: #333333;
+      border-radius: 4px;
+      background-color: rgba(180, 180, 180, 0.1);
+}
+.reward-note-modal .v-modal .main-inputs .message textarea {
+        width: 100%;
+        height: 44px;
+        padding: 0;
+        margin: 0;
+        resize: none;
+        background: none !important;
+        border: none !important;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+        -webkit-box-shadow: none;
+                box-shadow: none;
+}
+.reward-note-modal .v-modal .main-inputs .message textarea:focus {
+          outline: none;
+}
+.reward-note-modal .v-modal .reward-info .amount {
+    font-size: 28px;
+    font-weight: bold;
+    color: #EA6F5A;
+}
+.reward-note-modal .v-modal .reward-info .pay-method {
+    font-size: 14px;
+}
+.reward-note-modal .v-modal .reward-info .pay-method a {
+      color: #3194D0;
+}
+.reward-note-modal .v-modal .choose-pay {
+    margin: 0 -5px;
+}
+.reward-note-modal .v-modal .choose-pay input {
+      display: none;
+}
+.reward-note-modal .v-modal .choose-pay input:checked + .option {
+      color: #EA6F5A;
+      border-color: #EA6F5A;
+}
+.reward-note-modal .v-modal .choose-pay .option {
+      margin: 20px 5px 10px;
+      width: 156px;
+      height: 56px;
+      line-height: 54px;
+      text-align: center;
+      border: 1px solid #E6E6E6;
+      border-radius: 4px;
+      cursor: pointer;
+}
+.reward-note-modal .v-modal .choose-pay .option img {
+        height: 30px;
+}
+.reward-note-modal .v-modal .choose-pay .option img.day.alipay, .reward-note-modal .v-modal .choose-pay .option img.night.alipay {
+        min-width: 85px;
+}
+.reward-note-modal .v-modal .choose-pay .option img.day.wechat, .reward-note-modal .v-modal .choose-pay .option img.night.wechat {
+        min-width: 112px;
+}
+.reward-note-modal .v-modal .choose-pay .option img.night {
+        display: none;
+}
+body.reader-night-mode .reward-note-modal .v-modal .choose-pay .option img.night {
+        display: inline-block;
+}
+body.reader-night-mode .reward-note-modal .v-modal .choose-pay .option img.day {
+        display: none;
+}
+.reward-note-modal .v-modal .choose-pay .tooltip {
+      width: 230px;
+}
+.reward-note-modal .v-modal .modal-footer {
+    padding: 0 15px 20px;
+    border: none;
+    background-color: transparent;
+    text-align: center;
+}
+.reward-note-modal .v-modal .modal-footer .btn {
+      padding: 8px 45px;
+      font-size: 24px;
+}
+.reward-note-modal .v-modal .btn-pay {
+    padding: 8px 25px;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #F5A623;
+}
+.weixin-pay, .success-pay {
+  text-align: center;
+}
+.weixin-pay .v-modal, .success-pay .v-modal {
+    width: 350px;
+}
+.weixin-pay .ic-successed, .success-pay .ic-successed {
+    font-size: 60px;
+    color: #3db922;
+}
+.weixin-pay h2, .weixin-pay h3, .success-pay h2, .success-pay h3 {
+    margin-bottom: 20px;
+    color: #333333;
+}
+.weixin-pay h2, .success-pay h2 {
+    margin: 0 0 40px 0;
+    font-size: 24px;
+}
+.weixin-pay .bind-text, .success-pay .bind-text {
+    position: relative;
+    margin-bottom: 30px;
+    font-size: 14px;
+    color: #999999;
+}
+.weixin-pay .bind-text:before, .weixin-pay .bind-text:after, .success-pay .bind-text:before, .success-pay .bind-text:after {
+      content: "";
+      border-top: 1px solid #999;
+      display: block;
+      position: absolute;
+      width: 40px;
+      top: 8px;
+}
+.weixin-pay .bind-text:before, .success-pay .bind-text:before {
+      left: 30px;
+}
+.weixin-pay .bind-text:after, .success-pay .bind-text:after {
+      right: 30px;
+}
+.weixin-pay .share-bind, .success-pay .share-bind {
+    display: block;
+    margin-bottom: 30px;
+}
+.weixin-pay .share-bind i, .success-pay .share-bind i {
+      margin-right: 4px;
+      font-size: 22px;
+      vertical-align: middle;
+}
+.weixin-pay .share-bind.wechat i, .success-pay .share-bind.wechat i {
+      color: #00BB29;
+}
+.weixin-pay .share-bind.weibo i, .success-pay .share-bind.weibo i {
+      color: #E05244;
+}
+.weixin-pay .wx-qr-code, .success-pay .wx-qr-code {
+    display: inline-block;
+}
+.weixin-pay .wx-qr-code img, .success-pay .wx-qr-code img {
+      margin: 0 auto;
+      padding: 10px;
+      width: 200px;
+      background-color: #ffffff;
+}
+.weixin-pay .pay-amount, .success-pay .pay-amount {
+    margin: 20px 0;
+    color: #787878;
+}
+.weixin-pay .pay-amount span, .success-pay .pay-amount span {
+      color: #F5A623;
+}
+</style><style type="text/css">
+@charset "UTF-8";
+/*
+ * 变量
+*/
+.v-modal-wrap {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  background-color: transparent;
+}
+.v-modal-wrap.modal-leave-active {
+    -webkit-transition: opacity 0.3s;
+    -o-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+}
+.v-modal-wrap.modal-enter-active .v-modal-mask, .v-modal-wrap.modal-leave-active .v-modal-mask {
+    opacity: 0;
+}
+.v-modal-wrap.modal-enter-active .v-modal, .v-modal-wrap.modal-leave-active .v-modal {
+    -webkit-transform: translate(-50%, -70%);
+        -ms-transform: translate(-50%, -70%);
+            transform: translate(-50%, -70%);
+    opacity: 0;
+}
+.v-modal-wrap .v-modal-mask {
+    background-color: rgba(255, 255, 255, 0.7);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    -webkit-transition: opacity 0.3s;
+    -o-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+    opacity: 1;
+}
+.v-modal-wrap .v-modal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    -webkit-box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+    -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+    transition: opacity 0.3s, -webkit-transform 0.3s;
+    -o-transition: opacity 0.3s, transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s, -webkit-transform 0.3s;
+    opacity: 1;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    overflow: hidden;
+}
+.v-modal-wrap .v-modal > header:before, .v-modal-wrap .v-modal > header:after, .v-modal-wrap .v-modal > main:before, .v-modal-wrap .v-modal > main:after, .v-modal-wrap .v-modal > footer:before, .v-modal-wrap .v-modal > footer:after {
+      content: '';
+      clear: both;
+      display: table;
+}
+.v-modal-wrap .v-modal > header {
+      padding: 20px;
+      border-bottom: 1px solid #F0F0F0;
+}
+.v-modal-wrap .v-modal > header h4 {
+        margin: 0;
+        color: #333;
+        text-align: left;
+}
+.v-modal-wrap .v-modal .close {
+      position: absolute;
+      right: 16px;
+      top: 20px;
+      font-size: 26px;
+      line-height: 20px;
+      color: rgba(0, 0, 0, 0.8);
+}
+.v-modal-wrap .v-modal .close:hover {
+        color: #000000;
+}
+.v-modal-wrap .v-modal > main {
+      padding: 20px 20px 20px 20px;
+      font-size: 15px;
+      color: #333;
+      -webkit-box-flex: 1;
+      -webkit-flex-grow: 1;
+          -ms-flex-positive: 1;
+              flex-grow: 1;
+      overflow-x: hidden;
+      overflow-y: auto;
+}
+.v-modal-wrap .v-modal > footer {
+      padding: 20px;
+      background-color: #fff;
+}
+.v-modal-wrap .v-modal > footer button {
+        padding: 0;
+        margin: 0;
+        background-color: transparent;
+        border: 0;
+        float: right;
+}
+.v-modal-wrap .v-modal > footer button:focus {
+          outline: 0;
+}
+.v-modal-wrap .v-modal > footer .submit {
+        padding: 4px 12px;
+        border: 1px solid;
+        border-radius: 20px;
+}
+.v-modal-wrap .v-modal > footer .cancel {
+        margin-top: 5px;
+}
+.v-modal-wrap .v-modal > footer .cancel:hover {
+          color: #333333;
+}
+.reader-night-mode .v-modal-wrap .v-modal-mask {
+  background-color: rgba(63, 63, 63, 0.7);
+}
+.reader-night-mode .v-modal-wrap .v-modal {
+  background-color: #3f3f3f;
+}
+.reader-night-mode .v-modal-wrap .v-modal header {
+    border-color: #2F2F2F;
+}
+.reader-night-mode .v-modal-wrap .v-modal header h4 {
+      color: #C8C8C8;
+}
+.reader-night-mode .v-modal-wrap .v-modal .close {
+    color: #C8C8C8;
+}
+.reader-night-mode .v-modal-wrap .v-modal .close:hover {
+      color: #ffffff;
+}
+.reader-night-mode .v-modal-wrap .v-modal main {
+    color: #C8C8C8;
+}
+.reader-night-mode .v-modal-wrap .v-modal footer {
+    background-color: #3f3f3f;
+}
+.reader-night-mode .v-modal-wrap .v-modal footer .cancel:hover {
+      color: #C8C8C8;
+}
+</style><style type="text/css">
+.nqzzJ71pC-jOnJKAfdtr6_0 {
+  float: right;
+  height: 55px;
+  padding: 15px 0px;
+  margin: 0 12px;
+}
+._3tScN0zmSdGLaUAH4SxTbM_0 {
+    width: 100%;
+    height: 100%;
+}
+.nqzzJ71pC-jOnJKAfdtr6_0 ._3f806byixOPpOPWnx8HiQP_0 {
+    height: 25px;
+}
+.nqzzJ71pC-jOnJKAfdtr6_0 ._2MIQ6sBppQZAKea91We0qf_0 {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: 0.6;
+    z-index: 1000;
+}
+.nqzzJ71pC-jOnJKAfdtr6_0 ._1RppgOJ_CQiXgzd3ke-sbJ_0 {
+    position: fixed;
+    left: -webkit-calc( 50% - 190px);
+    left: calc( 50% - 190px);
+    top: -webkit-calc( 50% - 300px);
+    top: calc( 50% - 300px);
+    width: 380px;
+    height: 425px;
+    background-color: #fff;
+    padding: 40px 72px 0;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    z-index: 1000;
+    text-align: center;
+}
+body.reader-night-mode .nqzzJ71pC-jOnJKAfdtr6_0 ._1RppgOJ_CQiXgzd3ke-sbJ_0 {
+      background-color: #3f3f3f;
+      color: #c8c8c8;
+}
+.nqzzJ71pC-jOnJKAfdtr6_0 ._1RppgOJ_CQiXgzd3ke-sbJ_0 h4 {
+      margin: 0;
+      line-height: 25px;
+}
+.nqzzJ71pC-jOnJKAfdtr6_0 ._1RppgOJ_CQiXgzd3ke-sbJ_0 h4 span {
+        color: #e9634c;
+}
+.nqzzJ71pC-jOnJKAfdtr6_0 ._1RppgOJ_CQiXgzd3ke-sbJ_0 img {
+      width: 190px;
+      height: 190px;
+      margin: 12px 0 8px 0;
+}
+.nqzzJ71pC-jOnJKAfdtr6_0 ._1RppgOJ_CQiXgzd3ke-sbJ_0 p {
+      font-size: 14px;
+      line-height: 20px;
+      margin: 0;
+}
+.nqzzJ71pC-jOnJKAfdtr6_0 ._1RppgOJ_CQiXgzd3ke-sbJ_0 ._2WUz9DZJO5DIC_O5sD1kac_0 {
+      background-color: #e9634c;
+      color: #fff;
+      margin: 25px auto 0;
+      width: 190px;
+      height: 40px;
+      border-radius: 20px;
+      line-height: 40px;
+      font-size: 14px;
+      cursor: pointer;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
+}
+</style><style type="text/css">
+@charset "UTF-8";
+/*
+ * 变量
+*/
+.youdao-fixed-ad {
+  display: block;
+  position: relative;
+  width: 180px;
+  height: 180px;
+  border: 1px solid #e8eae9;
+}
+.youdao-fixed-ad .img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+.youdao-fixed-ad .ad-badge {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: block;
+    font-size: 12px;
+    padding: 2px 5px 0 6px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    cursor: pointer;
+}
+.qingteng-ads {
+  border: 1px solid #e8e8e8;
+  width: 180px;
+}
+</style><style type="text/css">
+.yuxi-fixed-ad {
+  position: relative;
+  width: 180px;
+  height: 180px;
+}
+.yuxi-fixed-ad .img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-image: url(//cdn2.jianshu.io/assets/web/yuxi-ads-d73b364baf42dfeca32d518c819a0136.jpg);
+}
+.yuxi-fixed-ad .ad-badge {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: block;
+    font-size: 12px;
+    padding: 2px 5px 0 6px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    cursor: pointer;
+}
+</style><style type="text/css">
+@charset "UTF-8";
+/*
+ * 变量
+*/
+.like[data-v-6ddd02c6] {
+  display: inline-block;
+}
+.like .like-group[data-v-6ddd02c6] {
+    position: relative;
+    padding: 13px 0 15px 0;
+    font-size: 0;
+    border: 1px solid #EA6F5A;
+    border-radius: 40px;
+}
+.like .like-group[data-v-6ddd02c6]:hover {
+      background-color: rgba(236, 97, 73, 0.05);
+}
+.like .like-group .btn-like[data-v-6ddd02c6] {
+      display: inline-block;
+      font-size: 19px;
+}
+.like .like-group .btn-like[data-v-6ddd02c6]:before {
+        content: '';
+        position: absolute;
+        left: 12px;
+        top: 2px;
+        width: 50px;
+        height: 50px;
+        background-image: url(//cdn2.jianshu.io/assets/web/like_animation_steps-62a00a7b52377d3069927cdb8e61fd34.png);
+        background-position: left;
+        background-repeat: no-repeat;
+        background-size: 1000px 50px;
+}
+.like .like-group .btn-like a[data-v-6ddd02c6] {
+        position: relative;
+        padding: 18px 30px 18px 55px;
+        color: #EA6F5A;
+}
+.like .like-group .modal-wrap[data-v-6ddd02c6] {
+      font-size: 18px;
+      border-left: 1px solid rgba(236, 97, 73, 0.4);
+      display: inline-block;
+      margin-left: -15px;
+}
+.like .like-group .modal-wrap a[data-v-6ddd02c6] {
+        color: #EA6F5A;
+        padding: 18px 26px 18px 18px;
+}
+.like .like-group.like-animation[data-v-6ddd02c6], .like .like-group.active[data-v-6ddd02c6] {
+      background-color: #EA6F5A;
+}
+.like .like-group.like-animation .btn-like a[data-v-6ddd02c6], .like .like-group.active .btn-like a[data-v-6ddd02c6] {
+        color: white;
+}
+.like .like-group.like-animation .modal-wrap[data-v-6ddd02c6], .like .like-group.active .modal-wrap[data-v-6ddd02c6] {
+        border-left: 1px solid white;
+}
+.like .like-group.like-animation .modal-wrap a[data-v-6ddd02c6], .like .like-group.active .modal-wrap a[data-v-6ddd02c6] {
+          color: white;
+}
+.like .like-group.like-animation .btn-like[data-v-6ddd02c6]:before {
+      -webkit-animation: likeBlast-data-v-6ddd02c6 0.6s 1 steps(19);
+              animation: likeBlast-data-v-6ddd02c6 0.6s 1 steps(19);
+      background-position: right;
+}
+@-webkit-keyframes likeBlast {
+0% {
+    background-position: left;
+}
+100% {
+    background-position: right;
+}
+}
+@keyframes likeBlast-data-v-6ddd02c6 {
+0% {
+    background-position: left;
+}
+100% {
+    background-position: right;
+}
+}
+.like .like-group.active .btn-like[data-v-6ddd02c6]:before {
+      background-position: right;
+}
+</style><style type="text/css">
+@charset "UTF-8";
+/*
+ * 变量
+*/
+.main {
+  position: relative;
+  margin: 0 auto;
+  padding: 0 0 30px 0;
+  width: 620px;
+}
+.main .title {
+    padding-left: 8px;
+    border-left: 3px solid #EA6F5A;
+    line-height: 1;
+    font-size: 15px;
+}
+.main .collection-settings {
+    position: absolute;
+    top: 2px;
+    right: 0;
+    font-size: 13px;
+    color: #A0A0A0;
+}
+.main .collection-settings span {
+      padding-left: 4px;
+}
+.main .include-collection {
+    width: 100%;
+    padding-top: 20px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+}
+.main .include-collection .item {
+      display: inline-block;
+      margin: 0 12px 12px 0;
+      min-height: 32px;
+      background-color: white;
+      border: 1px solid #DCDCDC;
+      border-radius: 4px;
+      vertical-align: top;
+      overflow: hidden;
+}
+.main .include-collection .item img {
+        width: 32px;
+        height: 32px;
+}
+.main .include-collection .item .name {
+        display: inline-block;
+        padding: 0 10px;
+        font-size: 14px;
+}
+.main .include-collection .add-collection-wrap {
+      margin: 0 12px 12px 0;
+}
+.main .include-collection .add-collection {
+      padding: 8px 12px;
+      font-size: 14px;
+      border: 1px solid #DCDCDC;
+      border-radius: 4px;
+}
+.main .include-collection .add-collection i {
+        margin-right: 4px;
+        color: #969696;
+}
+.main .recommend-note a {
+    position: relative;
+    margin: 20px 2px 0 0;
+    width: 200px;
+    height: 160px;
+    display: inline-block;
+}
+.main .recommend-note a:after {
+      content: "";
+      position: absolute;
+      width: 200px;
+      height: 160px;
+      border-radius: 0 0 4px 4px;
+      -webkit-box-shadow: inset 0px -80px 50px -22px rgba(0, 0, 0, 0.6);
+              box-shadow: inset 0px -80px 50px -22px rgba(0, 0, 0, 0.6);
+      top: 0;
+      left: 0;
+      z-index: 1;
+}
+.main .recommend-note .name {
+    position: absolute;
+    bottom: 40px;
+    left: 10px;
+    right: 10px;
+    font-size: 17px;
+    font-weight: bold;
+    color: #ffffff;
+    z-index: 2;
+}
+.main .recommend-note .author {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    z-index: 2;
+}
+.main .recommend-note .avatar {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+}
+.main .recommend-note .avatar img {
+      border-radius: 50%;
+}
+.main .recommend-note .author-name {
+    font-size: 12px;
+    color: #ffffff;
+    display: inline-block;
+    vertical-align: -1px;
+}
+.main .show-more {
+    margin: 0 12px 12px 0;
+    font-size: 14px;
+    color: #A0A0A0;
+}
+</style><style type="text/css">
+#featured-comment-list {
+  margin-top: 30px;
+  margin-bottom: -15px;
+}
+</style><style type="text/css">
+@charset "UTF-8";
+/*
+ * 变量
+*/
+.pc-bind-phone-modal .modal-content, .pc-bind-phone-modal .modal-body {
+  overflow: visible;
+}
+.pc-bind-phone-modal .modal-body {
+  padding-top: 14px;
+}
+.pc-bind-phone-modal .dropdown-menu {
+  max-height: 300px;
+  overflow: auto;
+}
+.pc-bind-phone-modal .dropdown-menu .tag {
+    background-color: #efefef;
+    color: #4A4A4A;
+    height: 28px;
+    line-height: 28px;
+    padding-left: 25px;
+    font-size: 12px;
+}
+.pc-bind-phone-modal .tips {
+  color: #999999;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 18px;
+  margin-bottom: 14px;
+}
+.pc-bind-phone-modal .tips a {
+    color: #3194D0;
+}
+.reader-night-mode .pc-bind-phone-modal .dropdown-menu .tag {
+  background-color: #2F2F2F;
+  color: #999999;
+}
+</style></head>
+
+  <!-- 只给10%的用户添加代码 -->
+  <!-- ###第四范式-智能推荐：代码直接复制 无需修改参数### -->
+  <!-- ###功能：上报内容并反馈用户行为### -->
+  <!--
+  -->
+  <body lang="zh-CN" class="reader-black-font">
+    <!-- 全局顶部导航栏 -->
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="width-limit">
+    <!-- 左上方 Logo -->
+    <a class="logo" href="https://www.jianshu.com/"><img src="./Android多版本源码及内核编译(Nexus5) - 简书_files/nav-logo-4c7bbafe27adc892f3046e6978459bac.png" alt="Nav logo"></a>
+
+    <!-- 右上角 -->
+      <!-- 未登录显示登录/注册/写文章 -->
+      <a class="btn write-btn" target="_blank" href="https://www.jianshu.com/writer#/">
+        <i class="iconfont ic-write"></i>写文章
+</a>      <a class="btn sign-up" id="sign_up" href="https://www.jianshu.com/sign_up">注册</a>
+      <a class="btn log-in" id="sign_in" href="https://www.jianshu.com/sign_in">登录</a>
+
+    <!-- 如果用户登录，显示下拉菜单 -->
+
+    <div class="nqzzJ71pC-jOnJKAfdtr6_0"><a class="_3tScN0zmSdGLaUAH4SxTbM_0"><img src="./Android多版本源码及内核编译(Nexus5) - 简书_files/nav_jsds_beta-eeb44d165b8ba37680fdb7e65ae17ae4.png" class="_3f806byixOPpOPWnx8HiQP_0"></a> <!----></div>
+
+    <div class="style-mode"><a class="style-mode-btn"><i class="iconfont ic-navigation-mode"></i></a> <div class="popover-modal" style="left: 0px; display: none;"><div class="meta"><i class="iconfont ic-navigation-night"></i><span>夜间模式</span></div> <div class="switch day-night-group"><a class="switch-btn">开</a> <a class="switch-btn active">关</a></div> <hr> <div class="switch font-family-group"><a class="switch-btn font-song">宋体</a> <a class="switch-btn font-hei active">黑体</a></div> <div class="switch"><a class="switch-btn active">简</a> <a class="switch-btn">繁</a></div></div></div>
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse" id="menu">
+        <ul class="nav navbar-nav">
+            <li class="tab ">
+              <a href="https://www.jianshu.com/">
+                <span class="menu-text">首页</span><i class="iconfont ic-navigation-discover menu-icon"></i>
+</a>            </li>
+            <li class="tab ">
+              <a id="web-nav-app-download-btn" class="app-download-btn" href="https://www.jianshu.com/apps?utm_medium=desktop&amp;utm_source=navbar-apps"><span class="menu-text">下载App</span><i class="iconfont ic-navigation-download menu-icon"></i></a>
+            </li>
+          <li class="search">
+            <form target="_blank" action="https://www.jianshu.com/search" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="✓">
+              <input type="text" name="q" id="q" value="" autocomplete="off" placeholder="搜索" class="search-input">
+              <a class="search-btn" href="javascript:void(null)"><i class="iconfont ic-search"></i></a>
+</form>          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+    
+<div class="note">
+  <div id="note-fixed-ad-container">
+    <div id="fixed-ad-container">
+      <div style="display: block;"><a target="_blank" href="https://www.jianshu.com/apps/redirect?utm_source=side-banner-click" id="web-note-ad-fixed"><span class="close">×</span></a></div>
+      <div><a href="https://log-yex.youdao.com/ct?slot=30edd91dd8637d9f645baa8448ba90b3&amp;youdao_bid=e348a897-61f0-4634-8c6c-f92a0951d1f9&amp;yexi=564cbae0b8e9b0b3beff7ae914c3c7be&amp;yexcb=aZVQECsx3bt56tGDnCqIqlNTPTPl_Ar5mvA0qZMgulk5YqRftcQT5SJPf_9NgMg8fpGrkn4aobYq5Lgm7lhjLrsZfyTRTusyR2yCxeBZb8wEmOqqamcs1vY0zvduL9HkPkC9jkXAG4E1-3FZBX9pg8r7b_QriYAKe2gDTvkpLoW3ZrAPPCvl02GFuY0obzho-5EccH0VDeh74Ug8pTgMgQ&amp;yexr=https%3A%2F%2Fdsp-click.youdao.com%2Fclk%2Frequest.s%3Fk%3D%252FCIg7cLHpNL31urp2YEyTqwP6%252BAKy0G3lDj2LuND6UDXxo%252BoRxcJpjjAgKuViCqvIxCHqA9N%252F2c%252F9Be%252FcwcSr947s8bvncI32uJVemP26Ff7bC%252Fxj4XyHpqietYHJMscFESPFCt%252FzAsXBa4C3o36EdsHEM7elkRgO9PHnDVJX%252F%252Bw9C78DsbHsha4wv7CkO70GiVPsM7pVbPLtnvypTte2UVTZT9xN1UTs8lC94BGR5oQyGlfTWppi3Zj2kwbZRqyqIl6VcMkg0oRhTg5H9IIamuRi8lsqQkR2rT1ibjV2IDaHEdKSSEV6JHTv0v1%252B8nPkR6KEqFi0y6oWrNR8a25KC%252FGEGr7HhWtZaHblslZjRNRB952sbXhe4PSRVEwUITa9BRBtpYE6b6%252FrRjVj2tKBzDRSnTRlW9mwQCIymmt8lZct3UYf0A9NFo1sO%252FN4wucd9VEdUbVSdXtyMnk5OczFpm6GzFleN7baJwvrZm1mqmwOrweDTEZcqTwmXUzrHE1%252FyMQgfh4I1RvxMAgywQ7GdjY%252BSsukXSufS%252FMxfGY7ZlV37iXslF446irwqrTJ7GkJW2Piiqj%252FUwvdbUI%252FRTQmAc3c3AyRiQrAMUR7WWNJcy90%252F80K5SyARNXDxCeHbPJ9mjVgzH1h50s0jDpeirB%252FFzWfYi%252F5Pt3s8lYnlhi6lWvcSYAhNVbYOo59F%252BG5HIXzTGPdKw9LXSrCmtpZ3RmGiln3Xg%252FDrCbmXDfaGSF5ElAts1IwYimosSz4%252FG41vEnrn4j5qZ0va4dPKwRk53VIRKgbkCETDgGcZXrM7OQ%252BB20TYVyBYv%252B4QV5ietS2T3%252BnW7a09KS5u0smc2SoUvq6DpSLS45rQx0jjHXx98C3w7s3G%252BDFy4PTTzF3TTBGtny0IDFidJxSDPksi%252ByAj00X2VdCLVDOkla6eZZDfANJrSven8cVvI28HRWWIDL3daeGBdVVLQ5j6KE7eNSVfTVwyGs0twmaa7RSNUkXncAeWWlkL3gIwaEvcco9gE5Sg3dnR6E0voLoLy2xCgg39UioedryljjKRkG2abTSrTLRzASe4Puw8lRVqIiUOyhKdyt0yCTIFgmlKKdmB%252BDEOmkByL8XBg6yXyHvauDf4yXYMK3ob1e9gx8FSKEbGmNGSL84mWgz2XMrl8GI8VEhOyctdfGj6hHFwmmOMCAq5WIKq%252FXxo%252BoRxcJpjjAgKuViCqvpw%252F3mVzkO9CsbORtOffPfw%253D%253D%26isrd%3D1%26youdao_bid%3De348a897-61f0-4634-8c6c-f92a0951d1f9&amp;iid=%7B%228079528265271717415%22%3A4%7D&amp;sid=17024" target="_blank" class="youdao-fixed-ad"><div class="img" style="background-image: url(&quot;https://oimageb4.ydstatic.com/image?id=8079528265271717415&amp;product=adpublish&amp;w=360&amp;h=360&amp;sc=0&amp;rm=2&amp;gsb=0&amp;gsbd=60&quot;);"></div> <span class="ad-badge">广告</span></a> <!----></div>
+      <a href="http://e.cn.miaozhen.com/r/k=2110413&amp;p=7L9Gn&amp;dx=__IPDX__&amp;rt=2&amp;ns=__IP__&amp;ni=__IESID__&amp;v=__LOC__&amp;xa=__ADPLATFORM__&amp;tr=__REQUESTID__&amp;mo=__OS__&amp;m0=__OPENUDID__&amp;m0a=__DUID__&amp;m1=__ANDROIDID1__&amp;m1a=__ANDROIDID__&amp;m2=__IMEI__&amp;m4=__AAID__&amp;m5=__IDFA__&amp;m6=__MAC1__&amp;m6a=__MAC__&amp;vo=3f2e070eb&amp;vr=2&amp;o=https%3A%2F%2Fwww.jianshu.com%2Fp%2Fee05f7eff678" target="_blank" class="yuxi-fixed-ad" style="display: none;"><div class="img"></div> <span class="ad-badge">广告</span></a>
+       <div id="zhangxin-fixed-ad"></div>
+      <div id="_so_pdsBy_0"></div>
+    </div>
+  </div>
+  <div class="post">
+    <div class="article">
+        <h1 class="title">Android多版本源码及内核编译(Nexus5)</h1>
+
+        <!-- 作者区域 -->
+        <div class="author">
+          <a class="avatar" href="https://www.jianshu.com/u/ab742c5b94e2">
+            <img src="./Android多版本源码及内核编译(Nexus5) - 简书_files/5-33d2da32c552b8be9a0548c7a4576607.jpg" alt="96">
+</a>          <div class="info">
+            <span class="name"><a href="https://www.jianshu.com/u/ab742c5b94e2">PR老师</a></span>
+            <!-- 关注用户按钮 -->
+            <a class="btn btn-success follow"><i class="iconfont ic-follow"></i><span>关注</span></a>
+            <!-- 文章数据信息 -->
+            <div class="meta">
+              <!-- 简书钻 -->
+              <!-- 如果文章更新时间大于发布时间，那么使用 tooltip 显示更新时间 -->
+                <span class="publish-time" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="最后编辑于 2017.12.10 04:51">2017.08.29 20:22*</span>
+              <span class="wordage">字数 1700</span>
+            <span class="views-count">阅读 3214</span><span class="comments-count">评论 0</span><span class="likes-count">喜欢 6</span></div>
+          </div>
+          <!-- 如果是当前作者，加入编辑按钮 -->
+        </div>
+
+
+        <!-- 文章内容 -->
+        <div data-note-content="" class="show-content">
+          <div class="show-content-free">
+            <p>因研究逆向工程需要编译多个Android源码和内核在Nexus5真机上运行。通过简书记录编译过程，所以不会针对单个功能做详细介绍，初次接触的同学可以按照下面流程一步一步来进行环境搭建，资源准备，真机编译。</p>
+<hr>
+<h1>源码编译</h1>
+<h2>目标</h2>
+<ul>
+<li>编译Android4.4.4-r1源码及内核</li>
+<li>编译Android6.0.1-r1源码及内核</li>
+</ul>
+<h2>硬件环境</h2>
+<ul>
+<li>Ubuntu 14.0.4LTS</li>
+<li>LG Nexus5 手机</li>
+</ul>
+<h2>环境JDK搭建</h2>
+<p>关于不同版本安卓源码对JDK版本的要求，如下是官方的文字描述：</p>
+<blockquote>
+<p>....<br>
+C.  AOSP 中 Android 的 master 分支：Ubuntu - OpenJDK 8；Mac OS - jdk 8u45 或更高版本<br>
+D.  Android 5.x (Lollipop) - Android 6.0 (Marshmallow)：Ubuntu - OpenJDK 7；Mac OS - jdk-7u71-macosx-x64.dmg<br>
+E.  Android 2.3.x (Gingerbread) - Android 4.4.x (KitKat)：Ubuntu - Java JDK 6；Mac OS - Java JDK 6<br>
+F.  Android 1.5 (Cupcake) - Android 2.2.x (Froyo)：Ubuntu - Java JDK 5<br>
+...</p>
+</blockquote>
+<p>所以编译Android 4.4.4需要 Java JDK 6,  编译Android6.0.1需要openJDK7</p>
+<p>Java JDK 6已经无法通过apt-get install方式安装， oracle官方<a href="https://link.jianshu.com/?t=http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-javase6-419409.html" target="_blank" rel="nofollow">下载地址</a></p>
+<h3>Java JDK 6安装过程:</h3>
+<p>1   把下载的文件放到自己定义的地方.<br>
+2   修改权限<br>
+<code>$chmod 777 jdk-6u45-linux-x64.bin</code><br>
+3   执行<br>
+<code>$./jdk-6u45-linux-x64.bin</code><br>
+4  配置环境变量<br>
+<code>$sudo gedit /etc/profile</code></p>
+<pre class="hljs bash"><code class="bash"><span class="hljs-comment">##添加到profile中保存</span>
+JAVA_HOME=<span class="hljs-variable">$jdk1</span>.6自定目录/jdk1.6.0_45 
+JRE_HOME=<span class="hljs-variable">$JAVA_HOME</span>/jre
+CLASSPATH=<span class="hljs-variable">$CLASSPATH</span>:<span class="hljs-variable">$JAVA_HOME</span>/lib:<span class="hljs-variable">$JRE_HOME</span>/lib
+PATH=<span class="hljs-variable">$PATH</span>:<span class="hljs-variable">$JAVA_HOME</span>/bin:<span class="hljs-variable">$JRE_HOME</span>/bin:<span class="hljs-variable">$JAVA_HOME</span>/lib:<span class="hljs-variable">$JAVA_HOME</span>
+</code></pre>
+<p>5  使/etc/profile生效<br>
+<code>$source /etc/profile</code><br>
+6  查看是否生效<br>
+<code>$java –version</code></p>
+<h3>openJDK7 安装过程</h3>
+<p>终端上执行下面命令<br>
+<code>$sudo apt-get install openjdk-7-jdk</code><br>
+正常情况下会安装到/usr/lib/jvm/java-7-openjdk-adm64/目录下</p>
+<h2>安装基础软件</h2>
+<pre class="hljs bash"><code class="bash"><span class="hljs-variable">$sudo</span> apt-get install git-core gnupg flex bison gperf build-essential
+    zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386
+     lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev ccache
+     libgl1-mesa-dev libxml2-utils xsltproc unzip
+</code></pre>
+<h2>安装Repo</h2>
+<p>1  <strong>创建目录</strong></p>
+<pre class="hljs bash"><code class="bash">$ mkdir ~/bin
+$ PATH=~/bin:<span class="hljs-variable">$PATH</span>
+</code></pre>
+<p>2  <strong>下载 Repo 工具</strong></p>
+<pre class="hljs php"><code class="php"><span class="hljs-comment">//使用了清华大学的镜像文件</span>
+$curl https:<span class="hljs-comment">//mirrors.tuna.tsinghua.edu.cn/git/git-repo &gt; ~/bin/repo</span>
+$chmod a+x ~/bin/repo
+</code></pre>
+<h2>同步源码</h2>
+<p>1  <strong>建立工作目录</strong></p>
+<pre class="hljs bash"><code class="bash"><span class="hljs-variable">$mkdir</span> WORKING_DIRECTORY
+<span class="hljs-variable">$cd</span> WORKING_DIRECTORY
+</code></pre>
+<p>2   <strong>初始化仓库</strong></p>
+<pre class="hljs php"><code class="php"><span class="hljs-comment">//WORKING_DIRECTORY 源码要放的目录</span>
+$mkdir WORKING_DIRECTORY
+$cd WORKING_DIRECTORY
+</code></pre>
+<p>初始化特定的 Android 版本列表文件，本文选择了两个支持Nexus 5的版本<br>
+，此处使用清华大学的镜像文件。</p>
+<pre class="hljs php"><code class="php"><span class="hljs-comment">//android-4.4.4_r1使用</span>
+$repo init -u https:<span class="hljs-comment">//aosp.tuna.tsinghua.edu.cn/platform/manifest -b android-4.4.4_r1</span>
+<span class="hljs-comment">//android-6.0.1_r1使用</span>
+$repo init -u https:<span class="hljs-comment">//aosp.tuna.tsinghua.edu.cn/platform/manifest -b android-6.0.1_r1</span>
+</code></pre>
+<p>如果提示无法连接到 gerrit.googlesource.com，参考<a href="https://link.jianshu.com/?t=https://mirrors.tuna.tsinghua.edu.cn/help/git-repo/" target="_blank" rel="nofollow">链接</a></p>
+<p>3  <strong>同步源码</strong><br>
+<code>$repo sync –j4</code><br>
+同步时间看大家自己网络情况，我的网络比较好，大约花了2个小时同步一个版本</p>
+<p>4  <strong>下载驱动文件</strong><br>
+首先查看源码分支列表，确定源码分支代号<br>
+</p><div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 469px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 52.93%;"></div>
+<div class="image-view" data-width="886" data-height="469"><img data-original-src="//upload-images.jianshu.io/upload_images/7548581-6a00a18d8df679aa.png" data-original-width="886" data-original-height="469" data-original-format="image/png" data-original-filesize="61828" style="cursor: zoom-in;" class="" src="./Android多版本源码及内核编译(Nexus5) - 简书_files/7548581-6a00a18d8df679aa.png"></div>
+</div>
+<div class="image-caption">Android4.4.4-r1分支代号KTU84P</div>
+</div><br>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 378px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 44.73%;"></div>
+<div class="image-view" data-width="845" data-height="378"><img data-original-src="//upload-images.jianshu.io/upload_images/7548581-0b604b55ed77dbf5.png" data-original-width="845" data-original-height="378" data-original-format="image/png" data-original-filesize="40645" style="cursor: zoom-in;" class="" src="./Android多版本源码及内核编译(Nexus5) - 简书_files/7548581-0b604b55ed77dbf5.png"></div>
+</div>
+<div class="image-caption">Android6.0.1-r1分支代号MMB29K</div>
+</div><p></p>
+<p>5  <strong>下载驱动</strong><br>
+访问<a href="https://link.jianshu.com/?t=https://developers.google.com/android/nexus/drivers#hikey" target="_blank" rel="nofollow">https://developers.google.com/android/nexus/drivers#hikey</a>（暂时没发现国内有镜像，如果有需要的话加我QQ3231549366）中找到对应设备与源码分支的硬件驱动。</p>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 286px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 31.290000000000003%;"></div>
+<div class="image-view" data-width="914" data-height="286"><img data-original-src="//upload-images.jianshu.io/upload_images/7548581-bfc65b94b862b657.png" data-original-width="914" data-original-height="286" data-original-format="image/png" data-original-filesize="48044" style="cursor: zoom-in;" class="" src="./Android多版本源码及内核编译(Nexus5) - 简书_files/7548581-bfc65b94b862b657.png"></div>
+</div>
+<div class="image-caption">KTU84P Nexus5驱动列表</div>
+</div>
+<div class="image-package">
+<div class="image-container" style="max-width: 700px; max-height: 274px; background-color: transparent;">
+<div class="image-container-fill" style="padding-bottom: 30.009999999999998%;"></div>
+<div class="image-view" data-width="913" data-height="274"><img data-original-src="//upload-images.jianshu.io/upload_images/7548581-547df3b961f18892.png" data-original-width="913" data-original-height="274" data-original-format="image/png" data-original-filesize="47488" style="cursor: zoom-in;" class="" src="./Android多版本源码及内核编译(Nexus5) - 简书_files/7548581-547df3b961f18892.png"></div>
+</div>
+<div class="image-caption">MMB29 Nexus5驱动列表</div>
+</div>
+<p>下载对应版本的渠道文件，依次解压三个文件，得到的三个shell脚本文件，将其置于源码根目录中再依次执行三个脚本，执行操作前，它会让你阅读相关协议，协议比较多有8项，最后输入I ACCEPT即可。执行完成以后会在源码的主目录生成一个vendor目录。注意执行shell的顺序，我第一次编译的时候没按照顺序执行，刷完机发现屏幕显示有问题，具体原因就没去研究，解决方法：删除了vendor目录，按照顺序又执行了一遍，重新编译后一切正常。</p>
+<h2>初始化编译环境</h2>
+<p>1  <strong>执行配置</strong></p>
+<pre class="hljs php"><code class="php"><span class="hljs-comment">//终端执行</span>
+$source build/envsetup.sh
+<span class="hljs-comment">//输出信息</span>
+including device/asus/deb/vendorsetup.sh
+including device/asus/flo/vendorsetup.sh
+including device/asus/fugu/vendorsetup.sh
+including device/generic/mini-emulator-arm64/vendorsetup.sh
+including device/generic/mini-emulator-armv7-a-neon/vendorsetup.sh
+including device/generic/mini-emulator-mips/vendorsetup.sh
+including device/generic/mini-emulator-x86_64/vendorsetup.sh
+including device/generic/mini-emulator-x86/vendorsetup.sh
+including device/htc/flounder/vendorsetup.sh
+including device/huawei/angler/vendorsetup.sh
+including device/lge/bullhead/vendorsetup.sh
+including device/lge/hammerhead/vendorsetup.sh
+including device/moto/shamu/vendorsetup.sh
+including sdk/bash_completion/adb.bash
+</code></pre>
+<p>2  <strong>选择编译类型</strong></p>
+<pre class="hljs cpp"><code class="cpp"><span class="hljs-comment">//终端执行</span>
+$lunch
+<span class="hljs-comment">//输出信息</span>
+You're building on Linux
+
+Lunch menu... pick a combo:
+     <span class="hljs-number">1.</span> aosp_arm-eng
+     <span class="hljs-number">2.</span> aosp_x86-eng
+     <span class="hljs-number">3.</span> aosp_mips-eng
+     <span class="hljs-number">4.</span> vbox_x86-eng
+     <span class="hljs-number">5.</span> aosp_hammerhead-userdebug
+     <span class="hljs-number">6.</span> aosp_mako-userdebug
+     <span class="hljs-number">7.</span> aosp_deb-userdebug
+     <span class="hljs-number">8.</span> aosp_tilapia-userdebug
+     <span class="hljs-number">9.</span> aosp_grouper-userdebug
+     <span class="hljs-number">10.</span> aosp_flo-userdebug
+     <span class="hljs-number">11.</span> mini_armv7a_neon-userdebug
+     <span class="hljs-number">12.</span> mini_mips-userdebug
+     <span class="hljs-number">13.</span> mini_x86-userdebug
+     <span class="hljs-number">14.</span> aosp_manta-userdebug
+
+Which would you like? [aosp_arm-eng]
+<span class="hljs-comment">//选择5， 因为Nexus5设备代号就是hammerhead，会出现下面的输出信息</span>
+
+###<span class="hljs-meta"># make completed successfully  ####</span>
+============================================
+PLATFORM_VERSION_CODENAME=REL
+PLATFORM_VERSION=<span class="hljs-number">4.4</span><span class="hljs-number">.4</span>
+TARGET_PRODUCT=aosp_hammerhead
+TARGET_BUILD_VARIANT=userdebug
+TARGET_BUILD_TYPE=release
+TARGET_BUILD_APPS=
+TARGET_ARCH=arm
+TARGET_ARCH_VARIANT=armv7-a-neon
+TARGET_CPU_VARIANT=krait
+HOST_ARCH=x86
+HOST_OS=linux
+HOST_OS_EXTRA=Linux<span class="hljs-number">-4.2</span><span class="hljs-number">.0</span><span class="hljs-number">-27</span>-generic-x86_64-with-Ubuntu<span class="hljs-number">-14.04</span>-trusty
+HOST_BUILD_TYPE=release
+BUILD_ID=KTU84P
+OUT_DIR=out
+============================================
+
+</code></pre>
+<p>3  <strong>检查Java环境</strong></p>
+<pre class="hljs php"><code class="php"><span class="hljs-comment">//终端执行</span>
+$java –version 
+
+<span class="hljs-comment">//Android 4.4.4 需要 Java JDK 6</span>
+<span class="hljs-comment">//Android 6.0.1需要open JDK7</span>
+    
+<span class="hljs-comment">//有的时候大家通过update-alternatives命令切换当前JAVA环境。</span>
+<span class="hljs-comment">//sudo update-alternatives --config java</span>
+<span class="hljs-comment">//sudo update-alternatives --config javac</span>
+<span class="hljs-comment">//sudo update-alternatives --config javaws</span>
+<span class="hljs-comment">//envsetup.sh中会使用当前环境变量中JAVA_HOME指定的JDK，虽然Android 4.4.4有指定使用java6，最好还是通过修改/etc/profile中JAVA_HOME 指定jdk的版本，</span>
+
+</code></pre>
+<h2>编译</h2>
+<pre class="hljs php"><code class="php">$make –j16
+<span class="hljs-comment">//j后面的参数取决于你电脑处理器的核心数，j=核心数*2 </span>
+大约<span class="hljs-number">2</span><span class="hljs-number">-3</span>个小时。
+</code></pre>
+<h2>刷机</h2>
+<p>1  <strong>进入recovery模式</strong><br>
+将Nexus5设备连接到电脑上，打开usb调试，输入<code>$sudo adb reboot bootloader</code> 手机就会进入recovery模式。<br>
+2  <strong>刷机</strong></p>
+<pre class="hljs php"><code class="php">$fastboot flashall –w
+<span class="hljs-comment">//或者fastboot -w flashall 刷机的过程大概在一至两分钟左右，刷机结束后会自动开机。</span>
+</code></pre>
+<h1>内核编译</h1>
+<h2>下载内核</h2>
+<p>当前工程目录下新建kernel目录，同步远程kernel代码仓库到本地</p>
+<pre class="hljs php"><code class="php">$git <span class="hljs-keyword">clone</span> https:<span class="hljs-comment">//aosp.tuna.tsinghua.edu.cn/kernel/msm.git</span>
+<span class="hljs-comment">//仓库文件大概有1.2G的大小，同步完成以后本地有文件夹msm</span>
+</code></pre>
+<h2>确认分支</h2>
+<pre class="hljs bash"><code class="bash"><span class="hljs-variable">$cd</span> msm
+<span class="hljs-variable">$git</span> branch -a
+//终端会输出如下信息
+    .
+    .
+    .
+  remotes/origin/android-msm-hammerhead-3.4-kitkat-mr1
+  remotes/origin/android-msm-hammerhead-3.4-kitkat-mr2
+  remotes/origin/android-msm-hammerhead-3.4-kk-fr1
+  remotes/origin/android-msm-hammerhead-3.4-kk-fr2
+  remotes/origin/android-msm-hammerhead-3.4-kk-r1
+  remotes/origin/android-msm-hammerhead-3.4<span class="hljs-_">-l</span>-preview
+  remotes/origin/android-msm-hammerhead-3.4-lollipop-mr1
+  remotes/origin/android-msm-hammerhead-3.4-lollipop-mr1.1
+  remotes/origin/android-msm-hammerhead-3.4-lollipop-release
+  remotes/origin/android-msm-hammerhead-3.4-m-preview
+  remotes/origin/android-msm-hammerhead-3.4-marshmallow
+  remotes/origin/android-msm-hammerhead-3.4-marshmallow-mr1
+  remotes/origin/android-msm-hammerhead-3.4-marshmallow-mr2
+  remotes/origin/android-msm-hammerhead-3.4-marshmallow-mr3
+    .
+    .
+    .
+</code></pre>
+<p>1  <strong>Android4.4.4_r1分支</strong></p>
+<blockquote>
+<p>remotes/origin/android-msm-hammerhead-3.4-kitkat-mr2</p>
+</blockquote>
+<p>2 <strong>Android6.0.1_r1分支</strong><br>
+按照设备代号，源码中的内核版本号，Android版本代号描述，有3个分支</p>
+<blockquote>
+<p>remotes/origin/android-msm-hammerhead-3.4-marshmallow-mr1<br>
+remotes/origin/android-msm-hammerhead-3.4-marshmallow-mr2<br>
+remotes/origin/android-msm-hammerhead-3.4-marshmallow-mr3</p>
+</blockquote>
+<p>理论上面这3个分支都可以使用，mr是"maintenance release"简写。因工作需要本文还是需要和源码中的kernel一致<br>
+3  <strong>通过官方提供的命令行获取</strong><br>
+非 Nexus 5 (hammerhead)运行以下命令</p>
+<blockquote>
+<p>$ dd if=kernel bs=1 skip=$(LC_ALL=C grep -a -b -o $'\x1f\x8b\x08\x00\x00\x00\x00\x00' kernel | cut -d ':' -f 1) | zgrep -a 'Linux version'<br>
+//Kernel在源码out/target/product/hammerhead/目录下</p>
+</blockquote>
+<p>对于 Nexus 5 (hammerhead)，请运行以下命令：</p>
+<blockquote>
+<p>$ dd if=zImage-dtb bs=1 skip=$(LC_ALL=C od -Ad -x -w2 zImage-dtb | grep 8b1f | cut -d ' ' -f1 | head -1) | zgrep -a 'Linux version'<br>
+//zImage-dtb在源码/device/lge/hammerhead-kernel目录下</p>
+</blockquote>
+<pre class="hljs objectivec"><code class="objectivec"><span class="hljs-comment">//Android4.4.4-r1输出信息</span>
+Linux version <span class="hljs-number">3.4</span><span class="hljs-number">.0</span>-gd59db4e (android-build@vpbs1.mtv.corp.google.com) (gcc version <span class="hljs-number">4.7</span> (GCC) ) <span class="hljs-meta">#1 SMP PREEMPT Mon Mar 17 15:16:36 PDT 2014</span>
+    Linux version <span class="hljs-built_in">CIFS</span> VFS Client <span class="hljs-keyword">for</span> Linux&lt;<span class="hljs-number">7</span>&gt;%s: sess setup type %
+
+<span class="hljs-comment">//Android6.0.1-r1输出信息</span>
+Linux version <span class="hljs-number">3.4</span><span class="hljs-number">.0</span>-g7717f76 (android-build@kpfi6.cbf.corp.google.com) (gcc version <span class="hljs-number">4.8</span> (GCC) ) <span class="hljs-meta">#1 SMP PREEMPT Wed Nov 4 21:42:24 UTC 2015</span>
+    Linux version <span class="hljs-built_in">CIFS</span> VFS Client <span class="hljs-keyword">for</span> Linux&lt;<span class="hljs-number">7</span>&gt;%s: sess setup type %d
+</code></pre>
+<p>Linux version 3.4.0-gd59db4e 文本中d59db4e是git commit版本号信息<br>
+Linux version 3.4.0-g7717f76  文本中7717f76是git commit版本号信息</p>
+<p>4  <strong>在关于手机内核版本信息查看</strong><br>
+5   <strong>在代码中或者adb中通过cat /proc/version信息查看</strong></p>
+<h2>内核源码下载</h2>
+<pre class="hljs cpp"><code class="cpp"><span class="hljs-comment">//输入终端命令获取到对应的内核源码：</span>
+<span class="hljs-comment">//Android4.4.4-r</span>
+$ git checkout d59db4e
+或者
+$ git checkout -b remotes/origin/android-msm-hammerhead<span class="hljs-number">-3.4</span>-kitkat-mr2
+
+<span class="hljs-comment">//Android6.0.1-r</span>
+$ git checkout <span class="hljs-number">7717f</span>76
+
+</code></pre>
+<h2>内核源码编译</h2>
+<p>设置环境变量</p>
+<pre class="hljs php"><code class="php"><span class="hljs-comment">//需要设置环境变量可以在kernel源码根目录下build.config文件中查看</span>
+<span class="hljs-comment">//Android6.0.1-r1</span>
+$export ANDROID_SRC_PATH=源码根目录
+$export PATH=$ANDROID_SRC_PATH/prebuilts/gcc/linux-x86/arm/arm-eabi<span class="hljs-number">-4.8</span>/bin:$PATH 
+$export ARCH=arm
+$export SUBARCH=arm
+$export CROSS_COMPILE=arm-eabi-
+
+<span class="hljs-comment">//Android4.4.4-r1</span>
+$export ANDROID_SRC_PATH=源码根目录
+$export PATH=$ANDROID_SRC_PATH/prebuilts/gcc/linux-x86/arm/arm-eabi<span class="hljs-number">-4.6</span>/bin:$PATH 
+$export ARCH=arm
+$export SUBARCH=arm
+$export CROSS_COMPILE=arm-eabi-
+
+</code></pre>
+<p>配置<br>
+<code>$make hammerhead_defconfig</code></p>
+<p>编译</p>
+<pre class="hljs bash"><code class="bash"><span class="hljs-variable">$make</span>
+</code></pre>
+<p>终端输出：Kernel: arch/arm/boot/zImage-dtb is ready 编译完成</p>
+<p>使用zImage-dtb替换/device/lge/hammerhead-kernel/zImage-dtb文件重新编译源码，编译后boot.img的内核就是我们编译的内核，可以在手机的关于界面内核信息可以看到。</p>
+<p>也可以通过如下文bootimg-tools针对当前编译后的boot.img重打包，毕竟重编译的时间太长了。</p>
+<h2>Boot.img重打包</h2>
+<p>bootimg-tools工具是一款基于mkbootimg开发的boot.img 解包重打包C语言工具，github地址：<a href="https://link.jianshu.com/?t=https://github.com/pbatard/bootimg-tools" target="_blank" rel="nofollow">https://github.com/pbatard/bootimg-tools</a></p>
+<p>1  <strong>下载编译bootimg-tools</strong></p>
+<pre class="hljs php"><code class="php"><span class="hljs-comment">//kernel/msm根目录终端命令行下执行</span>
+$mkdir bootimg-tools
+$cd bootimg-tools
+$git <span class="hljs-keyword">clone</span> https:<span class="hljs-comment">//github.com/pbatard/bootimg-tools.git</span>
+$make 
+</code></pre>
+<p>编译完成以后，在 makebootimg目录下生成了相应的二进制执行文件,将该二进制文件所在路径添加到 PATH路径中。</p>
+<p>2 <strong>终端上执行解包</strong>：</p>
+<pre class="hljs bash"><code class="bash"><span class="hljs-variable">$cd</span> 源码目录/out/target/product/hammerhead/
+<span class="hljs-variable">$unmkbootimg</span> –i boot.img
+
+//执行完毕输出信息
+/* 
+kernel written to <span class="hljs-string">'kernel'</span> (8451496 bytes)
+ramdisk written to <span class="hljs-string">'ramdisk.cpio.gz'</span> (923769 bytes)
+
+To rebuild this boot image, you can use the <span class="hljs-built_in">command</span>:
+  mkbootimg --base 0 --pagesize 2048 --kernel_offset 0x00008000 --ramdisk_offset 0x02900000 --second_offset 0x00f00000 --tags_offset 0x02700000 --cmdline <span class="hljs-string">'console=ttyHSL0,115200,n8 androidboot.hardware=hammerhead user_debug=31 maxcpus=2 msm_watchdog_v2.enable=1'</span> --kernel kernel --ramdisk ramdisk.cpio.gz -o boot.img
+*/
+</code></pre>
+<p>3  <strong>覆盖原来的kernel</strong><br>
+把内核源码目录下生成的arch/arm/boot目录下的zImage-dtb拷贝到Android源码目录out/target/product/hammerhead下。<br>
+并改名为kernel（注意备份原始的kernel文件）</p>
+<p>4 <strong>重打包</strong><br>
+使用步骤2中输出的mkbootimg 命令</p>
+<pre class="hljs php"><code class="php"><span class="hljs-comment">//ramdisk.cpio.gz boot.img 可以在命令上指定目录,例子是在当前目录下执行，所以不需要全路径</span>
+$cd 安卓源码目录/out/target/product/hammerhead/
+$mkbootimg --base <span class="hljs-number">0</span> --pagesize <span class="hljs-number">2048</span> --kernel_offset <span class="hljs-number">0x00008000</span> --ramdisk_offset <span class="hljs-number">0x02900000</span> --second_offset <span class="hljs-number">0x00f00000</span> --tags_offset <span class="hljs-number">0x02700000</span> --cmdline <span class="hljs-string">'console=ttyHSL0,115200,n8 androidboot.hardware=hammerhead user_debug=31 maxcpus=2 msm_watchdog_v2.enable=1'</span> --kernel kernel --ramdisk ramdisk.cpio.gz -o boot.img
+</code></pre>
+<p>生成boot.img后，连接手机执行烧写</p>
+<p>5  <strong>烧写</strong></p>
+<pre class="hljs ruby"><code class="ruby">$ adb reboot bootloader
+$ fastboot flash boot boot.img
+</code></pre>
+<h1>总结</h1>
+<p>本文介绍了2个版本源码和内核编译，其它版本源码和内核版本类似，主要是如何确认细节部分文中也做了说明。<br>
+后续会写些逆向工程方面的学习资料，主要包含基础知识，相关工具介绍，逆向思维，主要是Android方面了。</p>
+<p>参考文档：<br>
+1 <a href="https://link.jianshu.com/?t=https://source.android.com/source/requirements" target="_blank" rel="nofollow">https://source.android.com/source/requirements</a><br>
+2 <a href="https://link.jianshu.com/?t=http://blog.csdn.net/liu1075538266/article/details/51272398" target="_blank" rel="nofollow">http://blog.csdn.net/liu1075538266/article/details/51272398</a><br>
+3 <a href="https://link.jianshu.com/?t=https://mirrors.tuna.tsinghua.edu.cn/help/AOSP/" target="_blank" rel="nofollow">https://mirrors.tuna.tsinghua.edu.cn/help/AOSP/</a></p>
+
+          </div>
+        </div>
+    </div>
+
+    <!-- 如果是付费文章，未购买，则显示购买按钮 -->
+
+    <!-- 连载目录项 -->
+
+    <!-- 如果是付费文章 -->
+      <!-- 如果是付费连载，已购买，且作者允许赞赏，则显示付费信息和赞赏 -->
+        <div id="free-reward-panel" class="support-author"><p>小礼物走一走，来简书关注我</p> <div class="btn btn-pay">赞赏支持</div> <div class="supporter"><ul class="support-list"></ul> <!----></div> <!----> <!----></div>
+
+      <div class="show-foot">
+        <a class="notebook" href="https://www.jianshu.com/nb/15740582">
+          <i class="iconfont ic-search-notebook"></i>
+          <span>随笔</span>
+</a>        <div class="copyright" data-toggle="tooltip" data-html="true" data-original-title="转载请联系作者获得授权，并标注“简书作者”。">
+          © 著作权归作者所有
+        </div>
+        <div class="modal-wrap" data-report-note="">
+          <a id="report-modal">举报文章</a>
+        </div>
+      </div>
+
+      <!-- 文章底部作者信息 -->
+        <div class="follow-detail">
+          <div class="info">
+            <a class="avatar" href="https://www.jianshu.com/u/ab742c5b94e2">
+              <img src="./Android多版本源码及内核编译(Nexus5) - 简书_files/5-33d2da32c552b8be9a0548c7a4576607.jpg" alt="96">
+</a>            <a class="btn btn-success follow"><i class="iconfont ic-follow"></i><span>关注</span></a>
+            <a class="title" href="https://www.jianshu.com/u/ab742c5b94e2">PR老师</a>
+          <p>写了 1700 字，被 4 人关注，获得了 6 个喜欢</p></div>
+        </div>
+
+    <div class="meta-bottom">
+      <div data-v-6ddd02c6="" class="like"><div data-v-6ddd02c6="" class="btn like-group"><div data-v-6ddd02c6="" class="btn-like"><a data-v-6ddd02c6="">喜欢</a></div> <div data-v-6ddd02c6="" class="modal-wrap"><a data-v-6ddd02c6="">6</a></div></div> <!----></div>
+      <div class="share-group">
+        <a class="share-circle" data-action="weixin-share" data-toggle="tooltip" data-original-title="分享到微信">
+          <i class="iconfont ic-wechat"></i>
+        </a>
+        <a class="share-circle" data-action="weibo-share" data-toggle="tooltip" href="javascript:void((function(s,d,e,r,l,p,t,z,c){var%20f=&#39;http://v.t.sina.com.cn/share/share.php?appkey=1881139527&#39;,u=z||d.location,p=[&#39;&amp;url=&#39;,e(u),&#39;&amp;title=&#39;,e(t||d.title),&#39;&amp;source=&#39;,e(r),&#39;&amp;sourceUrl=&#39;,e(l),&#39;&amp;content=&#39;,c||&#39;gb2312&#39;,&#39;&amp;pic=&#39;,e(p||&#39;&#39;)].join(&#39;&#39;);function%20a(){if(!window.open([f,p].join(&#39;&#39;),&#39;mb&#39;,[&#39;toolbar=0,status=0,resizable=1,width=440,height=430,left=&#39;,(s.width-440)/2,&#39;,top=&#39;,(s.height-430)/2].join(&#39;&#39;)))u.href=[f,p].join(&#39;&#39;);};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();})(screen,document,encodeURIComponent,&#39;&#39;,&#39;&#39;,&#39;&#39;, &#39;推荐 PR老师 的文章《Android多版本源码及内核编译(Nexus5)》（ 分享自 @简书 ）&#39;,&#39;https://www.jianshu.com/p/33b5c4061f6c?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=weibo&#39;,&#39;页面编码gb2312|utf-8默认gb2312&#39;));" data-original-title="分享到微博">
+          <i class="iconfont ic-weibo"></i>
+        </a>
+        <a class="share-circle" data-toggle="tooltip" id="longshare" target="_blank" data-original-title="" title="">
+            <div class="qrcode" id="qrcode">
+             <img src="./Android多版本源码及内核编译(Nexus5) - 简书_files/download-index-side-qrcode-cb13fc9106a478795f8d10f9f632fccf.png" alt="Download index side qrcode">
+             <p>下载app生成长微博图片</p>
+             </div>
+          <i class="iconfont ic-picture"></i>
+        </a>
+        <a class="share-circle more-share" tabindex="0" data-toggle="popover" data-placement="top" data-html="true" data-trigger="focus" href="javascript:void(0);" data-content="
+          &lt;ul class=&quot;share-list&quot;&gt;
+            &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=&#39;+e(&#39;https://www.jianshu.com/p/33b5c4061f6c?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=qzone&#39;)+&#39;&amp;title=&#39;+e(&#39;推荐 PR老师 的文章《Android多版本源码及内核编译(Nexus5)》&#39;),x=function(){if(!window.open(r,&#39;qzone&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();&quot;&gt;&lt;i class=&quot;social-icon-sprite social-icon-zone&quot;&gt;&lt;/i&gt;&lt;span&gt;分享到QQ空间&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://twitter.com/share?url=&#39;+e(&#39;https://www.jianshu.com/p/33b5c4061f6c?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=twitter&#39;)+&#39;&amp;text=&#39;+e(&#39;推荐 PR老师 的文章《Android多版本源码及内核编译(Nexus5)》（ 分享自 @jianshucom ）&#39;)+&#39;&amp;related=&#39;+e(&#39;jianshucom&#39;),x=function(){if(!window.open(r,&#39;twitter&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();&quot;&gt;&lt;i class=&quot;social-icon-sprite social-icon-twitter&quot;&gt;&lt;/i&gt;&lt;span&gt;分享到Twitter&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://www.facebook.com/dialog/share?app_id=483126645039390&amp;display=popup&amp;href=https://www.jianshu.com/p/33b5c4061f6c?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=facebook&#39;,x=function(){if(!window.open(r,&#39;facebook&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();&quot;&gt;&lt;i class=&quot;social-icon-sprite social-icon-facebook&quot;&gt;&lt;/i&gt;&lt;span&gt;分享到Facebook&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://plus.google.com/share?url=&#39;+e(&#39;https://www.jianshu.com/p/33b5c4061f6c?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=google_plus&#39;),x=function(){if(!window.open(r,&#39;google_plus&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();&quot;&gt;&lt;i class=&quot;social-icon-sprite social-icon-google&quot;&gt;&lt;/i&gt;&lt;span&gt;分享到Google+&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:&#39;&#39;,r=&#39;http://www.douban.com/recommend/?url=&#39;+e(&#39;https://www.jianshu.com/p/33b5c4061f6c?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=douban&#39;)+&#39;&amp;title=&#39;+e(&#39;Android多版本源码及内核编译(Nexus5)&#39;)+&#39;&amp;sel=&#39;+e(s)+&#39;&amp;v=1&#39;,x=function(){if(!window.open(r,&#39;douban&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r+&#39;&amp;r=1&#39;};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()&quot;&gt;&lt;i class=&quot;social-icon-sprite social-icon-douban&quot;&gt;&lt;/i&gt;&lt;span&gt;分享到豆瓣&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+          &lt;/ul&gt;
+        " data-original-title="" title="">更多分享</a>
+      </div>
+    </div>
+
+    <div id="note-ad" class=""><a id="web-note-ad-1" target="_blank" href="https://www.jianshu.com/apps/redirect?utm_source=note-bottom-click"><img src="./Android多版本源码及内核编译(Nexus5) - 简书_files/web-note-ad-1-c2e1746859dbf03abe49248893c9bea4.png" alt="Web note ad 1"></a></div>
+
+    <!--
+    <div id="note-comment-above-ad-container">
+      <span id="youdao-comment-ad" class="ad-badge">广告</span>
+    </div>
+    -->
+    <div><div id="comment-list" class="comment-list"><div><form class="new-comment"><a class="avatar"><img src="./Android多版本源码及内核编译(Nexus5) - 简书_files/avatar_default-78d4d1f68984cd6d4379508dd94b4210.png"></a> <div class="sign-container"><a href="https://www.jianshu.com/sign_in?utm_source=desktop&amp;utm_medium=not-signed-in-comment-form" class="btn btn-sign">登录</a> <span>后发表评论</span></div></form> <!----></div> <!----> <div class="comments-placeholder" style="display: none;"><div class="author"><div class="avatar"></div> <div class="info"><div class="name"></div> <div class="meta"></div></div></div> <div class="text"></div> <div class="text animation-delay"></div> <div class="tool-group"><i class="iconfont ic-zan-active"></i><div class="zan"></div> <i class="iconfont ic-list-comments"></i><div class="zan"></div></div></div> <div id="normal-comment-list" class="normal-comment-list"><div><!----> <div><div class="top-title"><span>评论</span> <a class="close-btn" style="display: none;">关闭评论</a></div> <div class="no-comment"></div> <div class="text">
+            智慧如你，不想<a href="https://www.jianshu.com/sign_in?utm_source=desktop&amp;utm_medium=not-signed-in-nocomments-text">发表一点想法</a>咩~
+          </div></div> <!----> <div class="comments-placeholder" style="display: none;"><div class="author"><div class="avatar"></div> <div class="info"><div class="name"></div> <div class="meta"></div></div></div> <div class="text"></div> <div class="text animation-delay"></div> <div class="tool-group"><i class="iconfont ic-zan-active"></i><div class="zan"></div> <i class="iconfont ic-list-comments"></i><div class="zan"></div></div></div> </div></div> <!----> <div><!----></div></div></div>
+  </div>
+
+  <div class="side-tool"><ul><li data-placement="left" data-toggle="tooltip" data-container="body" data-original-title="回到顶部" style="display: none;"><a class="function-button"><i class="iconfont ic-backtop"></i></a></li> <!----> <!----> <!----> <!----> <li data-placement="left" data-toggle="tooltip" data-container="body" data-original-title="分享文章" id="share"><a tabindex="0" role="button" data-toggle="popover" data-placement="left" data-html="true" data-trigger="focus" href="javascript:void(0);" data-content="&lt;ul class=&#39;share-list&#39; style=&quot;width:220px&quot;&gt;
+                  &lt;li&gt;&lt;a class=&quot;weixin-share&quot;&gt;&lt;i class=&quot;social-icon-sprite social-icon-weixin&quot;&gt;&lt;/i&gt;&lt;span&gt;分享到微信&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                  &lt;li&gt;&lt;a href=&quot;javascript:void((function(s,d,e,r,l,p,t,z,c){var%20f=&#39;http://v.t.sina.com.cn/share/share.php?appkey=1881139527&#39;,u=z||d.location,p=[&#39;&amp;url=&#39;,e(u),&#39;&amp;title=&#39;,e(t||d.title),&#39;&amp;source=&#39;,e(r),&#39;&amp;sourceUrl=&#39;,e(l),&#39;&amp;content=&#39;,c||&#39;gb2312&#39;,&#39;&amp;pic=&#39;,e(p||&#39;&#39;)].join(&#39;&#39;);function%20a(){if(!window.open([f,p].join(&#39;&#39;),&#39;mb&#39;,[&#39;toolbar=0,status=0,resizable=1,width=440,height=430,left=&#39;,(s.width-440)/2,&#39;,top=&#39;,(s.height-430)/2].join(&#39;&#39;)))u.href=[f,p].join(&#39;&#39;);};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();})(screen,document,encodeURIComponent,&#39;&#39;,&#39;&#39;,&#39;&#39;, &#39;推荐 PR老师 的文章《Android多版本源码及内核编译(Nexus5)》（ 分享自 @简书 ）&#39;,&#39;https://www.jianshu.com/p/33b5c4061f6c?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=weibo&#39;,&#39;页面编码gb2312|utf-8默认gb2312&#39;));&quot;&gt;&lt;i class=&#39;social-icon-sprite social-icon-weibo&#39;&gt;&lt;/i&gt;&lt;span&gt;分享到微博&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                  
+                  &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=&#39;+e(&#39;https://www.jianshu.com/p/33b5c4061f6c?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=qzone&#39;)+&#39;&amp;title=&#39;+e(&#39;推荐 PR老师 的文章《Android多版本源码及内核编译(Nexus5)》&#39;),x=function(){if(!window.open(r,&#39;qzone&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();&quot;&gt;&lt;i class=&#39;social-icon-sprite social-icon-zone&#39;&gt;&lt;/i&gt;&lt;span&gt;分享到QQ空间&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                  &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://twitter.com/share?url=&#39;+e(&#39;https://www.jianshu.com/p/33b5c4061f6c?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=twitter&#39;)+&#39;&amp;text=&#39;+e(&#39;推荐 PR老师 的文章《Android多版本源码及内核编译(Nexus5)》（ 分享自 @jianshucom ）&#39;)+&#39;&amp;related=&#39;+e(&#39;jianshucom&#39;),x=function(){if(!window.open(r,&#39;twitter&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=600,height=600&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();&quot;&gt;&lt;i class=&#39;social-icon-sprite social-icon-twitter&#39;&gt;&lt;/i&gt;&lt;span&gt;分享到Twitter&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                  &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://www.facebook.com/dialog/share?app_id=483126645039390&amp;display=popup&amp;href=https://www.jianshu.com/p/33b5c4061f6c?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=facebook&#39;,x=function(){if(!window.open(r,&#39;facebook&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();&quot;&gt;&lt;i class=&#39;social-icon-sprite social-icon-facebook&#39;&gt;&lt;/i&gt;&lt;span&gt;分享到Facebook&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                  &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,r=&#39;https://plus.google.com/share?url=&#39;+e(&#39;https://www.jianshu.com/p/33b5c4061f6c?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=google_plus&#39;),x=function(){if(!window.open(r,&#39;google_plus&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})();&quot;&gt;&lt;i class=&#39;social-icon-sprite social-icon-google&#39;&gt;&lt;/i&gt;&lt;span&gt;分享到Google+&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                  &lt;li&gt;&lt;a href=&quot;javascript:void(function(){var d=document,e=encodeURIComponent,s1=window.getSelection,s2=d.getSelection,s3=d.selection,s=s1?s1():s2?s2():s3?s3.createRange().text:&#39;&#39;,r=&#39;http://www.douban.com/recommend/?url=&#39;+e(&#39;https://www.jianshu.com/p/33b5c4061f6c?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=reader_share&amp;utm_source=douban&#39;)+&#39;&amp;title=&#39;+e(&#39;Android多版本源码及内核编译(Nexus5)&#39;)+&#39;&amp;sel=&#39;+e(s)+&#39;&amp;v=1&#39;,x=function(){if(!window.open(r,&#39;douban&#39;,&#39;toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330&#39;))location.href=r+&#39;&amp;r=1&#39;};if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}})()&quot;&gt;&lt;i class=&#39;social-icon-sprite social-icon-douban&#39;&gt;&lt;/i&gt;&lt;span&gt;分享到豆瓣&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;" data-original-title="" title="" class="function-button"><i class="iconfont ic-share"></i></a> <!----></li> <!----></ul></div>
+</div>
+<div class="note-bottom">
+  <div><div class="main"><div class="title">被以下专题收入，发现更多相似内容</div> <!----> <div class="include-collection"><!----> <a href="https://www.jianshu.com/c/e49665f4ef9a?utm_source=desktop&amp;utm_medium=notes-included-collection" target="_blank" class="item"><img src="./Android多版本源码及内核编译(Nexus5) - 简书_files/Android.png"><div class="name">Android...</div></a> <!----></div></div> <!----> <!----></div>
+  <div data-vcomp="recommended-notes" data-note-id="16421170"></div>
+
+  <!-- 相关文章 -->
+      <!-- 未登录用户 -->
+      <div class="seo-recommended-notes">
+
+            <div class="note ">
+                            <a class="title" target="_blank" href="https://www.jianshu.com/p/dad51f6c9c4d?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">Android - 收藏集  </a>
+              <p class="description">Android 自定义View的各种姿势1 Activity的显示之ViewRootImpl详解 Activity的显示之ViewRootImpl初探 Activity的显示之Window和View Android系统的创世之初以及Activity的生命周期 图解Andro...</p>
+              <a class="author" target="_blank" href="https://www.jianshu.com/u/e946d18f163c?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+                <div class="avatar">
+                  <img src="./Android多版本源码及内核编译(Nexus5) - 简书_files/4-3397163ecdb3855a0a4139c34a695885.jpg" alt="48">
+                </div>
+                <span class="name">passiontim</span>
+</a>            </div>
+
+            <div class="note have-img">
+              <a class="cover" target="_blank" href="https://www.jianshu.com/p/e1f550ba164d?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+                <img src="./Android多版本源码及内核编译(Nexus5) - 简书_files/4809537-1e812eb766fa61ed.png" alt="240">
+</a>              <a class="title" target="_blank" href="https://www.jianshu.com/p/e1f550ba164d?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">Linux内核编译与管理</a>
+              <p class="description">我们说的Linux其实指的就是 内核（kernel）而已。这个内核控制你主机的所有硬件并提供系统所有的功能，所以它非常重要。我们开机的时候就是利用开机管理程序加载这个内核文件来检查硬件，在内核加载适当的驱动程序后，系统才能够顺利运行。 现今的系统由于强调在线升级机制，因此非...</p>
+              <a class="author" target="_blank" href="https://www.jianshu.com/u/f13278e94ecb?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+                <div class="avatar">
+                  <img src="./Android多版本源码及内核编译(Nexus5) - 简书_files/0a5dc0a62be1.jpg" alt="48">
+                </div>
+                <span class="name">Zhang21</span>
+</a>            </div>
+
+            <div class="note have-img">
+              <a class="cover" target="_blank" href="https://www.jianshu.com/p/5b4f91b342c4?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+                <img src="./Android多版本源码及内核编译(Nexus5) - 简书_files/4180120-05c6107188eebb85.png" alt="240">
+</a>              <a class="title" target="_blank" href="https://www.jianshu.com/p/5b4f91b342c4?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">下载Android5.1.1源码、编译源码、SDK和内核</a>
+              <p class="description">安装Ubuntu系统： 由于Android源码编译谷歌官方是推荐Ubuntu系统的，所以第一步就是安装Ubuntu系统，而我要下载的Android5.0的系统，官方要求最低是Ubuntu12.04，这里是官方要求的网址 https://source.android.com/...</p>
+              <a class="author" target="_blank" href="https://www.jianshu.com/u/a19aa1efb31f?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+                <div class="avatar">
+                  <img src="./Android多版本源码及内核编译(Nexus5) - 简书_files/3f2be102-c5d7-4536-8cf0-04268c0ef7f1.jpg" alt="48">
+                </div>
+                <span class="name">张鹤H</span>
+</a>            </div>
+
+            <div class="note have-img">
+              <a class="cover" target="_blank" href="https://www.jianshu.com/p/367f0886e62b?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+                <img src="./Android多版本源码及内核编译(Nexus5) - 简书_files/142377-7fbdaf7a849aa8dc" alt="240">
+</a>              <a class="title" target="_blank" href="https://www.jianshu.com/p/367f0886e62b?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">自己动手编译Android源码(超详细)</a>
+              <p class="description">在Android Studio代码调试一文中,简单的介绍了代码调试的一些技巧.现在我们来谈谈android源码编译的一些事.(俺认为,作为android developer人人都应该有一份自己Android源码,这样我们就可以随时对自己有疑惑的地方通过亲手调试来加强理解)....</p>
+              <a class="author" target="_blank" href="https://www.jianshu.com/u/22f55ea83811?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+                <div class="avatar">
+                  <img src="./Android多版本源码及内核编译(Nexus5) - 简书_files/1477d180b32d.png" alt="48">
+                </div>
+                <span class="name">涅槃1992</span>
+</a>            </div>
+
+            <div class="note have-img">
+              <a class="cover" target="_blank" href="https://www.jianshu.com/p/7fefbb879ca8?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+                <img src="./Android多版本源码及内核编译(Nexus5) - 简书_files/5273438-4e6bcf9d372e5cc5.jpg" alt="240">
+</a>              <a class="title" target="_blank" href="https://www.jianshu.com/p/7fefbb879ca8?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">念恋两相依⋯作者(咖米拉嘉嘉</a>
+              <p class="description">念恋两相依  作者：嘉嘉 灯下 思念从笔尖下流过 他深邃深情的目光辗转于心 似水的柔情绵长的依恋 念也去去 恋也去去 念恋两相依 黄昏 思念从发梢下流过 他彬彬有礼的行为倾度心门 青丝的飘逸宛若爱的缠绵 念也去去 恋也去去 念恋两相依 深夜 思念从额眉前流过 他谦谦君子的举...</p>
+              <a class="author" target="_blank" href="https://www.jianshu.com/u/84e23bb4639c?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+                <div class="avatar">
+                  <img src="./Android多版本源码及内核编译(Nexus5) - 简书_files/62a88730-b8c7-44a9-9e24-9fa38a169bbe" alt="48">
+                </div>
+                <span class="name">咖米拉A嘉嘉</span>
+</a>            </div>
+
+            <div class="note ">
+                            <a class="title" target="_blank" href="https://www.jianshu.com/p/0e0a2c797973?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">涂鸦《秋到大雁滩》</a>
+              <p class="description">大青山下大雁滩 落在富饶敕勒川 瓜果飘香景色美 采摘游玩好休闲</p>
+              <a class="author" target="_blank" href="https://www.jianshu.com/u/d8e06217c44b?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+                <div class="avatar">
+                  <img src="./Android多版本源码及内核编译(Nexus5) - 简书_files/f51333ad9ee1.jpeg" alt="48">
+                </div>
+                <span class="name">吴传文</span>
+</a>            </div>
+
+            <div class="note ">
+                            <a class="title" target="_blank" href="https://www.jianshu.com/p/8252231ccb15?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">各种坑爹bug记录——持续记录中</a>
+              <p class="description">2017.7.18GridView和ListView采用回收机制，简单地说：如果屏幕最多可以显示n个子View，那么内存中其实就只有这n个子View。当 滚动了之后，重新展现在屏幕的n个View是复用了之前的n个View。所以在GridView和ListView中，getC...</p>
+              <a class="author" target="_blank" href="https://www.jianshu.com/u/0b3edec737da?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+                <div class="avatar">
+                  <img src="./Android多版本源码及内核编译(Nexus5) - 简书_files/8e38359db391.JPG" alt="48">
+                </div>
+                <span class="name">Ucoon</span>
+</a>            </div>
+
+            <div class="note have-img">
+              <a class="cover" target="_blank" href="https://www.jianshu.com/p/ee597300164a?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+                <img src="./Android多版本源码及内核编译(Nexus5) - 简书_files/5060988-8b4398fea4318a84.jpg" alt="240">
+</a>              <a class="title" target="_blank" href="https://www.jianshu.com/p/ee597300164a?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">和自己对话</a>
+              <p class="description">娃坐在马桶上不肯下来,爸爸说晚了就不送了,今天一天呆在家里,没有饭吃没有人陪你玩.孩子还是无所畏的样子.大人的火气却在升级中.爸爸急得要吼了,孩子求救. 我说你可以一直坐在马桶上,你什么时候下来我就什么时候送你,你愿意体验迟到的感觉,那就多多得体验体验吧.孩子马上说我要下来...</p>
+              <a class="author" target="_blank" href="https://www.jianshu.com/u/9b39e77365a3?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+                <div class="avatar">
+                  <img src="./Android多版本源码及内核编译(Nexus5) - 简书_files/a71220b5-35cd-442e-b57d-40c8e085931e" alt="48">
+                </div>
+                <span class="name">lanfang</span>
+</a>            </div>
+
+            <div class="note have-img">
+              <a class="cover" target="_blank" href="https://www.jianshu.com/p/a3db5946be80?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+                <img src="./Android多版本源码及内核编译(Nexus5) - 简书_files/1340304-f67893b7317757be" alt="240">
+</a>              <a class="title" target="_blank" href="https://www.jianshu.com/p/a3db5946be80?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">网络昵称的微妙含义</a>
+              <p class="description">之前，茹果已经分析微信头像所包含的个人性格特点，具体到每个头像，肯定还有它的一些特定含义，文中写出来的都是大众心理，总会有些状况是特殊一点的。 今天，我们可以来看看第二个大点，那就是微信或者网络上常见昵称所隐含的一些信息。 一、昵称用外文 用外文的，除了外国人，一般就是在国...</p>
+              <a class="author" target="_blank" href="https://www.jianshu.com/u/b3f790b23b48?utm_campaign=maleskine&amp;utm_content=user&amp;utm_medium=seo_notes&amp;utm_source=recommendation">
+                <div class="avatar">
+                  <img src="./Android多版本源码及内核编译(Nexus5) - 简书_files/d151ef21926a.jpeg" alt="48">
+                </div>
+                <span class="name">茹果君</span>
+</a>            </div>
+      </div>
+</div>
+
+    <script type="application/json" data-name="page-data">{"user_signed_in":false,"locale":"zh-CN","os":"mac","read_mode":"day","read_font":"font2","note_show":{"is_author":false,"is_following_author":false,"is_liked_note":false,"follow_state":0,"uuid":"f45b31c8-6ce1-433a-b83d-9cc15557b132"},"note":{"id":16421170,"gupao_eligible":false,"slug":"33b5c4061f6c","user_id":7548581,"notebook_id":15740582,"commentable":true,"likes_count":6,"views_count":3214,"public_wordage":1700,"comments_count":0,"featured_comments_count":0,"total_rewards_count":0,"is_author":false,"paid_type":"free","paid":false,"paid_content_accessible":false,"author":{"nickname":"PR老师","total_wordage":1700,"followers_count":4,"total_likes_count":6}}}</script>
+    
+    <script src="./Android多版本源码及内核编译(Nexus5) - 简书_files/babel-polyfill-d171e3dec4b6c15634dd.js" crossorigin="anonymous"></script>
+    <script src="./Android多版本源码及内核编译(Nexus5) - 简书_files/web-base-e84cb8c6ee1a64214fde.js" crossorigin="anonymous"></script>
+<script src="./Android多版本源码及内核编译(Nexus5) - 简书_files/web-fc173612f53a56b50b10.js" crossorigin="anonymous"></script>
+    
+    <script src="./Android多版本源码及内核编译(Nexus5) - 简书_files/entry-ef9dddea37a7addc8099.js" crossorigin="anonymous"></script>
+    <script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+  
+
+<!----><!----></body></html>
